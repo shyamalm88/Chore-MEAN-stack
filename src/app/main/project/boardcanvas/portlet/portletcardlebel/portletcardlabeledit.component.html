@@ -1,0 +1,24 @@
+<span class="ion-edit list-card-operation" ngbDropdownToggle ngbDropdown #portletCardEditDrop="ngbDropdown" (click)="$event.stopPropagation()"></span>
+<div class="pop-over dropdown-menu" style="left: 0px; top: 0px; width: 100%" (click)="$event.stopPropagation();">
+    <div data-reactroot="">
+        <div class="pop-over-header"><span class="pop-over-header-title">Project Rename</span>
+            <a href="#" class="pop-over-header-close-btn icon-sm ion-close" (click)="portletCardEditDrop.close();"></a>
+        </div>
+        <div>
+            <div class="popover-content">
+                <div>
+                    <div>
+                        <form>
+                            <div class="form-group">
+                                <label class="control-label" for="Name">Rename Label</label>
+                                <input id="Name" name="Name" type="text" placeholder="Rename Label" class="form-control input-md textboxchange">
+                                <span class="help-block">rename This label</span>
+                                <input class="btn btn-success" type="submit" value="Edit">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

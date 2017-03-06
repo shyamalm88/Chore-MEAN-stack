@@ -1,0 +1,31 @@
+<a href="javascript:;" ngbDropdown ngbDropdownToggle #listActionDrop="ngbDropdown"><i class="ion-android-more-horizontal fa fa-lg"></i></a>
+<div class="pop-over dropdown-menu" style="left: 0px; top: 30px;">
+    <div data-reactroot="">
+        <div class="pop-over-header"><span class="pop-over-header-title">List Actions</span>
+            <a href="#" class="pop-over-header-close-btn icon-sm ion-close" (click)="$event.preventDefault(); listActionDrop.close();"></a>
+        </div>
+        <div>
+            <div class="popover-content">
+                <div>
+                    <div>
+                        <ul class="pop-over-list">
+                            <li><a class="" href="#">Add Card…</a></li>
+                            <li><a class="" href="#">Copy List…</a></li>
+                            <li><a class="" href="#">Move List…</a></li>
+                            <li><a class="" href="#">Subscribe </a></li>
+                        </ul>
+                        <hr>
+                        <ul class="pop-over-list">
+                            <li><a class="" href="#">Move All Cards in This List…</a></li>
+                            <li><a class="" href="#">Archive All Cards in This List…</a></li>
+                        </ul>
+                        <hr>
+                        <ul class="pop-over-list">
+                            <li><a class="" href="#">Archive This List</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

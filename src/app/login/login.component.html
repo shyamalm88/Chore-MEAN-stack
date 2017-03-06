@@ -1,0 +1,40 @@
+<div class="app app-fh app-loaded">
+    <!-- START APP CONTAINER -->
+    <div class="app-container" style="background: url(assets/images/bg-1.jpg) center center no-repeat fixed">
+        <div class="app-login-box">
+            <div class="app-login-box-user"><img src="assets/images/no-image.png"></div>
+            <div class="app-login-box-title">
+                <div class="title">Already a member?</div>
+                <div class="subtitle">Sign in to your account</div>
+            </div>
+            <div class="app-login-box-container">
+                <form action="index.html" method="post">
+                    <div class="form-group"><input type="text" class="form-control" name="login" placeholder="Email Address"></div>
+                    <div class="form-group"><input type="password" class="form-control" name="password" placeholder="Password"></div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-6 col-xs-6">
+                                <div class="app-checkbox"><label><input type="checkbox" name="app-checkbox-1" value="0"> Remember me<span></span></label></div>
+                            </div>
+                            <div class="col-md-6 col-xs-6"><button class="btn btn-teal btn-block">Sign In</button></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!--<div class="app-login-box-or">
+                <div class="or">OR</div>
+            </div>-->
+            <div class="app-login-box-container">
+                <!--<button class="btn btn-block btn-social btn-facebook" (click)="loginWith('facebook', $event)">
+                    <span class="fa fa-facebook"></span> Sign in with Facebook
+                </button>-->
+                <button class="btn btn-block btn-social btn-google" (click)="loginWith('google', $event)">
+                    <span class="fa fa-google"></span> Sign in with Google
+                </button>
+            </div>
+            <div class="app-login-box-footer">© Chore 2017. All rights reserved.</div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <!-- END APP CONTAINER -->
+</div>

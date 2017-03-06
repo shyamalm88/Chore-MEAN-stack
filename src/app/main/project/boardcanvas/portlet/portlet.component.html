@@ -1,0 +1,53 @@
+<div class="col-lg-3">
+    <div class="portlet">
+        <div class="portlet-heading bg-teal">
+            <h3 class="portlet-title">
+                Getting Started
+            </h3>
+            <div class="portlet-widgets">
+                <chore-portlet-actions></chore-portlet-actions>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="list-cards" [dragula]='"first-bag"'>
+            <div class="portlet-body" (click)="open(content)">
+                <chore-portlet-card-label></chore-portlet-card-label>
+                <div class="js-badges">
+                    <div class="faicons" title="This card has a description."><span class="badge-icon fa fa-align-left"></span></div>
+                    <div class="faicons" title="Attachments"><span class="badge-icon fa fa-paperclip"></span><span class="badge-text"> 1</span></div>
+                    <div class="faicons" title="Attachments"><span class="badge-icon fa fa-comment"></span><span class="badge-text"> 1</span></div>
+                    <div class="faicons" title="Attachments"><span class="badge-icon fa fa-check-square-o"></span><span class="badge-text"> 1</span></div>
+                    <div class="faicons" title="Attachments"><span class="badge-icon fa fa-picture-o"></span></div>
+                </div>
+                <div class="colorLable">
+                    <span class="bg-green-light"></span>
+                </div>
+                <chore-portlet-assined></chore-portlet-assined>
+                <template #content let-c="close" let-d="dismiss">
+                    <a class="fa fa-lg ion-close dialog-close-button" href="javascript:void(0)" (click)="d('Cross click')"></a>
+                    <chore-portlet-modal></chore-portlet-modal>
+                </template>
+
+
+
+            </div>
+            <div class="portlet-body" (click)="open(content)">
+                <chore-portlet-card-label></chore-portlet-card-label>
+                <div class="js-badges">
+                    <div class="faicons" title="This card has a description."><span class="badge-icon fa fa-align-left"></span></div>
+                    <div class="faicons" title="Attachments"><span class="badge-icon fa fa-paperclip"></span><span class="badge-text"> 1</span></div>
+                    <div class="faicons" title="Attachments"><span class="badge-icon fa fa-comment"></span><span class="badge-text"> 1</span></div>
+                    <div class="faicons" title="Attachments"><span class="badge-icon fa fa-check-square-o"></span><span class="badge-text"> 1</span></div>
+                </div>
+                <div class="colorLable">
+                    <span class="bg-amber"></span>
+                </div>
+                <chore-portlet-assined></chore-portlet-assined>
+            </div>
+            <a class="open-card-composer" href="#">Add a card…</a>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+    <div class="clearfix"></div>
+</div>

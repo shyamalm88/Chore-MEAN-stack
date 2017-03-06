@@ -1,0 +1,23 @@
+<button type="button" ngbDropdown class="btn btn-board" ngbDropdownToggle #boardDrop="ngbDropdown"><i class="fa fa-tasks fa-rotate-90" aria-hidden="true"></i> Boards</button>
+<div class="pop-over dropdown-menu" style="left: 0px; top: 30px;">
+    <div data-reactroot="">
+        <div class="pop-over-header"><span class="pop-over-header-title">Board Actions</span>
+            <a href="#" class="pop-over-header-close-btn icon-sm ion-close" (click)="$event.preventDefault(); boardDrop.close();"></a>
+        </div>
+        <div>
+            <div class="popover-content">
+                <div>
+                    <div>
+                        <ul class="pop-over-list">
+                            <li><a class="" href="#">Create Board</a></li>
+                            <li><a class="" href="#">View All Boards</a></li>
+                            <li><a class="" href="#">See Recent Boards</a></li>
+                            <li><a class="" href="#">See Close Boards</a></li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
