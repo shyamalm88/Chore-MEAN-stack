@@ -21,7 +21,7 @@ export class HttpService {
 
   //posting data
   public postData(url: string, data: any): Observable<Response> {
-    console.log(data);
+    console.log(url, data);
     return this.http.post(url, data).map(this.extractData).catch(this.handleError);
   }
 

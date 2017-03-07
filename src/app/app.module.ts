@@ -38,7 +38,7 @@ import {LoginComponent } from './login/login.component';
 
 
 const appRoutes: Routes = [
-  { path: 'board', component:  MainComponent},
+  { path: 'chore', component:  MainComponent},
   { path: 'login', component:  LoginComponent},
   // { path: 'login/auth/facebook', component:  LoginComponent},
   // { path: 'login/auth/google', component:  LoginComponent},

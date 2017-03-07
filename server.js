@@ -1,15 +1,29 @@
 var express = require('express');
-var path = require('path');
+var mongoose = require('mongoose');
+var passport = require('passport');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var http = require('http');
+var session = require('express-session');
+var path = require('path');
 
 var app = express();
+
+var configDB = require('./api/config/database.js');
+mongoose.connect(configDB.url);
+
+//var routes = require("./api/routes/boardRoutes");
+var router = express.Router();
+
+var api = require('./api/routes/api');
+
+app.use('/api', api);
+
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use(express.static(__dirname + '/dist'));
@@ -23,21 +37,8 @@ app.use(function(req, res, next) {
     err.status = 404;
     next(err);
 });
-// console.log(app.get('env') == 'development');
-// if (app.get('env' === 'development')) {
-//     app.listen(3000, function() {
-//         console.log('Example listening on port 3000!');
-//     });
-// } else {
-//     app.listen(8080, function() {
-//         console.log('Example listening on port 8080!');
-//     });
-// }
-var port = process.env.PORT || '3000';
-app.set('port', port);
 
-var server = http.createServer(app);
-
-server.listen(port, () => console.log(`API running on localhost:${port}`));
-
-module.exports = app;
+var port = process.env.PORT || 4200;
+app.listen(port, function() {
+    console.log('Server up: http://localhost:' + port);
+});

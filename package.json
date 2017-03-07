@@ -27,6 +27,7 @@
     "core-js": "^2.4.1",
     "dragula": "^3.7.2",
     "express": "^4.15.2",
+    "express-session": "^1.15.1",
     "grunt": "^1.0.1",
     "grunt-contrib-cssmin": "^2.0.0",
     "grunt-contrib-sass": "^1.0.0",
