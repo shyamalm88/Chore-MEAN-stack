@@ -25,7 +25,7 @@ app.use('/api', api);
 
 require('./server/config/passport')(passport); // pass passport for configuration
 app.use(session({
-    secret: 'ilovescotchscotchyscotchscotch', // session secret
+    secret: 'ArghyaChoreTrello', // session secret
     resave: true,
     saveUninitialized: true
 }));

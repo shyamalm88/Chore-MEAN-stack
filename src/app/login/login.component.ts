@@ -17,22 +17,5 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() { }
 
-    loginWith(social: String, $event: any) {
-        this.social = social;
-        if (this.social === 'facebook') {
-            this.loginWithSocialButtons(this.social)
-        } else if (this.social === 'google') {
-            this.loginWithSocialButtons(this.social)
-        }
-        $event.preventDefault();
-    }
-    loginWithSocialButtons(which) {
-        console.log(Constant.AUTH_ENDPOINT + 'auth/'+ which)
-        this.httpService.socialLogin(Constant.AUTH_ENDPOINT + 'auth/'+ which)
-            .subscribe(
-            (data): void => {
-                console.log(data);
-            }
-            )
-    }
+
 }

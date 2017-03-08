@@ -31,14 +31,14 @@ module.exports = function(app, passport) {
     // facebook -------------------------------
 
     // send to facebook to do the authentication
-    // app.get('/auth/facebook', passport.authenticate('facebook', { scope: 'email' }));
+    app.get('/auth/facebook', passport.authenticate('facebook', { scope: 'email' }));
 
-    // // handle the callback after facebook has authenticated the user
-    // app.get('/auth/facebook/callback',
-    //     passport.authenticate('facebook', {
-    //         successRedirect: '/profile',
-    //         failureRedirect: '/'
-    //     }));
+    // handle the callback after facebook has authenticated the user
+    app.get('/auth/facebook/callback',
+        passport.authenticate('facebook', {
+            successRedirect: 'http://localhost:8080/',
+            failureRedirect: 'http://localhost:8080/login'
+        }));
 
 
     // google ---------------------------------
@@ -49,8 +49,8 @@ module.exports = function(app, passport) {
     // the callback after google has authenticated the user
     app.get('/auth/google/callback',
         passport.authenticate('google', {
-            successRedirect: '/profile',
-            failureRedirect: '/'
+            successRedirect: 'http://localhost:8080/',
+            failureRedirect: 'http://localhost:8080/login'
         }));
 
     // =============================================================================
@@ -75,20 +75,8 @@ module.exports = function(app, passport) {
     // handle the callback after facebook has authorized the user
     app.get('/connect/facebook/callback',
         passport.authorize('facebook', {
-            successRedirect: '/profile',
-            failureRedirect: '/'
-        }));
-
-    // twitter --------------------------------
-
-    // send to twitter to do the authentication
-    app.get('/connect/twitter', passport.authorize('twitter', { scope: 'email' }));
-
-    // handle the callback after twitter has authorized the user
-    app.get('/connect/twitter/callback',
-        passport.authorize('twitter', {
-            successRedirect: '/profile',
-            failureRedirect: '/'
+            successRedirect: 'http://localhost:8080/',
+            failureRedirect: 'http://localhost:8080/login'
         }));
 
 
@@ -100,8 +88,8 @@ module.exports = function(app, passport) {
     // the callback after google has authorized the user
     app.get('/connect/google/callback',
         passport.authorize('google', {
-            successRedirect: '/profile',
-            failureRedirect: '/'
+            successRedirect: 'http://localhost:8080',
+            failureRedirect: 'http://localhost:8080/login'
         }));
 
     // =============================================================================
