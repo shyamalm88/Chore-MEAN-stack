@@ -27,7 +27,8 @@ export class LoginComponent implements OnInit {
         $event.preventDefault();
     }
     loginWithSocialButtons(which) {
-        this.httpService.socialLogin(Constant.API_ENDPOINT + 'auth/'+ which)
+        console.log(Constant.AUTH_ENDPOINT + 'auth/'+ which)
+        this.httpService.socialLogin(Constant.AUTH_ENDPOINT + 'auth/'+ which)
             .subscribe(
             (data): void => {
                 console.log(data);

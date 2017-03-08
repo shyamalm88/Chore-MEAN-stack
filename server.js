@@ -23,6 +23,19 @@ var api = require('./server/routes/boardRoutes');
 // // all of our routes will be prefixed with /api
 app.use('/api', api);
 
+require('./server/config/passport')(passport); // pass passport for configuration
+app.use(session({
+    secret: 'ilovescotchscotchyscotchscotch', // session secret
+    resave: true,
+    saveUninitialized: true
+}));
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+
+
+// routes ======================================================================
+require('./server/routes/passportRoutes.js')(app, passport); // load our routes and pass in our app and fully configured passport
+
 
 
 //indicating routing files to index.html
@@ -42,7 +55,11 @@ mongoose.connect(configDB.url);
 
 
 
-var port = process.env.PORT || 4200;
+
+
+
+
+var port = process.env.PORT || 8080;
 app.listen(port, function() {
     console.log('Server up: http://localhost:' + port);
 });

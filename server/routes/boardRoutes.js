@@ -36,4 +36,8 @@ app.route('/board/:index')
         });
     });
 
+
+
+
+
 module.exports = app;
