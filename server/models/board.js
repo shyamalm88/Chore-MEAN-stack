@@ -12,8 +12,8 @@ var BoardSchema = new Schema({
     created_by: String,
     closed: Boolean,
     archived: Boolean,
-    //cards: Array,
-    //teamname: String,
+    cards: Array,
+    teamname: String,
 });
 
 BoardSchema.pre('save', function(next) {
@@ -44,7 +44,6 @@ module.exports.findAll = function(callback) {
 };
 
 module.exports.addNewBoard = function(body, callback) {
-    console.log(body);
     var board = new Board({
         name: body.name,
         description: body.description,

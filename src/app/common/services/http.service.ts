@@ -12,6 +12,7 @@ export class HttpService {
 
   //get all data
   public getData(url: string): Observable<Response> {
+    console.log(url);
     return this.http.get(url).map(this.extractData).catch(this.handleError);
   }
 

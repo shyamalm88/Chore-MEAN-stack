@@ -7,38 +7,47 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var path = require('path');
+var router = express.Router();
 
 var app = express();
 
-var configDB = require('./api/config/database.js');
-mongoose.connect(configDB.url);
+// app usage codes
+app.use(logger('dev'));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(cookieParser());
 
-//var routes = require("./api/routes/boardRoutes");
-var router = express.Router();
 
-var api = require('./api/routes/api');
-
+var api = require('./server/routes/boardRoutes');
+// // REGISTER OUR ROUTES -------------------------------
+// // all of our routes will be prefixed with /api
 app.use('/api', api);
 
 
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser());
 
-app.use(express.static(__dirname + '/dist'));
-
-app.get('*', function(req, res) {
-    res.sendFile(path.join(__dirname, '/dist/index.html'));
+//indicating routing files to index.html
+app.use(express.static(path.join(__dirname, 'dist')));
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
+
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-    var err = new Error('Not Found');
-    err.status = 404;
-    next(err);
-});
+// app.use(function(req, res, next) {
+//     var err = new Error('Not Found');
+//     err.status = 404;
+//     next(err);
+// });
 
-var port = process.env.PORT || 4200;
+//mongodb connection
+var configDB = require('./server/config/database.js');
+mongoose.connect(configDB.url);
+
+
+
+
+
+
+var port = process.env.PORT || 3000;
 app.listen(port, function() {
     console.log('Server up: http://localhost:' + port);
 });

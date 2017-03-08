@@ -10,7 +10,6 @@ module.exports.getAllBoards = function(callback) {
 }
 module.exports.addNewBoard = function(body, callback) {
     console.log("Adding new book");
-    console.log(body);
     boardDA.addNewBoard(body, callback);
 }
 module.exports.editBoard = function(body, index, callback) {

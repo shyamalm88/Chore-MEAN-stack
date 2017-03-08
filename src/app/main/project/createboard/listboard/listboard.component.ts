@@ -31,7 +31,6 @@ export class ListBoardComponent implements OnInit {
                 console.log(this.boardDisplayData);
             },
             (err): void => {            //error catching method
-
                 console.log(err)
             },
         );
