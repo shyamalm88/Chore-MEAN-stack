@@ -31,12 +31,7 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
-// catch 404 and forward to error handler
-// app.use(function(req, res, next) {
-//     var err = new Error('Not Found');
-//     err.status = 404;
-//     next(err);
-// });
+
 
 //mongodb connection
 var configDB = require('./server/config/database.js');
@@ -47,7 +42,7 @@ mongoose.connect(configDB.url);
 
 
 
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 4200;
 app.listen(port, function() {
     console.log('Server up: http://localhost:' + port);
 });
