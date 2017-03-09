@@ -244,6 +244,8 @@ module.exports = function(passport) {
                                 user.google.token = token;
                                 user.google.name = profile.displayName;
                                 user.google.email = (profile.emails[0].value || '').toLowerCase(); // pull the first email
+                                console.log(profile._json.image.url);
+                                user.google.image = profile._json.image.url; //pull the profile image
 
                                 user.save(function(err) {
                                     if (err)
@@ -261,6 +263,8 @@ module.exports = function(passport) {
                             newUser.google.token = token;
                             newUser.google.name = profile.displayName;
                             newUser.google.email = (profile.emails[0].value || '').toLowerCase(); // pull the first email
+                            console.log(profile._json.image.url);
+                            newUser.google.image = profile._json.image.url; //pull the profile image
 
                             newUser.save(function(err) {
                                 if (err)
@@ -279,6 +283,8 @@ module.exports = function(passport) {
                     user.google.token = token;
                     user.google.name = profile.displayName;
                     user.google.email = (profile.emails[0].value || '').toLowerCase(); // pull the first email
+                    console.log(profile._json.image.url);
+                    user.google.image = profile._json.image.url; //pull the profile image
 
                     user.save(function(err) {
                         if (err)
