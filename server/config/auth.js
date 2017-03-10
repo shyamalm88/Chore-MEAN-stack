@@ -8,8 +8,7 @@ module.exports = {
         'clientID': '1270106429703654', // Facebook App ID
         'clientSecret': '60b86733b6a92ac891547f125f4373a4', // Facebook App Secret
         'callbackURL': 'http://localhost:8080/auth/facebook/callback',
-        'profileURL': 'https://graph.facebook.com/v2.5/me?fields=first_name,last_name,email'
-
+        'profileFields': ['id', 'email', 'displayName', 'photos']
     }
 
 };

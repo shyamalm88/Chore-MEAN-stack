@@ -1,3 +1,6 @@
+var express = require('express');
+var router = express.Router();
+
 module.exports = function(app, passport) {
 
 
@@ -6,7 +9,6 @@ module.exports = function(app, passport) {
         req.logout();
         res.redirect('/');
     });
-
 
     // process the login form
     app.post('/login', passport.authenticate('local-login', {
@@ -31,7 +33,7 @@ module.exports = function(app, passport) {
     // facebook -------------------------------
 
     // send to facebook to do the authentication
-    app.get('/auth/facebook', passport.authenticate('facebook', { scope: 'email' }));
+    app.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email'] }));
 
     // handle the callback after facebook has authenticated the user
     app.get('/auth/facebook/callback',
@@ -44,7 +46,7 @@ module.exports = function(app, passport) {
     // google ---------------------------------
 
     // send to google to do the authentication
-    app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+    app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'], prompt: "select_account" }));
 
     // the callback after google has authenticated the user
     app.get('/auth/google/callback',
@@ -83,7 +85,7 @@ module.exports = function(app, passport) {
     // google ---------------------------------
 
     // send to google to do the authentication
-    app.get('/connect/google', passport.authorize('google', { scope: ['profile', 'email'] }));
+    app.get('/connect/google', passport.authorize('google', { scope: ['profile', 'email'], prompt: "select_account" }));
 
     // the callback after google has authorized the user
     app.get('/connect/google/callback',
@@ -138,6 +140,8 @@ module.exports = function(app, passport) {
 
 
 };
+
+
 
 // route middleware to ensure user is logged in
 function isLoggedIn(req, res, next) {
