@@ -2,16 +2,15 @@ var express = require('express');
 var router = express.Router();
 var boardController = require("../board_controller/board_controller");
 
+
 var app = express();
 
 app.route('/board')
-    .get(function(req, res) {
-        console.log('hi');
+    .get(function(req, res, next) {
         boardController.getAllBoards(function(results) { res.json(results); });
     })
     .post(function(req, res) {
         boardController.addNewBoard(req.body, function(results) {
-            console.log(req);
             res.json(results);
         });
     });
