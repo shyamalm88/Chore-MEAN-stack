@@ -18,14 +18,31 @@ export class CreateBoardComponent implements OnInit {
   private success;
   private error;
   private dataSet;
-  constructor(private modalService: NgbModal, private httpService: HttpService, public fb: FormBuilder, private _sharedService: SharedDataService) { }
-
-  ngOnInit() { }
+  private loggedInUserId;
+  private loggedInUserEmail;
 
   public createBoardForm = this.fb.group({
     name: ['', Validators.required],
     description: ['', Validators.required],
+    createdby: ['', Validators.required],
+    isclosed: ['', Validators.required],
+    isarchived: ['', Validators.required],
+    teamname: ['', Validators.required],
   });
+
+  constructor(
+    private modalService: NgbModal,
+    private httpService: HttpService,
+    public fb: FormBuilder,
+    private _sharedService: SharedDataService,
+  ) { }
+
+  ngOnInit() {
+    // console.log(this.isLoggedInService.isLoggedIn);
+    // console.log(this.isLoggedInService.loggedInUserData);
+  }
+
+
 
   createBoard(event, modal) {
     let data = this.createBoardForm.value;  // accessing form data.
@@ -38,7 +55,7 @@ export class CreateBoardComponent implements OnInit {
           this.getAllData();
 
           this.dismissModal(modal); // dismissing modal
-          this.showSuccessMesssage(); // creating success message
+          this.showSuccessMessage(); // creating success message
           console.log(this.boardData);
         },
         (err): void => {            //error catching method
@@ -64,7 +81,7 @@ export class CreateBoardComponent implements OnInit {
       )
   }
 
-  showSuccessMesssage(): void {
+  showSuccessMessage(): void {
     this.success = this.boardData.message;
   }
 

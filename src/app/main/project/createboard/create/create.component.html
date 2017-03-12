@@ -38,12 +38,39 @@
      </div>
      <div class="form-group">
          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+             <label class="control-label requiredField" for="name">Assigned Team
+            </label>
+         </div>
+         <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+             <select class="form-control" id="" formControlName="teamname">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+            </select>
+         </div>
+         <div class="clearfix"></div>
+     </div>
+     <div class="form-group">
+         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
       <label class="control-label " for="description">
        Description
       </label>
          </div>
          <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
       <textarea class="form-control" cols="10" id="description" formControlName="description" placeholder="Board Description" rows="2" [charCount]="200"></textarea>
+
+         </div>
+         <div class="clearfix"></div>
+     </div>
+     <div class="form-group sr-only">
+         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+      <label class="control-label sr-only" for="description">
+       Created by
+      </label>
+         </div>
+         <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+      <input class="form-control input-sm" id="name" formControlName="createdby" type="hidden"/>
 
          </div>
          <div class="clearfix"></div>

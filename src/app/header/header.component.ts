@@ -1,4 +1,5 @@
-import { Component, ViewEncapsulation } from "@angular/core";
+import { Component, ViewEncapsulation, OnInit, Input } from '@angular/core';
+import { AuthService } from '../common/services/auth.service';
 
 @Component({
     moduleId: module.id,
@@ -7,6 +8,24 @@ import { Component, ViewEncapsulation } from "@angular/core";
     encapsulation: ViewEncapsulation.None
 })
 
-export class HeaderComponent{
-    constructor(){}
+
+export class HeaderComponent implements OnInit{
+    private isLoggedIn;
+    private loggedInUserData;
+    constructor(private authService: AuthService){
+
+    }
+
+
+    ngOnInit() {
+        this.authService.userData.subscribe((userData) => {
+            this.loggedInUserData = userData;
+            console.log(this.loggedInUserData);
+            if(this.loggedInUserData){
+                this.isLoggedIn = true;
+            }
+        });
+    }
+
+
 }
