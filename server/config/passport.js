@@ -206,8 +206,6 @@ module.exports = function(passport) {
                         if (err) {
                             return done(err);
                         }
-                        userData = user;
-                        localStorage.setItem('userData', JSON.stringify(userData));
                         return done(null, user);
                     });
 
