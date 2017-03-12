@@ -9,13 +9,17 @@ var session = require('express-session');
 var path = require('path');
 var router = express.Router();
 
+
 var app = express();
+
+
 
 // app usage codes
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
+
 
 
 var api = require('./server/routes/boardRoutes');
@@ -27,15 +31,15 @@ require('./server/config/passport')(passport); // pass passport for configuratio
 app.use(session({
     secret: 'ArghyaChoreTrello', // session secret
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
 }));
+
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 
 
 // routes ======================================================================
-require('./server/routes/passportRoutes.js')(app, passport); // load our routes and pass in our app and fully configured passport
-
+require('./server/routes/authRoutes.js')(app, passport); // load our routes and pass in our app and fully configured passport
 
 
 //indicating routing files to index.html
@@ -43,6 +47,7 @@ app.use(express.static(path.join(__dirname, 'dist')));
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
+
 
 
 

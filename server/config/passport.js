@@ -4,6 +4,7 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 //var TwitterStrategy = require('passport-twitter').Strategy;
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
+
 // load up the user model
 var User = require('../models/user');
 
@@ -20,7 +21,7 @@ module.exports = function(passport) {
 
     // used to serialize the user for the session
     passport.serializeUser(function(user, done) {
-        done(null, user.id);
+        done(null, user);
     });
 
     // used to deserialize the user
@@ -160,15 +161,16 @@ module.exports = function(passport) {
                         if (user) {
 
                             // if there is a user id already but no token (user was linked at one point and then removed)
+
                             if (!user.facebook.token) {
                                 user.facebook.token = token;
                                 user.facebook.name = profile.displayName;
                                 user.facebook.email = (profile.emails[0].value || '').toLowerCase();;
                                 user.facebook.image = profile.photos[0].value;
                                 user.save(function(err) {
-                                    if (err)
+                                    if (err) {
                                         return done(err);
-
+                                    }
                                     return done(null, user);
                                 });
                             }
@@ -177,16 +179,15 @@ module.exports = function(passport) {
                         } else {
                             // if there is no user, create them
                             var newUser = new User();
-                            console.log(profile);
                             newUser.facebook.id = profile.id;
                             newUser.facebook.token = token;
                             newUser.facebook.name = profile.displayName;
                             newUser.facebook.email = (profile.emails[0].value || '').toLowerCase();
                             newUser.facebook.image = profile.photos[0].value;
                             newUser.save(function(err) {
-                                if (err)
+                                if (err) {
                                     return done(err);
-
+                                }
                                 return done(null, newUser);
                             });
                         }
@@ -202,9 +203,11 @@ module.exports = function(passport) {
                     user.facebook.email = (profile.emails[0].value || '').toLowerCase();
                     user.facebook.image = profile.photos[0].value;
                     user.save(function(err) {
-                        if (err)
+                        if (err) {
                             return done(err);
-
+                        }
+                        userData = user;
+                        localStorage.setItem('userData', JSON.stringify(userData));
                         return done(null, user);
                     });
 
@@ -247,9 +250,9 @@ module.exports = function(passport) {
                                 user.google.image = profile._json.image.url; //pull the profile image
 
                                 user.save(function(err) {
-                                    if (err)
+                                    if (err) {
                                         return done(err);
-
+                                    }
                                     return done(null, user);
                                 });
                             }
@@ -265,9 +268,9 @@ module.exports = function(passport) {
                             newUser.google.image = profile._json.image.url; //pull the profile image
 
                             newUser.save(function(err) {
-                                if (err)
+                                if (err) {
                                     return done(err);
-
+                                }
                                 return done(null, newUser);
                             });
                         }
@@ -284,8 +287,9 @@ module.exports = function(passport) {
                     user.google.image = profile._json.image.url; //pull the profile image
 
                     user.save(function(err) {
-                        if (err)
+                        if (err) {
                             return done(err);
+                        }
 
                         return done(null, user);
                     });

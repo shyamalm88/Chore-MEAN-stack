@@ -164,7 +164,7 @@ h6 {
     max-height: 100%;
     .portlet-body {
         color: #333;
-        margin-top: 10px;
+        margin-bottom: 10px;
         padding: 6px 30px 6px 8px;
         cursor: pointer;
         border-bottom: 1px solid #ccc;
@@ -233,6 +233,9 @@ main {
     flex-grow: 1;
     -webkit-box-flex: 1;
     &.viewEditBoard {
+        .panel-collapse {
+            margin-bottom: -10px;
+        }
         .dividerBoard {
             background: rgba(8, 13, 24, 0.68);
         }
@@ -367,6 +370,8 @@ html,
     padding: 0 4px;
     z-index: 1;
     min-height: 0;
+    margin-top: 10px;
+    margin-bottom: -10px;
     input[type="text"] {
         margin-top: 10px;
         margin-bottom: 10px;
@@ -427,7 +432,7 @@ html,
 
 .colorLable {
     position: absolute;
-    top: -2px;
+    top: 0px;
     width: 100%;
     left: 0;
     span {

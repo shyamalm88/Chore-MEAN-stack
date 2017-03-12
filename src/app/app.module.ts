@@ -8,6 +8,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { DragulaModule } from 'ng2-dragula/ng2-dragula';
 
 import { HttpService } from './common/services/http.service';
+import { AuthService } from './common/services/auth.service';
 import { SharedDataService } from './common/services/shared.data.services';
 
 
@@ -40,8 +41,6 @@ import {LoginComponent } from './login/login.component';
 const appRoutes: Routes = [
   { path: 'chore', component:  MainComponent},
   { path: 'login', component:  LoginComponent},
-  // { path: 'login/auth/facebook', component:  LoginComponent},
-  // { path: 'login/auth/google', component:  LoginComponent},
   { path: 'signup', component:  SignupComponent},
   { path: '', component: CreateEditBoardComponent },
 ];
@@ -83,7 +82,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     DragulaModule,
   ],
-  providers: [HttpService, SharedDataService],
+  providers: [HttpService, SharedDataService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

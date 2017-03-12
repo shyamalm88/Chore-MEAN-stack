@@ -3,10 +3,12 @@ var router = express.Router();
 var boardController = require("../board_controller/board_controller");
 
 
+
 var app = express();
 
+
 app.route('/board')
-    .get(function(req, res, next) {
+    .get(function(req, res) {
         boardController.getAllBoards(function(results) { res.json(results); });
     })
     .post(function(req, res) {

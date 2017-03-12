@@ -1,4 +1,4 @@
-<div class="col-lg-3" *ngFor="let board of boardDisplayData" (click)="open(content, board)">
+<div class="col-lg-3" *ngFor="let board of boardDisplayData">
     <div class="portlet">
         <div class="portlet-heading bg-teal">
             <h3 class="portlet-title">
@@ -11,7 +11,7 @@
         </div>
         <div class="panel-collapse">
             <div class="portlet-body">
-                <span aria-haspopup="true" class="ion-edit list-card-operation dropdown-toggle dropdown" ngbdropdown="" ngbdropdowntoggle="" aria-expanded="false"></span> {{board.description}}
+                <span aria-haspopup="true" class="ion-edit list-card-operation dropdown-toggle dropdown" ngbdropdown="" ngbdropdowntoggle="" aria-expanded="false" (click)="open(content, board)"></span> {{board.description}}
             </div>
         </div>
     </div>
