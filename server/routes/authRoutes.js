@@ -1,13 +1,8 @@
-var express = require('express');
-var router = express.Router();
-
 module.exports = function(app, passport) {
-
-
     // LOGOUT ==============================
     app.get('/logout', function(req, res) {
         req.logout();
-        res.redirect('/');
+        res.redirect('/login');
     });
 
     // process the login form
@@ -19,8 +14,8 @@ module.exports = function(app, passport) {
 
     // SIGNUP =================================
     // show the signup form
-    app.get('/signup', function(req, res) {
-        // res.render('signup.ejs', { message: 'signupMessage' });
+    app.get('/signup', function(req, res, next) {
+        next();
     });
 
     // process the signup form
@@ -39,7 +34,8 @@ module.exports = function(app, passport) {
     app.get('/auth/facebook/callback',
         passport.authenticate('facebook', {
             successRedirect: 'http://localhost:8080/',
-            failureRedirect: 'http://localhost:8080/login'
+            failureRedirect: 'http://localhost:8080/login',
+
         }));
 
 
@@ -137,6 +133,16 @@ module.exports = function(app, passport) {
             res.redirect('/profile');
         });
     });
+    app.get('/', isLoggedIn, function(req, res, next) {
+        var user = req.user;
+        //res.json(user);
+        next();
+    });
+    app.get('/userData', isLoggedIn, function(req, res, next) {
+        var user = req.user;
+        res.json(user);
+        next();
+    });
 
 
 };
@@ -147,6 +153,5 @@ module.exports = function(app, passport) {
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated())
         return next();
-
-    res.redirect('/');
+    res.redirect('/login');
 }

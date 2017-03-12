@@ -163,7 +163,7 @@ h6 {
 }
 .portlet .portlet-body {
   color: #333;
-  margin-top: 10px;
+  margin-bottom: 10px;
   padding: 6px 30px 6px 8px;
   cursor: pointer;
   border-bottom: 1px solid #ccc;
@@ -175,7 +175,7 @@ h6 {
   visibility: visible;
 }
 .portlet .portlet-heading {
-  padding: 5px 20px;
+  padding: 5px 20px 5px 10px;
 }
 .portlet .portlet-heading .portlet-title {
   text-overflow: ellipsis;
@@ -230,6 +230,9 @@ main {
   position: relative;
   flex-grow: 1;
   -webkit-box-flex: 1;
+}
+main.viewEditBoard .panel-collapse {
+  margin-bottom: -10px;
 }
 main.viewEditBoard .dividerBoard {
   background: rgba(8, 13, 24, 0.68);
@@ -363,6 +366,8 @@ html,
   padding: 0 4px;
   z-index: 1;
   min-height: 0;
+  margin-top: 10px;
+  margin-bottom: -10px;
 }
 .list-cards input[type="text"] {
   margin-top: 10px;
@@ -423,7 +428,7 @@ html,
 
 .colorLable {
   position: absolute;
-  top: -2px;
+  top: 0px;
   width: 100%;
   left: 0;
 }
