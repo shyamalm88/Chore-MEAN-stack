@@ -9,7 +9,6 @@ import { DragulaModule } from 'ng2-dragula/ng2-dragula';
 
 import { HttpService } from './common/services/http.service';
 import { AuthService } from './common/services/auth.service';
-import { IsLoggedInService } from './common/services/isloggedin.service';
 import { SharedDataService } from './common/services/shared.data.services';
 
 
@@ -71,8 +70,6 @@ const appRoutes: Routes = [
     ListBoardComponent,
     SignupComponent,
     LoginComponent,
-    // FacebookLoginComponent,
-    // GoogleLoginComponent
   ],
   imports: [
     BrowserModule,
@@ -83,7 +80,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     DragulaModule,
   ],
-  providers: [HttpService, SharedDataService, AuthService, IsLoggedInService],
+  providers: [HttpService, SharedDataService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

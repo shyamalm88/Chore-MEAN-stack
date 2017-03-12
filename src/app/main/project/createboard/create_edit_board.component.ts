@@ -2,8 +2,8 @@ import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 import { HttpService } from '../../../common/services/http.service';
-import { IsLoggedInService } from '../../../common/services/isloggedin.service';
 import { Constant } from '../../../common/constant/constant';
+import { AuthService } from '../../../common/services/auth.service';
 
 
 @Component({
@@ -14,12 +14,17 @@ import { Constant } from '../../../common/constant/constant';
 })
 export class CreateEditBoardComponent implements OnInit {
     private currentUserData;
-    constructor(private httpService: HttpService, private router: Router, private isLoggedInService: IsLoggedInService) { }
+    constructor(
+        private httpService: HttpService,
+        private router: Router,
+        private authService: AuthService
+    ) { }
 
     ngOnInit() {
-
-        console.log(this.isLoggedInService.isLoggedIn);
-        console.log(this.isLoggedInService.loggedInUserData);
+        this.authService.userData.subscribe((userData) => {
+            this.currentUserData = userData;
+            console.log(this.currentUserData);
+        });
 
     }
 
