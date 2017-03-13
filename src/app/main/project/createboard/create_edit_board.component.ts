@@ -23,7 +23,7 @@ export class CreateEditBoardComponent implements OnInit {
     ngOnInit() {
         this.authService.userData.subscribe((userData) => {
             this.currentUserData = userData;
-            console.log(this.currentUserData);
+            //console.log(this.currentUserData);
         });
 
     }

@@ -9,19 +9,20 @@ import { AuthService } from '../common/services/auth.service';
 })
 
 
-export class HeaderComponent implements OnInit{
-    private isLoggedIn;
-    private loggedInUserData;
-    constructor(private authService: AuthService){
+export class HeaderComponent implements OnInit {
+    public isLoggedIn;
+    public loggedInUserData;
+    constructor(private authService: AuthService) {
 
     }
+
 
 
     ngOnInit() {
         this.authService.userData.subscribe((userData) => {
             this.loggedInUserData = userData;
-            console.log(this.loggedInUserData);
-            if(this.loggedInUserData){
+            //console.log(this.loggedInUserData);
+            if (this.loggedInUserData) {
                 this.isLoggedIn = true;
             }
         });
