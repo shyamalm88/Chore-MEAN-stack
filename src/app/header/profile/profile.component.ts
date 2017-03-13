@@ -9,16 +9,19 @@ import { AuthService } from '../../common/services/auth.service';
 })
 
 
-export class ChoreProfile implements OnInit{
-    private currentUserData;
-    constructor(private authService: AuthService){}
-    @Input() user;
+export class ChoreProfile implements OnInit {
+    public currentUserData;
+    public image;
+    public userImage;
+    public userName;
+    constructor(private authService: AuthService) { }
 
-    ngOnInit(){
-        this.authService.userData.subscribe((userData) => {
-            this.currentUserData = userData;
-            console.log(this.currentUserData);
-        });
+    @Input() user: string;
+
+    ngOnInit() {
+        this.currentUserData = this.user;
+        this.userImage = this.currentUserData.facebook ? this.currentUserData.facebook.image : this.currentUserData.google.image;
+        this.userName = this.currentUserData.facebook ? this.currentUserData.facebook.name : this.currentUserData.google.name;
     }
 }
 
