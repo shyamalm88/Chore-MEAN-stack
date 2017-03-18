@@ -20,6 +20,12 @@
     <div class="wrapper">
         <app-root>Loading...</app-root>
     </div>
+    <script type="text/javascript">
+        if (window.location.hash && window.location.hash == '#_=_') {
+            window.location.hash = '';
+        }
+    </script>
+
 </body>
 
 </html>

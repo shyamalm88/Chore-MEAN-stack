@@ -40,7 +40,10 @@ var sess = {
     secret: 'ArghyaChoreTrello', // session secret
     resave: true,
     saveUninitialized: true,
-    cookie: {},
+    cookie: {
+        maxAge: new Date(Date.now() + 3600000), //1 Hour
+        expires: new Date(Date.now() + 3600000), //1 Hour
+    },
     rolling: true
 }
 
