@@ -40,7 +40,7 @@ var sess = {
     secret: 'ArghyaChoreTrello', // session secret
     resave: true,
     saveUninitialized: true,
-    cookie: { expires: new Date(Date.now() + 30000) },
+    cookie: {},
     rolling: true
 }
 
