@@ -27,7 +27,6 @@ export class HttpService {
 
   //posting data
   public postData(url: string, data: any): Observable<Response> {
-    console.log(url, data);
     return this.http
       .post(url, data)
       .map(this.extractData)
@@ -59,9 +58,9 @@ export class HttpService {
     if (error instanceof Response) {
       if (error.status === 401) {
         console.log('not loggedin');
-        this.router.navigate(['/login']);
+        //this.router.navigate(['/login']);
       } else {
-        const body = error.json() || '';
+        const body = error.json() || {};
         const err = body.error || JSON.stringify(body);
         errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
       }

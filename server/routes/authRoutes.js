@@ -6,24 +6,52 @@ module.exports = function(app, passport) {
     });
 
     // process the login form
-    app.post('/login', passport.authenticate('local-login', {
-        successRedirect: '/profile', // redirect to the secure profile section
-        failureRedirect: '/login', // redirect back to the signup page if there is an error
-        failureFlash: true // allow flash messages
-    }));
+    // app.post('/login', passport.authenticate('local-login', {
+    //     successRedirect: '/board',
+    //     failureRedirect: '/login', // redirect back to the signup page if there is an error
+    //     failureFlash: 'Invalid username or password.', // allow flash messages
+    //     successFlash: 'Welcome!',
+    //     session: true
+    // }));
 
-    // SIGNUP =================================
-    // show the signup form
-    app.get('/signup', function(req, res, next) {
-        next();
+    // app.post('/login',
+    //     passport.authenticate('local-login', {
+    //         successRedirect: '/board',
+    //         failureRedirect: '/login',
+    //         failureFlash: true
+    //     }));
+    // function(req, res) {
+    //     if (req.isAuthenticated()) {
+    //         res.send({ 'message': 'successfully logged in' });
+    //     } else {
+    //         res.send({ 'message': 'please provide valid email & password' });
+    //     }
+
+    // });
+
+    app.post('/login', function(req, res, next) {
+        passport.authenticate('local-login', function(err, user, info) {
+            if (err) {
+                return next(err);
+            }
+            if (info) {
+                return res.send(info);
+            }
+            if (!user) {
+                return res.send({ 'message': 'Not a register user' });
+            }
+
+            req.logIn(user, function(err) {
+                if (err) {
+                    return next(err);
+                }
+                return res.send({ 'message': 'successfully logged in' });
+            });
+        })(req, res, next);
     });
 
-    // process the signup form
-    app.post('/signup', passport.authenticate('local-signup', {
-        successRedirect: '/profile', // redirect to the secure profile section
-        failureRedirect: '/signup', // redirect back to the signup page if there is an error
-        failureFlash: true // allow flash messages
-    }));
+
+
 
     // facebook -------------------------------
 
@@ -33,8 +61,8 @@ module.exports = function(app, passport) {
     // handle the callback after facebook has authenticated the user
     app.get('/auth/facebook/callback',
         passport.authenticate('facebook', {
-            successRedirect: 'http://localhost:8080/',
-            failureRedirect: 'http://localhost:8080/login',
+            successRedirect: '/board',
+            failureRedirect: '/login',
 
         }));
 
@@ -47,8 +75,8 @@ module.exports = function(app, passport) {
     // the callback after google has authenticated the user
     app.get('/auth/google/callback',
         passport.authenticate('google', {
-            successRedirect: 'http://localhost:8080/',
-            failureRedirect: 'http://localhost:8080/login'
+            successRedirect: '/board',
+            failureRedirect: '/login'
         }));
 
     // =============================================================================
@@ -73,8 +101,8 @@ module.exports = function(app, passport) {
     // handle the callback after facebook has authorized the user
     app.get('/connect/facebook/callback',
         passport.authorize('facebook', {
-            successRedirect: 'http://localhost:8080/',
-            failureRedirect: 'http://localhost:8080/login'
+            successRedirect: '/board',
+            failureRedirect: '/login'
         }));
 
 
@@ -86,8 +114,8 @@ module.exports = function(app, passport) {
     // the callback after google has authorized the user
     app.get('/connect/google/callback',
         passport.authorize('google', {
-            successRedirect: 'http://localhost:8080',
-            failureRedirect: 'http://localhost:8080/login'
+            successRedirect: '/board',
+            failureRedirect: '/login'
         }));
 
     // =============================================================================
@@ -117,13 +145,13 @@ module.exports = function(app, passport) {
     });
 
     // twitter --------------------------------
-    app.get('/unlink/twitter', isLoggedIn, function(req, res) {
-        var user = req.user;
-        user.twitter.token = undefined;
-        user.save(function(err) {
-            res.redirect('/profile');
-        });
-    });
+    // app.get('/unlink/twitter', isLoggedIn, function(req, res) {
+    //     var user = req.user;
+    //     user.twitter.token = undefined;
+    //     user.save(function(err) {
+    //         res.redirect('/profile');
+    //     });
+    // });
 
     // google ---------------------------------
     app.get('/unlink/google', isLoggedIn, function(req, res) {
@@ -132,6 +160,11 @@ module.exports = function(app, passport) {
         user.save(function(err) {
             res.redirect('/profile');
         });
+    });
+    app.get('/board', isLoggedIn, function(req, res, next) {
+        var user = req.user;
+        //res.json(user);
+        next();
     });
     app.get('/', isLoggedIn, function(req, res, next) {
         var user = req.user;

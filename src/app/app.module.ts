@@ -39,10 +39,11 @@ import {LoginComponent } from './login/login.component';
 
 
 const appRoutes: Routes = [
+  { path: '', redirectTo: '/board', pathMatch: 'full' },
   { path: 'chore', component:  MainComponent},
   { path: 'login', component:  LoginComponent},
   { path: 'signup', component:  SignupComponent},
-  { path: '', component: CreateEditBoardComponent },
+  { path: 'board', component: CreateEditBoardComponent },
 ];
 
 @NgModule({

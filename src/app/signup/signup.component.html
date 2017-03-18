@@ -8,21 +8,99 @@
             </div>
             <!--<div class="app-login-box-container margin-top-20"><button class="btn btn-facebook btn-block">Connect With Facebook</button> <button class="btn btn-twitter btn-block">Connect With Twitter</button></div>-->
             <div class="app-login-box-container">
+
+                <div class="alert alert-success" *ngIf="succesMessage">
+                    <i class="fa fa-check-circle-o" aria-hidden="true"></i> You have successfully signed up.
+                </div>
+                <div class="alert alert-danger" *ngIf="errorMessage">
+                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> You have successfully signed up.
+                </div>
+
                 <div class="title">Sign in with email</div>
-                <form action="index.html" method="post">
+                <form [formGroup]="signUpForm" novalidate (ngSubmit)="signup(signUpForm.value, signUpForm.valid)">
                     <div class="form-group">
                         <div class="row">
-                            <div class="col-md-6"><input type="text" class="form-control" name="name" placeholder="Name"></div>
-                            <div class="col-md-6"><input type="text" class="form-control" name="last_name" placeholder="Last Name"></div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" placeholder="Name" formControlName="firstName" [ngClass]="{'has-error':!signUpForm.controls['firstName'].valid && signUpForm.controls['firstName'].touched}">
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" placeholder="Last Name" formControlName="lastName" [ngClass]="{'has-error':!signUpForm.controls['lastName'].valid && signUpForm.controls['lastName'].touched}">
+                            </div>
+                            <div class="col-md-12">
+                                <div class="alert alert-danger fade in error" *ngIf="signUpForm.controls['firstName'].hasError('required') && signUpForm.controls['firstName'].touched">
+                                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> First Name must be filled in
+                                </div>
+                                <div class="alert alert-danger fade in error" *ngIf="signUpForm.controls['firstName'].hasError('minlength') && signUpForm.controls['firstName'].touched">
+                                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> First Name must be atleast 3 charecters long
+                                </div>
+                                <div class="alert alert-danger fade in error" *ngIf="signUpForm.controls['firstName'].hasError('maxlength') && signUpForm.controls['firstName'].touched">
+                                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> First Name must be within 20 charecters
+                                </div>
+                                <div class="alert alert-danger fade in error" *ngIf="signUpForm.controls['firstName'].hasError('pattern') && signUpForm.controls['firstName'].touched">
+                                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> First Name must not contain any special charecter
+                                </div>
+                                <div class=" alert alert-danger fade in error" *ngIf="signUpForm.controls['lastName'].hasError('required') && signUpForm.controls['lastName'].touched">
+                                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> Last Name must be filled in
+                                </div>
+                                <div class="alert alert-danger fade in error " *ngIf="signUpForm.controls['lastName'].hasError('minlength') && signUpForm.controls['lastName'].touched">
+                                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> Last Name must be atleast 3 charecters long
+                                </div>
+                                <div class="alert alert-danger fade in error " *ngIf="signUpForm.controls['lastName'].hasError('maxlength') && signUpForm.controls['lastName'].touched">
+                                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> Last Name must be within 20 charecters
+                                </div>
+                                <div class="alert alert-danger fade in error " *ngIf="signUpForm.controls['lastName'].hasError('pattern') && signUpForm.controls['lastName'].touched">
+                                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> Last Name must not contain any special charecter
+                                </div>
+
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group"><input type="text" class="form-control" name="login" placeholder="Email Address"></div>
-                    <div class="form-group"><input type="password" class="form-control" name="password" placeholder="Password"></div>
-                    <div class="form-group"><button class="btn btn-teal btn-block">Create Account</button></div>
+                    <div class="form-group" formGroupName="user">
+                        <input type="text" class="form-control" placeholder="Email Address" formControlName="email">
+                        <div class="row">
+                            <div class="col-md-12 ">
+                                <div class="alert alert-danger fade in error " *ngIf="signUpForm.controls.user.controls['email'].hasError('required') && signUpForm.controls.user.controls['email'].touched">
+                                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> Email must be filled in
+                                </div>
+                                <div class="alert alert-danger fade in error " *ngIf="signUpForm.controls.user.controls['email'].hasError('minlength') && signUpForm.controls.user.controls['email'].touched">
+                                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> Email must be atleast 3 charecters long
+                                </div>
+                                <div class="alert alert-danger fade in error " *ngIf="signUpForm.controls.user.controls['email'].hasError('pattern') && signUpForm.controls.user.controls['email'].touched">
+                                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> Not a valid email address.
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group " formGroupName="user">
+                        <input type="password" class="form-control" placeholder="Password" formControlName="password">
+                        <div class="row">
+                            <div class="col-md-12 ">
+                                <div class="alert alert-danger fade in error " *ngIf="signUpForm.controls.user.controls['password'].hasError('required') && signUpForm.controls.user.controls['password'].touched">
+                                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> Password must be filled in
+                                </div>
+                                <div class="alert alert-danger fade in error " *ngIf="signUpForm.controls.user.controls['password'].hasError('minlength') && signUpForm.controls.user.controls['password'].touched">
+                                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> Password must be atleast 8 charecters long
+                                </div>
+                                <div class="alert alert-danger fade in error " *ngIf="signUpForm.controls.user.controls['password'].hasError('maxlength') && signUpForm.controls.user.controls['password'].touched">
+                                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> Password must be within 20 charecters
+                                </div>
+                                <div class="alert alert-danger fade in error " *ngIf="signUpForm.controls.user.controls['password'].hasError('pattern') && signUpForm.controls.user.controls['password'].touched">
+                                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> Password must contain atleast 1 uppercase, 1 small case, 1 special charecter, 1 number
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group ">
+                        <button class="btn btn-teal btn-block " [disabled]="!signUpForm.valid " type="submit ">Create Account</button>
+                    </div>
                 </form>
             </div>
-            <div class="app-login-box-footer">© Chore 2017. All rights reserved.</div>
-            <div class="clearfix"></div>
+            <div class="app-login-box-footer ">© Chore 2017. All rights reserved.</div>
+            <div class="clearfix "></div>
         </div>
     </div>
     <!-- END APP CONTAINER -->

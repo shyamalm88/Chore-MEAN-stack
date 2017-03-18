@@ -22,18 +22,36 @@ app.use(cookieParser());
 
 
 
+
+
 var api = require('./server/routes/boardRoutes');
 // // REGISTER OUR ROUTES -------------------------------
 // // all of our routes will be prefixed with /api
 app.use('/api', api);
 
+
+var localAuth = require('./server/routes/localAuthRoutes');
+app.use('/auth', localAuth);
+
 require('./server/config/passport')(passport); // pass passport for configuration
-app.use(session({
+
+//cookie configuration
+var sess = {
     secret: 'ArghyaChoreTrello', // session secret
     resave: true,
     saveUninitialized: true,
-}));
+    cookie: { expires: new Date(Date.now() + 30000) },
+    rolling: true
+}
 
+if (app.get('env') === 'production') {
+    app.set('trust proxy', 1) // trust first proxy
+    sess.cookie.secure = true // serve secure cookies
+}
+app.use(session(sess));
+
+
+//passport initialize and passport session initialize
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 
