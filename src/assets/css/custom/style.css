@@ -55,6 +55,16 @@ h6 {
   height: 25px;
 }
 
+.app-login-box-container .error {
+  background: #fff;
+  border: none;
+  margin-bottom: 10px;
+  font-weight: normal;
+  color: #cc0000;
+  margin-top: 10px;
+  padding: 0px;
+}
+
 .btn-board {
   background: transparent;
   border: none;
@@ -1201,7 +1211,7 @@ chore-project {
 .app .app-login-box .app-login-box-container {
   float: left;
   width: 100%;
-  padding: 0 30px 30px;
+  padding: 0 30px 10px;
 }
 .app .app-login-box .app-login-box-container > .title {
   float: left;
@@ -3475,6 +3485,10 @@ fieldset[disabled] .btn-yahoo.focus {
 .btn-yahoo .badge {
   color: #720e9e;
   background-color: #fff;
+}
+
+.margin-top-10 {
+  margin-top: 10px;
 }
 
 /*# sourceMappingURL=style.css.map */
