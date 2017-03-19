@@ -1,0 +1,25 @@
+<div class="col-lg-3" *ngFor="let team of teamDisplayData">
+    <div class="portlet">
+        <div class="portlet-heading bg-teal">
+            <h3 class="portlet-title">
+                {{team.name}}
+            </h3>
+            <div class="portlet-widgets">
+                <a data-toggle="remove" href="#"><i class="ion-close-round"></i></a>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="panel-collapse collapse in teamListPanel">
+            <div class="portlet-body createBoard createTeam">
+                <div class="boardDescription">
+                    {{team.description}}
+                </div>
+                <div class="boardIcon">
+                    <a href=""><span><i  class="fa fa-tasks fa-2x "></i> Boards</span></a>
+                    <a href=""><span><i class="fa fa-2x ion-network fa-rotate-90"></i> Team</span></a>
+                    <a href=""><span><i class="fa fa-2x ion-ios-cog fa-cog"></i> Settings</span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

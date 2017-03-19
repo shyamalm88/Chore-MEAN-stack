@@ -9,8 +9,7 @@ import { DragulaModule } from 'ng2-dragula/ng2-dragula';
 
 import { HttpService } from './common/services/http.service';
 import { AuthService } from './common/services/auth.service';
-import { SharedDataService } from './common/services/shared.data.services';
-
+import { SharedDataService, SharedTeamService } from './common/services/shared.data.services';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -36,6 +35,8 @@ import { CharCount } from './common/directive/charcount.directive';
 import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
 import { ProfileDetailsComponent } from './header/profile/profile.details.component';
+import { TeamListComponent } from './main/project/createteam/teamlist.component';
+import { CreateTeamComponent } from './main/project/createteam/createteam.component';
 
 
 
@@ -73,7 +74,9 @@ const appRoutes: Routes = [
     ListBoardComponent,
     SignupComponent,
     LoginComponent,
-    ProfileDetailsComponent
+    ProfileDetailsComponent,
+    CreateTeamComponent,
+    TeamListComponent
   ],
   imports: [
     BrowserModule,
@@ -84,7 +87,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     DragulaModule,
   ],
-  providers: [HttpService, SharedDataService, AuthService],
+  providers: [HttpService, SharedDataService, AuthService, SharedTeamService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

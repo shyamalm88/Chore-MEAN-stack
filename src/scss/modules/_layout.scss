@@ -4269,3 +4269,59 @@ fieldset[disabled] .btn-yahoo.focus {
 .m-b-30 {
     margin-bottom: 30px!important
 }
+
+.form-control {
+    &.has-error {
+        border: 1px solid #cc0000;
+    }
+}
+
+.pos-abs {
+    position: absolute;
+}
+
+main.viewEditBoard {
+    .portlet {
+        .teamListPanel {
+            overflow: hidden;
+        }
+        .portlet-body {
+            &.createTeam {
+                .boardDescription {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    margin: 8px;
+                    box-sizing: border-box;
+                    overflow: hidden;
+                }
+                .boardIcon {
+                    height: 101px;
+                    top: 121px;
+                    position: relative;
+                    z-index: 9;
+                    background: #edeff0;
+                    transition-property: top, bottom;
+                    transition-duration: 0.5s;
+                    span {
+                        padding-left: 20px;
+                        padding-right: 20px;
+                        color: #01635a;
+                        overflow: hidden;
+                        display: inline-block;
+                        i {
+                            display: block;
+                        }
+                    }
+                }
+                &:hover {
+                    .boardIcon {
+                        top: 0px;
+                    }
+                }
+            }
+        }
+    }
+}
