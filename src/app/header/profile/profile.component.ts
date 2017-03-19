@@ -19,7 +19,6 @@ export class ChoreProfile implements OnInit {
 
     ngOnInit() {
         this.currentUserData = this.user;
-        console.log(this.currentUserData);
         if(this.currentUserData.facebook){
             this.userImage = this.currentUserData.facebook.image;
             this.userName = this.currentUserData.facebook.name;

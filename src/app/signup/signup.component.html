@@ -56,7 +56,7 @@
                         </div>
                     </div>
                     <div class="form-group" formGroupName="user">
-                        <input type="text" class="form-control" placeholder="Email Address" formControlName="email">
+                        <input type="text" class="form-control" placeholder="Email Address" formControlName="email" [ngClass]="{'has-error': !signUpForm.controls.user.controls['email'].valid && signUpForm.controls.user.controls['email'].touched}">
                         <div class="row">
                             <div class="col-md-12 ">
                                 <div class="alert alert-danger fade in error " *ngIf="signUpForm.controls.user.controls['email'].hasError('required') && signUpForm.controls.user.controls['email'].touched">
@@ -74,7 +74,7 @@
                     </div>
 
                     <div class="form-group " formGroupName="user">
-                        <input type="password" class="form-control" placeholder="Password" formControlName="password">
+                        <input type="password" class="form-control" placeholder="Password" formControlName="password" [ngClass]="{'has-error': !signUpForm.controls.user.controls['password'].valid && signUpForm.controls.user.controls['password'].touched}">
                         <div class="row">
                             <div class="col-md-12 ">
                                 <div class="alert alert-danger fade in error " *ngIf="signUpForm.controls.user.controls['password'].hasError('required') && signUpForm.controls.user.controls['password'].touched">
@@ -95,7 +95,7 @@
                     </div>
 
                     <div class="form-group ">
-                        <button class="btn btn-teal btn-block " [disabled]="!signUpForm.valid " type="submit ">Create Account</button>
+                        <button class="btn btn-teal btn-block " [disabled]="!signUpForm.valid" type="submit ">Create Account</button>
                     </div>
                 </form>
             </div>

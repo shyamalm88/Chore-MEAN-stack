@@ -25,9 +25,11 @@ app.use(cookieParser());
 
 
 var api = require('./server/routes/boardRoutes');
+var teamApi = require('./server/routes/teamRoutes');
 // // REGISTER OUR ROUTES -------------------------------
 // // all of our routes will be prefixed with /api
 app.use('/api', api);
+app.use('/api', teamApi);
 
 
 var localAuth = require('./server/routes/localAuthRoutes');
@@ -40,12 +42,9 @@ var sess = {
     secret: 'ArghyaChoreTrello', // session secret
     resave: true,
     saveUninitialized: true,
-    cookie: {
-        maxAge: new Date(Date.now() + 3600000), //1 Hour
-        expires: new Date(Date.now() + 3600000), //1 Hour
-    },
+    cookie: {},
     rolling: true
-}
+};
 
 if (app.get('env') === 'production') {
     app.set('trust proxy', 1) // trust first proxy

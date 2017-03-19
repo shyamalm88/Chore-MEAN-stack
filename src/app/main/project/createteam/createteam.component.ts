@@ -1,75 +1,66 @@
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { FormBuilder, Validators, FormControl, FormGroup } from '@angular/forms';
-import { NgForm } from '@angular/forms';
-import { HttpService } from '../../../../common/services/http.service';
-import { Subscription } from 'rxjs/Rx';
-import { Constant } from '../../../../common/constant/constant';
-import { SharedDataService } from '../../../../common/services/shared.data.services';
-import { AuthService } from '../../../../common/services/auth.service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { HttpService } from '../../../common/services/http.service';
+import { AuthService } from '../../../common/services/auth.service';
+import { Constant } from '../../../common/constant/constant';
+import { Subject, BehaviorSubject } from 'rxjs/Rx';
+import { SharedTeamService } from '../../../common/services/shared.data.services';
+
 
 @Component({
   moduleId: module.id,
-  selector: 'chore-create-board',
-  templateUrl: './create.component.html',
+  selector: 'chore-create-team',
+  templateUrl: 'createteam.component.html',
   encapsulation: ViewEncapsulation.None
 })
-export class CreateBoardComponent implements OnInit {
-  private boardData;
-  private success;
-  private error;
-  private dataSet;
-  private loggedInUserId;
-  private loggedInUserEmail;
-  private isLoggedIn;
+export class CreateTeamComponent implements OnInit {
   private loggedInUserData;
-  public createBoardForm: FormGroup;
-
+  private isLoggedIn;
+  private loggedInUserEmail;
+  public createTeamForm;
+  private teamData;
+  private success;
+  private teamDataSet;
+  private error;
 
   constructor(
     private modalService: NgbModal,
     private httpService: HttpService,
     public fb: FormBuilder,
-    private _sharedService: SharedDataService,
-    private authService: AuthService
+    private authService: AuthService,
+    private _sharedTeamService: SharedTeamService
   ) { }
 
   ngOnInit() {
-
     this.authService.userData.subscribe((userData) => {
       this.loggedInUserData = userData;
       if (this.loggedInUserData) {
         this.isLoggedIn = true;
         this.loggedInUserEmail = this.loggedInUserData.facebook.email || this.loggedInUserData.google.email
           || this.loggedInUserData.local.email;
-        this.createBoardForm = this.fb.group({
+        this.createTeamForm = this.fb.group({
           name: ['', Validators.required],
           description: ['', Validators.required],
           createdby: [this.loggedInUserEmail, Validators.required],
-          isclosed: [''],
-          isarchived: [''],
-          teamname: [''],
+          members: ['']
         });
       }
 
     });
-
-
   }
 
-
-
-  createBoard(event, modal) {
-    let data = this.createBoardForm.value;  // accessing form data.
-    if (this.createBoardForm.value.name) { // if name entered in the form
-      this.httpService.postData(Constant.API_ENDPOINT + 'board', data)
+  createTeam(event, modal) {
+    let data = this.createTeamForm.value;  // accessing form data.
+    if (this.createTeamForm.value.name) { // if name entered in the form
+      this.httpService.postData(Constant.API_ENDPOINT + 'team', data)
         .subscribe(
         (data): void => {
-          this.boardData = data;
-          this.getAllData();
+          this.teamData = data;
           this.dismissModal(modal); // dismissing modal
           this.showSuccessMessage(); // creating success message
-          console.log(this.boardData);
+          console.log(this.teamData);
+          this.getAllData();
         },
         (err): void => {            //error catching method
           this.showErrorMessage(); //show error message
@@ -79,22 +70,22 @@ export class CreateBoardComponent implements OnInit {
     } else {
       return false;
     }
-    this.createBoardForm.reset();
+    this.createTeamForm.reset();
   }
 
   getAllData() {
-    this.httpService.getData(Constant.API_ENDPOINT + 'board')
+    this.httpService.getData(Constant.API_ENDPOINT + 'team')
       .subscribe(
       (data): void => {
-        this.dataSet = data;
-        this._sharedService.dataArray = [];
-        this._sharedService.insertData(this.dataSet);
+        this.teamDataSet = data;
+        this._sharedTeamService.dataArray = [];
+        this._sharedTeamService.insertData(this.teamDataSet);
       }
-    )
+      )
   }
 
   showSuccessMessage(): void {
-    this.success = this.boardData.message;
+    this.success = this.teamData.message;
   }
 
   showErrorMessage(): void {
@@ -108,8 +99,6 @@ export class CreateBoardComponent implements OnInit {
   }
 
   open(content): void {
-    this.success = undefined;
-    this.error = undefined;
     this.modalService.open(content);
   }
 }
