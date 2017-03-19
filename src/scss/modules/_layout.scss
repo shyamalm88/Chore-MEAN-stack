@@ -4032,3 +4032,240 @@ fieldset[disabled] .btn-yahoo.focus {
 .margin-top-10 {
     margin-top: 10px;
 }
+
+.profileContainer {
+    background: #fff;
+    min-height: 100%;
+    padding: 30px 25px;
+    .card-box {
+        border: 2px solid #f3f3f3;
+        -webkit-border-radius: 5px;
+        border-radius: 5px;
+        -moz-border-radius: 5px;
+        background-clip: padding-box;
+        margin-bottom: 20px;
+        background-color: #fff;
+    }
+    .member-card .member-thumb {
+        position: relative;
+    }
+    .thumb-xl {
+        height: 120px;
+        width: 120px;
+    }
+    .img-circle {
+        border-radius: 50%;
+    }
+    .member-card .member-star {
+        position: absolute;
+        top: 12px;
+        right: 10px;
+        font-size: 16px;
+        background-color: #fff;
+        height: 20px;
+        width: 20px;
+        border-radius: 50%;
+        line-height: 20px;
+        text-align: center;
+    }
+    .social-links li a {
+        border-radius: 50%;
+        color: rgba(121, 121, 121, .5);
+        display: inline-block;
+        height: 30px;
+        line-height: 30px;
+        border: 2px solid rgba(121, 121, 121, .5);
+        text-align: center;
+        width: 30px;
+    }
+    .text-success {
+        color: #4bd396!important;
+    }
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-weight: 600;
+    }
+    h4 {
+        color: #505458;
+        margin: 10px 0;
+    }
+    .text-custom {
+        color: #188ae2!important;
+    }
+    .inbox-widget .inbox-item {
+        border-bottom: 1px solid rgba(243, 243, 243, 0.9);
+        overflow: hidden;
+        padding: 10px 0;
+        position: relative;
+    }
+    .inbox-widget .inbox-item .inbox-item-img {
+        display: block;
+        float: left;
+        margin-right: 15px;
+        width: 40px;
+    }
+    .inbox-widget .inbox-item img {
+        width: 40px;
+    }
+    .inbox-widget .inbox-item .inbox-item-author {
+        color: #313a46;
+        display: block;
+        margin: 0;
+    }
+    .inbox-widget .inbox-item .inbox-item-text {
+        color: #a0a0a0;
+        display: block;
+        font-size: 12px;
+        margin: 0;
+    }
+    .inbox-widget .inbox-item .inbox-item-date {
+        color: #a9a9a9;
+        font-size: 11px;
+        position: absolute;
+        right: 7px;
+        top: 2px;
+    }
+    .card-box {
+        padding: 20px;
+    }
+}
+
+.p-0 {
+    padding: 0!important
+}
+
+.p-20 {
+    padding: 20px!important
+}
+
+.p-30 {
+    padding: 30px!important
+}
+
+.p-l-0 {
+    padding-left: 0!important
+}
+
+.p-r-0 {
+    padding-right: 0!important
+}
+
+.p-t-0 {
+    padding-top: 0!important
+}
+
+.p-b-0 {
+    padding-bottom: 0!important
+}
+
+.p-t-10 {
+    padding-top: 10px!important
+}
+
+.p-b-10 {
+    padding-bottom: 10px!important
+}
+
+.p-l-r-10 {
+    padding-left: 10px;
+    padding-right: 10px
+}
+
+.text-muted {
+    color: #98a6ad!important;
+}
+
+.font-13 {
+    font-size: 13px!important;
+}
+
+.m-0 {
+    margin: 0!important
+}
+
+.m-r-5 {
+    margin-right: 5px!important
+}
+
+.m-r-10 {
+    margin-right: 10px!important
+}
+
+.m-r-15 {
+    margin-right: 15px!important
+}
+
+.m-l-5 {
+    margin-left: 5px!important
+}
+
+.m-l-10 {
+    margin-left: 10px!important
+}
+
+.m-l-15 {
+    margin-left: 15px!important
+}
+
+.m-t-5 {
+    margin-top: 5px!important
+}
+
+.m-t-0 {
+    margin-top: 0!important
+}
+
+.m-t-10 {
+    margin-top: 10px!important
+}
+
+.m-t-15 {
+    margin-top: 15px!important
+}
+
+.m-t-20 {
+    margin-top: 20px!important
+}
+
+.m-t-30 {
+    margin-top: 30px!important
+}
+
+.m-t-40 {
+    margin-top: 40px!important
+}
+
+.m-t-50 {
+    margin-top: 50px!important
+}
+
+.m-b-0 {
+    margin-bottom: 0!important
+}
+
+.m-b-5 {
+    margin-bottom: 5px!important
+}
+
+.m-b-10 {
+    margin-bottom: 10px!important
+}
+
+.m-b-15 {
+    margin-bottom: 15px!important
+}
+
+.m-b-20 {
+    margin-bottom: 20px!important
+}
+
+.m-b-25 {
+    margin-bottom: 25px!important
+}
+
+.m-b-30 {
+    margin-bottom: 30px!important
+}
