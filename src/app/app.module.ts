@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
 
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DragulaModule } from 'ng2-dragula/ng2-dragula';
 
 import { HttpService } from './common/services/http.service';
@@ -29,21 +29,23 @@ import { PortletAssignedComponent } from './main/project/boardcanvas/portlet/por
 import { PortletCardLabelComponent } from './main/project/boardcanvas/portlet/portletcardlebel/portletcardlabel.component';
 import { PortletCardLabelEditComponent } from './main/project/boardcanvas/portlet/portletcardlebel/portletcardlabeledit.component';
 import { PortletModalComponent } from './main/project/boardcanvas/portlet/portletmodal/portletmodal.component';
-import {CreateEditBoardComponent } from './main/project/createboard/create_edit_board.component';
-import {CreateBoardComponent } from './main/project/createboard/create/create.component';
-import {ListBoardComponent } from './main/project/createboard/listboard/listboard.component';
-import {CharCount } from './common/directive/charcount.directive';
-import {SignupComponent } from './signup/signup.component';
-import {LoginComponent } from './login/login.component';
+import { CreateEditBoardComponent } from './main/project/createboard/create_edit_board.component';
+import { CreateBoardComponent } from './main/project/createboard/create/create.component';
+import { ListBoardComponent } from './main/project/createboard/listboard/listboard.component';
+import { CharCount } from './common/directive/charcount.directive';
+import { SignupComponent } from './signup/signup.component';
+import { LoginComponent } from './login/login.component';
+import { ProfileDetailsComponent } from './header/profile/profile.details.component';
 
 
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/board', pathMatch: 'full' },
-  { path: 'chore', component:  MainComponent},
-  { path: 'login', component:  LoginComponent},
-  { path: 'signup', component:  SignupComponent},
+  { path: 'chore', component: MainComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'signup', component: SignupComponent },
   { path: 'board', component: CreateEditBoardComponent },
+  { path: 'profile', component: ProfileDetailsComponent },
 ];
 
 @NgModule({
@@ -71,6 +73,7 @@ const appRoutes: Routes = [
     ListBoardComponent,
     SignupComponent,
     LoginComponent,
+    ProfileDetailsComponent
   ],
   imports: [
     BrowserModule,
