@@ -10,7 +10,7 @@
         </div>
     </div>
 </div>
-<chore-team-list></chore-team-list>
+<chore-team-list [teamlist]="teamDataSet"></chore-team-list>
 <template #content let-c="close" let-d="dismiss">
     <div class="modal-header">
         <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">

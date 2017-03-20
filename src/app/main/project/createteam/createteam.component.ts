@@ -5,7 +5,6 @@ import { HttpService } from '../../../common/services/http.service';
 import { AuthService } from '../../../common/services/auth.service';
 import { Constant } from '../../../common/constant/constant';
 import { Subject, BehaviorSubject } from 'rxjs/Rx';
-import { SharedTeamService } from '../../../common/services/shared.data.services';
 
 
 @Component({
@@ -29,7 +28,6 @@ export class CreateTeamComponent implements OnInit {
     private httpService: HttpService,
     public fb: FormBuilder,
     private authService: AuthService,
-    private _sharedTeamService: SharedTeamService
   ) { }
 
   ngOnInit() {
@@ -60,7 +58,7 @@ export class CreateTeamComponent implements OnInit {
           this.dismissModal(modal); // dismissing modal
           this.showSuccessMessage(); // creating success message
           console.log(this.teamData);
-          this.getAllData();
+          this.getAllData(); // to get all data;
         },
         (err): void => {            //error catching method
           this.showErrorMessage(); //show error message
@@ -78,10 +76,8 @@ export class CreateTeamComponent implements OnInit {
       .subscribe(
       (data): void => {
         this.teamDataSet = data;
-        this._sharedTeamService.dataArray = [];
-        this._sharedTeamService.insertData(this.teamDataSet);
       }
-      )
+    );
   }
 
   showSuccessMessage(): void {

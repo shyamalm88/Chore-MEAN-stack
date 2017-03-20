@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, OnInit, DoCheck } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit, DoCheck, Input } from '@angular/core';
 import { HttpService } from '../../../common/services/http.service';
 import { Constant } from '../../../common/constant/constant';
 import { SharedTeamService } from '../../../common/services/shared.data.services';
@@ -14,6 +14,10 @@ export class TeamListComponent implements OnInit {
     private teamDisplayData;
     constructor(private httpService: HttpService, private _sharedTeamService: SharedTeamService) { }
 
+
+    @Input() teamlist: any;
+
+
     ngOnInit() {
         this.getAllData();
     }
@@ -24,18 +28,8 @@ export class TeamListComponent implements OnInit {
         this.httpService.getData(Constant.API_ENDPOINT + 'team')
             .subscribe(
             (data): void => {
-                this.teamData = data;
-                this._sharedTeamService.insertData(this.teamData);
-                this.teamDisplayData = this._sharedTeamService.dataArray[0];
+                this.teamlist = data;
             }
-        )
-    }
-
-    ngDoCheck() {
-        if (this.teamData !== this._sharedTeamService.dataArray[0]) {
-            this.teamDisplayData = this._sharedTeamService.dataArray[0];
-        } else {
-             this.teamDisplayData = this.teamData;
-        }
+        );
     }
 }

@@ -1,10 +1,9 @@
-import { Component, ViewEncapsulation, OnInit, DoCheck, OnChanges } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit, OnChanges, Input } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, Validators } from '@angular/forms';
 import { HttpService } from '../../../../common/services/http.service';
 import { Subscription } from 'rxjs/Rx';
 import { Constant } from '../../../../common/constant/constant';
-import { SharedDataService } from '../../../../common/services/shared.data.services';
 
 @Component({
     moduleId: module.id,
@@ -22,10 +21,11 @@ import { SharedDataService } from '../../../../common/services/shared.data.servi
  */
 export class ListBoardComponent implements OnInit {
     public boardDisplayData;
-    private displayData;
     private success;
     private error;
     private dataSet;
+
+    @Input() displayData: any
 /**
  * =============================================
  * Form builder
@@ -40,7 +40,6 @@ export class ListBoardComponent implements OnInit {
         private modalService: NgbModal,
         private httpService: HttpService,
         public fb: FormBuilder,
-        private _sharedService: SharedDataService
     ) { }
 
 /**
@@ -54,9 +53,6 @@ export class ListBoardComponent implements OnInit {
             .subscribe(
             (data): void => {
                 this.displayData = data;
-                this._sharedService.insertData(this.displayData);
-                this.boardDisplayData = this._sharedService.dataArray[0];
-                console.log(this.boardDisplayData);
             },
             (err): void => {//error catching method
                 console.log(err);
@@ -77,10 +73,10 @@ export class ListBoardComponent implements OnInit {
             this.httpService.editData(Constant.API_ENDPOINT + 'board/' + data.id, data)
                 .subscribe(
                 (data): void => {
-                    this.boardDisplayData = data;
+                    this.displayData = data;
                     this.dismissModal(modal); // dismissing modal
                     this.showSuccessMessage(); // creating success message
-                    console.log(this.boardDisplayData);
+                    //console.log(this.boardDisplayData);
                 },
                 (err): void => { //error catching method
                     this.showErrorMessage(); //show error message
@@ -128,18 +124,5 @@ export class ListBoardComponent implements OnInit {
         this.success = undefined;
         this.error = undefined;
         this.modalService.open(content);
-    }
-
-    /**
-     * check if a new board is added or not. if added then it
-     * will repopulate the list of boards view
-     */
-
-    ngDoCheck() {
-        if (this.displayData !== this._sharedService.dataArray[0]) {
-            this.boardDisplayData = this._sharedService.dataArray[0];
-        } else {
-            this.boardDisplayData = this.displayData;
-        }
     }
 }
