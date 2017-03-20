@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, OnInit, DoCheck, Input } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit, Input } from '@angular/core';
 import { HttpService } from '../../../common/services/http.service';
 import { Constant } from '../../../common/constant/constant';
 import { SharedTeamService } from '../../../common/services/shared.data.services';
