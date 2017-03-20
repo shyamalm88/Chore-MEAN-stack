@@ -5,9 +5,13 @@ import { NgForm } from '@angular/forms';
 import { HttpService } from '../../../../common/services/http.service';
 import { Subscription } from 'rxjs/Rx';
 import { Constant } from '../../../../common/constant/constant';
-import { SharedDataService } from '../../../../common/services/shared.data.services';
 import { AuthService } from '../../../../common/services/auth.service';
 
+/**
+ * @export
+ * @class CreateBoardComponent
+ * @implements {OnInit}
+ */
 @Component({
   moduleId: module.id,
   selector: 'chore-create-board',
@@ -26,11 +30,19 @@ export class CreateBoardComponent implements OnInit {
   public createBoardForm: FormGroup;
 
 
+  /**
+   * Creates an instance of CreateBoardComponent.
+   * @param {NgbModal} modalService
+   * @param {HttpService} httpService
+   * @param {FormBuilder} fb
+   * @param {AuthService} authService
+   *
+   * @memberOf CreateBoardComponent
+   */
   constructor(
     private modalService: NgbModal,
     private httpService: HttpService,
     public fb: FormBuilder,
-    private _sharedService: SharedDataService,
     private authService: AuthService
   ) { }
 
@@ -87,10 +99,8 @@ export class CreateBoardComponent implements OnInit {
       .subscribe(
       (data): void => {
         this.dataSet = data;
-        this._sharedService.dataArray = [];
-        this._sharedService.insertData(this.dataSet);
       }
-    )
+    );
   }
 
   showSuccessMessage(): void {
