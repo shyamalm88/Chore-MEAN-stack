@@ -1,12 +1,11 @@
 import { Component, ViewEncapsulation, OnInit, OnChanges, Input } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { HttpService } from '../../../../common/services/http.service';
 import { Subscription } from 'rxjs/Rx';
 import { Constant } from '../../../../common/constant/constant';
 
 @Component({
-    moduleId: module.id,
     selector: 'chore-list-board',
     templateUrl: './listboard.component.html',
     encapsulation: ViewEncapsulation.None
@@ -24,48 +23,43 @@ export class ListBoardComponent implements OnInit {
     private success;
     private error;
     private dataSet;
+    private teamSet;
+    private selectedValue;
+    public updateBoardForm: FormGroup
 
     @Input() displayData: any
-/**
- * =============================================
- * Form builder
- * =============================================
- */
-    public updateBoardForm = this.fb.group({
-        name: ['', Validators.required],
-        description: ['', Validators.required],
-        id: [''],
-    });
+    /**
+     * =============================================
+     * Form builder
+     * =============================================
+     */
+
     constructor(
         private modalService: NgbModal,
         private httpService: HttpService,
         public fb: FormBuilder,
     ) { }
 
-/**
- * =============================================
- *On ngOnInit method the api/board is called with get method
- *and the data passed to the SharedDataService.
- * =============================================
- */
+    /**
+     * =============================================
+     *On ngOnInit method the api/board is called with get method
+     *and the data passed to the SharedDataService.
+     * =============================================
+     */
     ngOnInit() {
-        this.httpService.getData(Constant.API_ENDPOINT + 'board')
-            .subscribe(
-            (data): void => {
-                this.displayData = data;
-            },
-            (err): void => {//error catching method
-                console.log(err);
-            },
-        );
+        this.getAllTeams();
     }
 
-/**
- * =============================================
- *On updateBoard method will update the board from the modal form
- * which will update the single data whose id matched with the board
- * =============================================
- */
+    onSelected(value: boolean) {
+    console.log(value);
+    this.selectedValue = value;
+  }
+    /**
+     * =============================================
+     *On updateBoard method will update the board from the modal form
+     * which will update the single data whose id matched with the board
+     * =============================================
+     */
 
     updateBoard(event, modal) {
         let data = this.updateBoardForm.value;  // accessing form data.
@@ -73,7 +67,9 @@ export class ListBoardComponent implements OnInit {
             this.httpService.editData(Constant.API_ENDPOINT + 'board/' + data.id, data)
                 .subscribe(
                 (data): void => {
-                    this.displayData = data;
+                    this.boardDisplayData = data;
+                    console.log(this.boardDisplayData);
+
                     this.dismissModal(modal); // dismissing modal
                     this.showSuccessMessage(); // creating success message
                     //console.log(this.boardDisplayData);
@@ -86,7 +82,16 @@ export class ListBoardComponent implements OnInit {
         } else {
             return false;
         }
-        console.log(data);
+    }
+
+    getAllTeams() {
+        this.httpService.getData(Constant.API_ENDPOINT + 'team')
+            .subscribe(
+            (data): void => {
+                this.teamSet = data;
+                console.log(this.teamSet);
+            }
+            );
     }
 
     /**
@@ -123,6 +128,12 @@ export class ListBoardComponent implements OnInit {
     open(content): void {
         this.success = undefined;
         this.error = undefined;
+        this.updateBoardForm = this.fb.group({
+        name: ['', Validators.required],
+        description: ['', Validators.required],
+        id: [''],
+        teamname: [this.displayData.teamname],
+    });
         this.modalService.open(content);
     }
 }

@@ -50,7 +50,7 @@ module.exports.addNewBoard = function(body, callback) {
         created_by: body.createdby || "",
         closed: false,
         cards: [],
-        teamname: body.teamname || "",
+        teamname: body.teamname || "personal board",
     });
     board.save(function(err, result) {
         if (err) throw err;
@@ -69,12 +69,14 @@ module.exports.editBoard = function(body, index, callback) {
                 message: "Board with ISBN: " + index + " not found.",
             });
         }
+        console.log(body)
         result.name = body.name;
         result.description = body.description;
         result.created_by = body.createdby;
         result.closed = body.closed || false;
         result.cards = [];
-        result.teamname = body.teamname || "";
+        result.teamname = body.teamname || "personal board";
+
         result.save(function(err, result) {
             if (err) throw err;
             callback({

@@ -1,7 +1,7 @@
 <header class="choreHeader" *ngIf="isLoggedIn">
     <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
         <chore-board-dropdown></chore-board-dropdown>
-        <form class="searchChore">
+        <form class="searchChore inlineBlock v-m">
             <input class="form-control input-sm" placeholder="Search"> <span class="fa fa-search fa-rotate-90"></span>
         </form>
     </div>
@@ -10,11 +10,11 @@
             <a routerLink="/"> <i class="fa fa-modx fa-rotate-180" aria-hidden="true"></i> Chore</a>
         </div>
     </div>
-    <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
-        <chore-profile [user]="loggedInUserData"></chore-profile>
-        <chore-notification></chore-notification>
-        <chore-add-board-team></chore-add-board-team>
+    <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 text-right">
         <chore-project-name></chore-project-name>
+        <chore-add-board-team></chore-add-board-team>
+        <chore-notification></chore-notification>
+        <chore-profile [user]="loggedInUserData"></chore-profile>
 
     </div>
     <div class="clearfix"></div>

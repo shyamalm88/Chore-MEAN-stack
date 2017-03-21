@@ -37,7 +37,6 @@ export class HttpService {
 
   //editing data
   public editData(url: string, data: any): Observable<Response> {
-    console.log(url, data);
     return this.http
       .put(url, data)
       .map(this.extractData)

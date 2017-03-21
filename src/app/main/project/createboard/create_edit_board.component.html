@@ -2,14 +2,18 @@
 </chore-header>
 <div id="surface">
     <main class="mainBoard viewEditBoard">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <h2 class="boardHeading"> <i class="ion-person"></i> Personal Board</h2>
-        </div>
-        <chore-create-board></chore-create-board>
+        <div *ngFor="let item of grouped">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <h2 class="boardHeading"> <i class="ion-person"></i> {{item.teamName}}</h2>
+            </div>
 
+            <chore-create-board [boardData]="item.boards"></chore-create-board>
+
+            <!--<chore-list-board *ngFor="let individual of item.boards"></chore-list-board>-->
+        </div>
         <div class="clearfix"></div>
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <h2 class="boardHeading"> <i class=" fa fa-lg ion-ios-people"></i> Team Members Board</h2>
+            <h2 class="boardHeading"> <i class=" fa fa-lg ion-ios-people"></i> Teams</h2>
         </div>
         <chore-create-team></chore-create-team>
     </main>

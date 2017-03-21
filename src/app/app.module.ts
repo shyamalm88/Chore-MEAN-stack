@@ -7,6 +7,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DragulaModule } from 'ng2-dragula/ng2-dragula';
 import {SelectModule} from 'ng2-select';
+import * as _ from 'underscore';
 
 import { HttpService } from './common/services/http.service';
 import { AuthService } from './common/services/auth.service';
