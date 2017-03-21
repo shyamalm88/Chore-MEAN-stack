@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var boardController = require("../board_controller/board_controller");
+var boardController = require("../controller/board_controller");
 
 
 

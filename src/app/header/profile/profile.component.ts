@@ -19,15 +19,15 @@ export class ChoreProfile implements OnInit {
 
     ngOnInit() {
         this.currentUserData = this.user;
-        if(this.currentUserData.facebook){
+        if (this.currentUserData.facebook){
             this.userImage = this.currentUserData.facebook.image;
             this.userName = this.currentUserData.facebook.name;
-        }else if(this.currentUserData.google){
+        }else if (this.currentUserData.google){
             this.userImage = this.currentUserData.google.image;
             this.userName = this.currentUserData.google.name;
-        }else{
+        }else {
             this.userImage = this.currentUserData.local.image;
-            this.userName = this.currentUserData.local.firstname + ' ' + this.currentUserData.local.lastname;
+            this.userName = this.currentUserData.local.name;
         }
     }
 }

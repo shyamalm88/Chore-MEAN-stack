@@ -7,6 +7,7 @@ var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 // load up the user model
 var User = require('../models/user');
+var teamMember = require('../models/teamMember');
 
 // load the auth variables
 var configAuth = require('./auth'); // use this one for testing
@@ -121,16 +122,30 @@ module.exports = function(passport) {
                                     });
                                 } else {
                                     var newUser = new User();
+                                    var newTeamMember = new teamMember();
+
                                     newUser.facebook.id = profile.id;
                                     newUser.facebook.token = token;
                                     newUser.facebook.name = profile.displayName;
                                     newUser.facebook.email = (profile.emails[0].value || '').toLowerCase();
                                     newUser.facebook.image = profile.photos[0].value;
+
+                                    newTeamMember.name = newUser.facebook.name;
+                                    newTeamMember.email = newUser.facebook.email;
+                                    newTeamMember.image = newUser.facebook.image;
+
                                     newUser.save(function(err) {
                                         if (err) {
                                             return done(err);
                                         }
                                         return done(null, newUser);
+                                    });
+
+                                    newTeamMember.save(function(err) {
+                                        if (err) {
+                                            return done(err);
+                                        }
+                                        return done(null, newTeamMember);
                                     });
                                 }
                             });
@@ -219,17 +234,30 @@ module.exports = function(passport) {
                                     });
                                 } else {
                                     var newUser = new User();
+                                    var newTeamMember = new teamMember();
+
                                     newUser.google.id = profile.id;
                                     newUser.google.token = token;
                                     newUser.google.name = profile.displayName;
                                     newUser.google.email = (profile.emails[0].value || '').toLowerCase(); // pull the first email
                                     newUser.google.image = profile._json.image.url; //pull the profile image
 
+                                    newTeamMember.name = newUser.google.name;
+                                    newTeamMember.email = newUser.google.email;
+                                    newTeamMember.image = newUser.google.image;
+
                                     newUser.save(function(err) {
                                         if (err) {
                                             return done(err);
                                         }
                                         return done(null, newUser);
+                                    });
+
+                                    newTeamMember.save(function(err) {
+                                        if (err) {
+                                            return done(err);
+                                        }
+                                        return done(null, newTeamMember);
                                     });
                                 }
                             });

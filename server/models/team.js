@@ -69,9 +69,6 @@ module.exports.editTeam = function(body, index, callback) {
         result.name = body.name;
         result.description = body.description;
         result.created_by = body.createdby;
-        result.closed = body.closed || false;
-        result.cards = [];
-        result.teamname = body.teamname || "";
         result.save(function(err, result) {
             if (err) throw err;
             callback({

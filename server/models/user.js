@@ -5,8 +5,7 @@ var bcrypt = require('bcrypt-nodejs');
 // define the schema for our user model
 var userSchema = mongoose.Schema({
     local: {
-        firstname: String,
-        lastname: String,
+        name: String,
         email: String,
         password: String,
         image: String
@@ -31,6 +30,7 @@ var userSchema = mongoose.Schema({
 });
 
 
+
 userSchema.pre('save', function(next) {
     now = new Date();
     this.updated_at = now;
@@ -39,6 +39,7 @@ userSchema.pre('save', function(next) {
     }
     next();
 });
+
 
 // generating a hash
 userSchema.methods.generateHash = function(password) {

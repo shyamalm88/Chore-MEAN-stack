@@ -52,8 +52,13 @@ export class CreateBoardComponent implements OnInit {
       this.loggedInUserData = userData;
       if (this.loggedInUserData) {
         this.isLoggedIn = true;
-        this.loggedInUserEmail = this.loggedInUserData.facebook.email || this.loggedInUserData.google.email
-          || this.loggedInUserData.local.email;
+        if (this.loggedInUserData.facebook){
+            this.loggedInUserEmail = this.loggedInUserData.facebook.email;
+        }else if (this.loggedInUserData.google){
+            this.loggedInUserEmail = this.loggedInUserData.google.email;
+        }else {
+            this.loggedInUserEmail = this.loggedInUserData.local.email;
+        }
         this.createBoardForm = this.fb.group({
           name: ['', Validators.required],
           description: ['', Validators.required],
