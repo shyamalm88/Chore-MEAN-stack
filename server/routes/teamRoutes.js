@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var teamController = require("../team_controller/team_controller");
+var teamController = require("../controller/team_controller");
 
 
 
