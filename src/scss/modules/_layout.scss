@@ -153,6 +153,7 @@ h6 {
 .searchChore {
     overflow: hidden;
     position: relative;
+    width: 60%;
     span {
         position: absolute;
         right: 10px;
@@ -4324,4 +4325,16 @@ main.viewEditBoard {
             }
         }
     }
+}
+
+.posRel {
+    position: relative;
+}
+
+.inlineBlock {
+    display: inline-block;
+}
+
+.v-m {
+    vertical-align: middle;
 }

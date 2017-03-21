@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, OnInit } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit, Input } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, Validators, FormControl, FormGroup } from '@angular/forms';
 import { NgForm } from '@angular/forms';
@@ -13,13 +13,12 @@ import { AuthService } from '../../../../common/services/auth.service';
  * @implements {OnInit}
  */
 @Component({
-  moduleId: module.id,
   selector: 'chore-create-board',
   templateUrl: './create.component.html',
   encapsulation: ViewEncapsulation.None
 })
 export class CreateBoardComponent implements OnInit {
-  private boardData;
+
   private success;
   private error;
   private dataSet;
@@ -31,7 +30,7 @@ export class CreateBoardComponent implements OnInit {
   public createBoardForm: FormGroup;
   private selectedValue;
 
-
+@Input() boardData: any
   /**
    * Creates an instance of CreateBoardComponent.
    * @param {NgbModal} modalService
@@ -50,6 +49,8 @@ export class CreateBoardComponent implements OnInit {
 
   ngOnInit() {
     this.getAllTeams();
+    this.dataSet = this.boardData;
+    console.log(this.dataSet);
   }
 
   onSelected(value: boolean) {

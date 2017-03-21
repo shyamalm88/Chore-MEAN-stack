@@ -3,7 +3,6 @@ import { HttpService } from '../../../common/services/http.service';
 import { Constant } from '../../../common/constant/constant';
 
 @Component({
-    moduleId: module.id,
     selector: 'chore-team-list',
     templateUrl: 'teamlist.component.html',
     encapsulation: ViewEncapsulation.None

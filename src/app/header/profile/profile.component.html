@@ -1,20 +1,22 @@
-<button type="button" ngbDropdown class="btn btn-board margin-right-10 pull-right" ngbDropdownToggle *ngIf="user"> <img src="{{userImage}}" class="profileImage">{{userName}}</button>
-<div class="pop-over dropdown-menu" style="left: 230px; top: 40px;">
-    <div>
+<div class="posRel inlineBlock v-m">
+    <button type="button" ngbDropdown class="btn btn-board margin-right-10 pull-right" ngbDropdownToggle *ngIf="user"> <img src="{{userImage}}" class="profileImage">{{userName}}</button>
+    <div class="pop-over dropdown-menu" style="right:0px;left:auto; top: 40px;">
         <div>
-            <div class="popover-content">
-                <div>
+            <div>
+                <div class="popover-content">
                     <div>
-                        <ul class="pop-over-list">
-                            <li><a class="" routerLink="/profile"><i class="fa ion-person" aria-hidden="true"></i> {{userName}}  's Profile</a></li>
-                            <li><a class="" href="#"><i class="fa ion-ios-browsers" aria-hidden="true"></i> Cards</a></li>
-                            <li><a class="" href="#"><i class="fa ion-ios-cog" aria-hidden="true"></i> Settings</a></li>
-                        </ul>
-                        <hr>
-                        <ul class="pop-over-list">
-                            <li><a class="" href="#"><i class="fa ion-ios-help" aria-hidden="true"></i> Help</a></li>
-                            <li><a class="" href="#"><i class="fa ion-android-exit" aria-hidden="true"></i> Logout</a></li>
-                        </ul>
+                        <div>
+                            <ul class="pop-over-list">
+                                <li><a class="" routerLink="/profile"><i class="fa ion-person" aria-hidden="true"></i> {{userName}}  's Profile</a></li>
+                                <li><a class="" href="#"><i class="fa ion-ios-browsers" aria-hidden="true"></i> Cards</a></li>
+                                <li><a class="" href="#"><i class="fa ion-ios-cog" aria-hidden="true"></i> Settings</a></li>
+                            </ul>
+                            <hr>
+                            <ul class="pop-over-list">
+                                <li><a class="" href="#"><i class="fa ion-ios-help" aria-hidden="true"></i> Help</a></li>
+                                <li><a class="" href="#"><i class="fa ion-android-exit" aria-hidden="true"></i> Logout</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
