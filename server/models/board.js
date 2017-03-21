@@ -75,6 +75,7 @@ module.exports.editBoard = function(body, index, callback) {
         result.created_by = body.createdby;
         result.closed = body.closed || false;
         result.cards = [];
+        console.log(body.teamname);
         result.teamname = body.teamname || "personal board";
 
         result.save(function(err, result) {
