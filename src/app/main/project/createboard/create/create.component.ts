@@ -27,7 +27,9 @@ export class CreateBoardComponent implements OnInit {
   private loggedInUserEmail;
   private isLoggedIn;
   private loggedInUserData;
+  private teamSet;
   public createBoardForm: FormGroup;
+  private selectedValue;
 
 
   /**
@@ -43,38 +45,17 @@ export class CreateBoardComponent implements OnInit {
     private modalService: NgbModal,
     private httpService: HttpService,
     public fb: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
   ) { }
 
   ngOnInit() {
-
-    this.authService.userData.subscribe((userData) => {
-      this.loggedInUserData = userData;
-      if (this.loggedInUserData) {
-        this.isLoggedIn = true;
-        if (this.loggedInUserData.facebook){
-            this.loggedInUserEmail = this.loggedInUserData.facebook.email;
-        }else if (this.loggedInUserData.google){
-            this.loggedInUserEmail = this.loggedInUserData.google.email;
-        }else {
-            this.loggedInUserEmail = this.loggedInUserData.local.email;
-        }
-        this.createBoardForm = this.fb.group({
-          name: ['', Validators.required],
-          description: ['', Validators.required],
-          createdby: [this.loggedInUserEmail, Validators.required],
-          isclosed: [''],
-          isarchived: [''],
-          teamname: [''],
-        });
-      }
-
-    });
-
-
+    this.getAllTeams();
   }
 
-
+  onSelected(value: boolean) {
+    console.log(value);
+    this.selectedValue = value;
+  }
 
   createBoard(event, modal) {
     let data = this.createBoardForm.value;  // accessing form data.
@@ -105,11 +86,22 @@ export class CreateBoardComponent implements OnInit {
       (data): void => {
         this.dataSet = data;
       }
-    );
+      );
+  }
+
+  getAllTeams() {
+    this.httpService.getData(Constant.API_ENDPOINT + 'team')
+      .subscribe(
+      (data): void => {
+        this.teamSet = data;
+        console.log(this.teamSet);
+      }
+      );
   }
 
   showSuccessMessage(): void {
     this.success = this.boardData.message;
+
   }
 
   showErrorMessage(): void {
@@ -125,6 +117,28 @@ export class CreateBoardComponent implements OnInit {
   open(content): void {
     this.success = undefined;
     this.error = undefined;
+    this.getAllTeams();
+    this.authService.userData.subscribe((userData) => {
+      this.loggedInUserData = userData;
+      if (this.loggedInUserData) {
+        this.isLoggedIn = true;
+        if (this.loggedInUserData.facebook) {
+          this.loggedInUserEmail = this.loggedInUserData.facebook.email;
+        } else if (this.loggedInUserData.google) {
+          this.loggedInUserEmail = this.loggedInUserData.google.email;
+        } else {
+          this.loggedInUserEmail = this.loggedInUserData.local.email;
+        }
+        this.createBoardForm = this.fb.group({
+          name: ['', Validators.required],
+          description: ['', Validators.required],
+          createdby: [this.loggedInUserEmail, Validators.required],
+          isclosed: [''],
+          isarchived: [''],
+          teamname: [''],
+        });
+      }
+    });
     this.modalService.open(content);
   }
 }
