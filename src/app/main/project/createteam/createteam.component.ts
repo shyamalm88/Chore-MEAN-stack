@@ -31,26 +31,7 @@ export class CreateTeamComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.authService.userData.subscribe((userData) => {
-      this.loggedInUserData = userData;
-      if (this.loggedInUserData) {
-        this.isLoggedIn = true;
-        if (this.loggedInUserData.facebook){
-            this.loggedInUserEmail = this.loggedInUserData.facebook.email;
-        }else if (this.loggedInUserData.google){
-            this.loggedInUserEmail = this.loggedInUserData.google.email;
-        }else {
-            this.loggedInUserEmail = this.loggedInUserData.local.email;
-        }
-        this.createTeamForm = this.fb.group({
-          name: ['', Validators.required],
-          description: ['', Validators.required],
-          createdby: [this.loggedInUserEmail, Validators.required],
-          members: ['']
-        });
-      }
-
-    });
+    this.getAllData();
   }
 
   createTeam(event, modal) {
@@ -62,7 +43,6 @@ export class CreateTeamComponent implements OnInit {
           this.teamData = data;
           this.dismissModal(modal); // dismissing modal
           this.showSuccessMessage(); // creating success message
-          console.log(this.teamData);
           this.getAllData(); // to get all data;
         },
         (err): void => {            //error catching method
@@ -82,7 +62,7 @@ export class CreateTeamComponent implements OnInit {
       (data): void => {
         this.teamDataSet = data;
       }
-    );
+      );
   }
 
   showSuccessMessage(): void {
@@ -100,6 +80,28 @@ export class CreateTeamComponent implements OnInit {
   }
 
   open(content): void {
+    this.success = undefined;
+    this.error = undefined;
+    this.authService.userData.subscribe((userData) => {
+      this.loggedInUserData = userData;
+      if (this.loggedInUserData) {
+        this.isLoggedIn = true;
+        if (this.loggedInUserData.facebook) {
+          this.loggedInUserEmail = this.loggedInUserData.facebook.email;
+        } else if (this.loggedInUserData.google) {
+          this.loggedInUserEmail = this.loggedInUserData.google.email;
+        } else {
+          this.loggedInUserEmail = this.loggedInUserData.local.email;
+        }
+        this.createTeamForm = this.fb.group({
+          name: ['', Validators.required],
+          description: ['', Validators.required],
+          createdby: [this.loggedInUserEmail, Validators.required],
+          members: ['']
+        });
+      }
+
+    });
     this.modalService.open(content);
   }
 }

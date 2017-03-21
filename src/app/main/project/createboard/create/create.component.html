@@ -21,8 +21,8 @@
       <span aria-hidden="true">&times;</span>
     </button>
     <h4 class="modal-title">Create board</h4>
-</div>
-<div class="modal-body">
+    </div>
+    <div class="modal-body">
     <div class="alert alert-success" *ngIf="success">
         {{success}}
     </div>
@@ -47,12 +47,8 @@
             </label>
          </div>
          <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-             <select class="form-control" id="" formControlName="teamname">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-            </select>
+            <chore-single-select [teams]="teamSet" (onSelected)="onSelected($event)"></chore-single-select>
+            <input type="hidden" formControlName="teamname" [(ngModel)]="selectedValue">
          </div>
          <div class="clearfix"></div>
      </div>
@@ -90,5 +86,5 @@
       <div class="clearfix"></div>
      </div>
     </form>
-</div>
+    </div>
 </template>

@@ -1,7 +1,6 @@
 import { Component, ViewEncapsulation, OnInit, Input } from '@angular/core';
 import { HttpService } from '../../../common/services/http.service';
 import { Constant } from '../../../common/constant/constant';
-import { SharedTeamService } from '../../../common/services/shared.data.services';
 
 @Component({
     moduleId: module.id,
@@ -12,7 +11,7 @@ import { SharedTeamService } from '../../../common/services/shared.data.services
 export class TeamListComponent implements OnInit {
     private teamData;
     private teamDisplayData;
-    constructor(private httpService: HttpService, private _sharedTeamService: SharedTeamService) { }
+    constructor(private httpService: HttpService) { }
 
 
     @Input() teamlist: any;

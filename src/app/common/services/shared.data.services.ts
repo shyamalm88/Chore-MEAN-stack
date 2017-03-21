@@ -8,11 +8,3 @@ export class SharedDataService {
         this.dataArray.unshift(data);
     }
 }
-
-export class SharedTeamService {
-    dataArray: any[] = [];
-
-    insertData(data: string){
-        this.dataArray.unshift(data);
-    }
-}
