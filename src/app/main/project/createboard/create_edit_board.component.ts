@@ -15,7 +15,7 @@ import { AuthService } from '../../../common/services/auth.service';
 export class CreateEditBoardComponent implements OnInit {
     private currentUserData;
     private boardData;
-    private grouped;
+    private grouped = [];
     constructor(
         private httpService: HttpService,
         private router: Router,

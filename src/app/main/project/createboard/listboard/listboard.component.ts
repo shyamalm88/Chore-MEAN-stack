@@ -51,9 +51,9 @@ export class ListBoardComponent implements OnInit {
     }
 
     onSelected(value: boolean) {
-    console.log(value);
-    this.selectedValue = value;
-  }
+        console.log(value);
+        this.selectedValue = value;
+    }
     /**
      * =============================================
      *On updateBoard method will update the board from the modal form
@@ -63,6 +63,7 @@ export class ListBoardComponent implements OnInit {
 
     updateBoard(event, modal) {
         let data = this.updateBoardForm.value;  // accessing form data.
+        console.log(data);
         if (this.updateBoardForm.value.name) { // if name entered in the form
             this.httpService.editData(Constant.API_ENDPOINT + 'board/' + data.id, data)
                 .subscribe(
@@ -129,11 +130,11 @@ export class ListBoardComponent implements OnInit {
         this.success = undefined;
         this.error = undefined;
         this.updateBoardForm = this.fb.group({
-        name: ['', Validators.required],
-        description: ['', Validators.required],
-        id: [''],
-        teamname: [this.displayData.teamname],
-    });
+            name: ['', Validators.required],
+            description: ['', Validators.required],
+            id: [''],
+            teamname: [],
+        });
         this.modalService.open(content);
     }
 }
