@@ -45,7 +45,7 @@ import { SingleSelectComponent } from './common/component/single_select/singleSe
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/board', pathMatch: 'full' },
-  { path: 'chore', component: MainComponent },
+  { path: 'chore/c/:boardid/:boardname', component: MainComponent },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'board', component: CreateEditBoardComponent },

@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 
 
 @Component({
-    moduleId: module.id,
+
     selector: 'chore-signup',
     templateUrl: './signup.component.html'
 })

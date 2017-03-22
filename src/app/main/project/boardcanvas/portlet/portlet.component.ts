@@ -1,19 +1,26 @@
 import { Component, ViewEncapsulation} from "@angular/core";
 import { DragulaService } from 'ng2-dragula/ng2-dragula';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
 
 @Component({
-    moduleId: module.id,
-    selector: 'chore-portlet', 
+
+    selector: 'chore-portlet',
     templateUrl: './portlet.component.html',
     encapsulation: ViewEncapsulation.None
 })
 
 export class PortletComponent{
-    constructor(private dragulaService: DragulaService, private modalService: NgbModal) {
-    dragulaService.setOptions('first-bag', {
-      removeOnSpill: true
-    });
+
+    constructor(private dragulaService: DragulaService, private modalService: NgbModal, private router: Router) {
+      // var self = this;
+      // setTimeout(function() {
+      //   self.router.navigateByUrl('/board');
+      // }, 3000);
+
+    // dragulaService.setOptions('first-bag', {
+    //   removeOnSpill: true
+    // });
     dragulaService.drag.subscribe((value) => {
         console.log(value);
       this.onDrag(value.slice(1));
@@ -30,7 +37,7 @@ export class PortletComponent{
         console.log(value);
       this.onOut(value.slice(1));
     });
-    
+
   }
 
 //modal open
@@ -76,8 +83,8 @@ export class PortletComponent{
     let [e, el, container] = args;
     this.removeClass(el, 'ex-over');
   }
-  
-  
+
+
 }
 
 

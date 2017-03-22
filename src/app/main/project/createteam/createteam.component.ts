@@ -8,7 +8,7 @@ import { Subject, BehaviorSubject } from 'rxjs/Rx';
 
 
 @Component({
-  moduleId: module.id,
+
   selector: 'chore-create-team',
   templateUrl: 'createteam.component.html',
   encapsulation: ViewEncapsulation.None

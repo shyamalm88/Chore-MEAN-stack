@@ -2,7 +2,7 @@ import { Component, ViewEncapsulation, Input, OnInit } from '@angular/core';
 import { AuthService } from '../../common/services/auth.service';
 
 @Component({
-    moduleId: module.id,
+
     selector: 'chore-profile',
     templateUrl: './profile.component.html',
     encapsulation: ViewEncapsulation.None

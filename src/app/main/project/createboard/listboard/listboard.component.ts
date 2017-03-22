@@ -4,6 +4,7 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { HttpService } from '../../../../common/services/http.service';
 import { Subscription } from 'rxjs/Rx';
 import { Constant } from '../../../../common/constant/constant';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'chore-list-board',
@@ -38,6 +39,7 @@ export class ListBoardComponent implements OnInit {
         private modalService: NgbModal,
         private httpService: HttpService,
         public fb: FormBuilder,
+        private router: Router,
     ) { }
 
     /**
@@ -69,8 +71,6 @@ export class ListBoardComponent implements OnInit {
                 .subscribe(
                 (data): void => {
                     this.boardDisplayData = data;
-                    console.log(this.boardDisplayData);
-
                     this.dismissModal(modal); // dismissing modal
                     this.showSuccessMessage(); // creating success message
                     //console.log(this.boardDisplayData);
@@ -120,6 +120,7 @@ export class ListBoardComponent implements OnInit {
         setTimeout(function () {
             modal('Cross click');
         }, 1500);
+
     }
 
     /**

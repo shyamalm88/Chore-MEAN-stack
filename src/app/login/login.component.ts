@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs/Rx';
 import { Constant } from '../common/constant/constant';
 
 @Component({
-    moduleId: module.id,
+
     selector: 'chore-login',
     templateUrl: './login.component.html'
 })

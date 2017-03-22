@@ -2,7 +2,7 @@ import { Component, ViewEncapsulation } from "@angular/core";
 import {NgbDropdownConfig} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-    moduleId: module.id,
+
     selector: 'chore-portlet-actions',
     templateUrl: './portletactions.component.html',
     encapsulation: ViewEncapsulation.None

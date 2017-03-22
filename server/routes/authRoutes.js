@@ -176,6 +176,9 @@ module.exports = function(app, passport) {
         res.json(user);
         next();
     });
+    app.get('/chore/c/:boardid/:boardname', isLoggedIn, function(req, res, next) {
+        next();
+    });
 
 
 
