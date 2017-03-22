@@ -6,6 +6,7 @@ import { HttpService } from '../../../../common/services/http.service';
 import { Subscription } from 'rxjs/Rx';
 import { Constant } from '../../../../common/constant/constant';
 import { AuthService } from '../../../../common/services/auth.service';
+import { Router } from '@angular/router';
 
 /**
  * @export
@@ -30,7 +31,7 @@ export class CreateBoardComponent implements OnInit {
   public createBoardForm: FormGroup;
   private selectedValue;
 
-@Input() boardData: any
+  @Input() boardData: any
   /**
    * Creates an instance of CreateBoardComponent.
    * @param {NgbModal} modalService
@@ -45,6 +46,7 @@ export class CreateBoardComponent implements OnInit {
     private httpService: HttpService,
     public fb: FormBuilder,
     private authService: AuthService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -110,6 +112,8 @@ export class CreateBoardComponent implements OnInit {
   }
 
   dismissModal(modal): void {
+
+    this.router.navigate(['/chore/c/' + this.boardData.board.boardId + '/' + this.boardData.board.name]);
     setTimeout(function () {
       modal('Cross click');
     }, 1500);
@@ -136,7 +140,7 @@ export class CreateBoardComponent implements OnInit {
           createdby: [this.loggedInUserEmail, Validators.required],
           isclosed: [''],
           isarchived: [''],
-          teamname: [''],
+          teamname: [],
         });
       }
     });

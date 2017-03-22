@@ -14,11 +14,27 @@ var BoardSchema = new Schema({
     archived: Boolean,
     cards: Array,
     teamname: String,
+    boardId: String,
 });
 
 BoardSchema.pre('save', function(next) {
-    now = new Date();
+    var now = new Date();
+
+    function makeId() { // Public Domain/MIT
+        var d = new Date().getTime();
+        if (typeof performance !== 'undefined' && typeof performance.now === 'function') {
+            d += performance.now(); //use high-precision timer if available
+        }
+        return 'xxxyxxxx-xxxx-4xxx'.replace(/[xy-]/g, function(c) {
+            var r = (d + Math.random() * 16) % 16 | 0;
+            d = Math.floor(d / 16);
+            return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+        });
+    }
+    var rString = makeId();
+
     this.updated_at = now;
+    this.boardId = rString;
     if (!this.created_at) {
         this.created_at = now;
     }
