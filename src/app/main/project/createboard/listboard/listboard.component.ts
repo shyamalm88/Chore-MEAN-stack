@@ -26,9 +26,10 @@ export class ListBoardComponent implements OnInit {
     private dataSet;
     private teamSet;
     private selectedValue;
-    public updateBoardForm: FormGroup
+    public updateBoardForm: FormGroup;
 
-    @Input() displayData: any
+    @Input() displayData: any;
+
     /**
      * =============================================
      * Form builder
@@ -56,6 +57,7 @@ export class ListBoardComponent implements OnInit {
         console.log(value);
         this.selectedValue = value;
     }
+
     /**
      * =============================================
      *On updateBoard method will update the board from the modal form
