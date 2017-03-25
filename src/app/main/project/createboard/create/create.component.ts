@@ -72,7 +72,7 @@ export class CreateBoardComponent implements OnInit {
 
   onSelected(value: boolean) {
     console.log(value);
-    this.selectedValue = value;
+    this.selectedValue = value; // value
   }
 
   // if image uploaded then response the value
