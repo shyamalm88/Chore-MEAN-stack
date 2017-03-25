@@ -16,6 +16,7 @@ export class CreateEditBoardComponent implements OnInit {
     private currentUserData;
     private boardData;
     private grouped = [];
+
     constructor(
         private httpService: HttpService,
         private router: Router,
@@ -44,15 +45,16 @@ export class CreateEditBoardComponent implements OnInit {
 
         this.grouped = _.chain(this.boardData).groupBy("teamname").map(function (boards, teamName) {
             // Optionally remove product_id from each record
-            var cleanOffers = _.map(boards, function (it) {
+            var cleanBoards = _.map(boards, function (it) {
                 return _.omit(it, "");
             });
 
             return {
                 teamName: teamName,
-                boards: cleanOffers
+                boards: cleanBoards
             };
         }).value();
+
         console.log(this.grouped);
     }
 

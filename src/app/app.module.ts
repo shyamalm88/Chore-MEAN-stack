@@ -6,8 +6,10 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DragulaModule } from 'ng2-dragula/ng2-dragula';
-import {SelectModule} from 'ng2-select';
+import { SelectModule } from 'ng2-select';
 import * as _ from 'underscore';
+//import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-upload/ng2-file-upload';
+import {UPLOAD_DIRECTIVES} from 'ng2-file-uploader/ng2-file-uploader';
 
 import { HttpService } from './common/services/http.service';
 import { AuthService } from './common/services/auth.service';
@@ -56,6 +58,9 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     CharCount,
+    // FileSelectDirective,
+    // FileDropDirective,
+    UPLOAD_DIRECTIVES,
     HeaderComponent,
     ChoreDropdownBoard,
     ChoreAddBoardTeam,
@@ -90,7 +95,7 @@ const appRoutes: Routes = [
     NgbModule.forRoot(),
     RouterModule.forRoot(appRoutes),
     DragulaModule,
-    SelectModule
+    SelectModule,
   ],
   providers: [HttpService, SharedDataService, AuthService],
   bootstrap: [AppComponent]

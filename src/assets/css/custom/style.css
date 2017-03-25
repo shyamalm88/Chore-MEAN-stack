@@ -146,6 +146,10 @@ h6 {
   border-radius: 0;
 }
 
+.block {
+  display: block;
+}
+
 .searchChore {
   overflow: hidden;
   position: relative;
@@ -172,7 +176,7 @@ h6 {
   border-radius: 3px;
   margin-bottom: 20px;
   transition: all 0.4s;
-  border: 2px solid #f3f3f3;
+  border: 0px solid #f3f3f3;
   display: flex;
   flex-direction: column;
   max-height: 100%;
@@ -194,12 +198,14 @@ h6 {
   margin-bottom: 0px;
 }
 .portlet .portlet-heading {
-  padding: 5px 20px 5px 10px;
+  padding: 5px 10px 5px 10px;
+  margin: -1px 0px 0 0px;
 }
 .portlet .portlet-heading .portlet-title {
   text-overflow: ellipsis;
   width: 85%;
   white-space: nowrap;
+  font-size: 13px;
   overflow: hidden;
   font-family: "Lato", "sans-serif";
 }
@@ -266,7 +272,7 @@ main.viewEditBoard .portlet .portlet-body {
   margin-top: 0;
   border-bottom: none;
   padding: 6px 6px 6px 8px;
-  height: 113px;
+  height: 90px;
   overflow-y: auto;
 }
 main.viewEditBoard .portlet .portlet-body.createBoard {
@@ -277,7 +283,7 @@ main.viewEditBoard .portlet .portlet-body.createBoard .boardIcon {
   display: table-cell;
   text-align: center;
   vertical-align: middle;
-  height: 139px;
+  height: 117px;
   color: #009688;
 }
 
@@ -3771,6 +3777,28 @@ main.viewEditBoard .portlet .portlet-body.createTeam .boardIcon span i {
 }
 main.viewEditBoard .portlet .portlet-body.createTeam:hover .boardIcon {
   top: 0px;
+}
+main.viewEditBoard .portlet.haveCover {
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  border: 0px;
+}
+main.viewEditBoard .portlet.haveCover .portlet-heading.bg-teal {
+  background: transparent !important;
+  background: -moz-linear-gradient(top, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0.65) 99%, rgba(0, 0, 0, 0.65) 100%) !important;
+  background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0.65) 99%, rgba(0, 0, 0, 0.65) 100%) !important;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0.65) 99%, rgba(0, 0, 0, 0.65) 100%) !important;
+}
+main.viewEditBoard .portlet.haveCover .panel-collapse .portlet-body {
+  color: #fff;
+  border-radius: 0px;
+  background: transparent;
+  background: -moz-linear-gradient(top, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0.4) 50%, transparent 100%) !important;
+  background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0.4) 50%, transparent 100%) !important;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0.4) 50%, transparent 100%) !important;
+}
+main.viewEditBoard .portlet.haveCover .panel-collapse .portlet-body .list-card-operation {
+  background: transparent;
 }
 
 .posRel {

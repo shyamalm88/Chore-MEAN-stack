@@ -1,4 +1,10 @@
+var express = require('express');
 var mongoose = require('mongoose');
+
+
+
+
+
 // var dbHost = require(dbHost);
 // var configDB = require('./../config/database.js');
 // mongoose.connect(configDB.url);
@@ -15,6 +21,8 @@ var BoardSchema = new Schema({
     cards: Array,
     teamname: String,
     boardId: String,
+    coverImageUrl: String,
+    coverImageID: String,
 });
 
 BoardSchema.pre('save', function(next) {
@@ -60,6 +68,10 @@ module.exports.findAll = function(callback) {
 };
 
 module.exports.addNewBoard = function(body, callback) {
+    // var fileName = cloudinary.uploader.upload('dog-wallpaper-12.jpg', function(result) {
+    //     console.log(result);
+    //     return result;
+    // });
     var board = new Board({
         name: body.name,
         description: body.description,
@@ -67,6 +79,8 @@ module.exports.addNewBoard = function(body, callback) {
         closed: false,
         cards: [],
         teamname: body.teamname || "personal board",
+        coverImageUrl: '',
+        coverImageID: '',
     });
     board.save(function(err, result) {
         if (err) throw err;
@@ -93,6 +107,8 @@ module.exports.editBoard = function(body, index, callback) {
         result.cards = [];
         console.log(body.teamname);
         result.teamname = body.teamname || "personal board";
+        result.coverImageUrl = body.coverImageUrl;
+        result.coverImageID = body.coverImageID;
 
         result.save(function(err, result) {
             if (err) throw err;

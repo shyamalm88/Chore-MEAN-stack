@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, OnInit, Input } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit, Input, Directive, NgZone } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, Validators, FormControl, FormGroup } from '@angular/forms';
 import { NgForm } from '@angular/forms';
@@ -8,6 +8,9 @@ import { Constant } from '../../../../common/constant/constant';
 import { AuthService } from '../../../../common/services/auth.service';
 import { Router } from '@angular/router';
 
+
+const URL = 'api/imageUpload';
+
 /**
  * @export
  * @class CreateBoardComponent
@@ -16,7 +19,8 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'chore-create-board',
   templateUrl: './create.component.html',
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+
 })
 export class CreateBoardComponent implements OnInit {
 
@@ -30,6 +34,16 @@ export class CreateBoardComponent implements OnInit {
   private teamSet;
   public createBoardForm: FormGroup;
   private selectedValue;
+
+
+  uploadFile: any; // uploadFile
+  postId: number; // postId assign for the cover image post
+  options: Object = {
+    url: '/api/imageUpload',  // upload url for temporary usage
+    fieldName: 'cover', // field name for uploading image.
+    params: { 'post_id': this.postId } // postID
+  };
+
 
   @Input() boardData: any
   /**
@@ -47,7 +61,8 @@ export class CreateBoardComponent implements OnInit {
     public fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
-  ) { }
+
+  ) {}
 
   ngOnInit() {
     this.getAllTeams();
@@ -60,14 +75,25 @@ export class CreateBoardComponent implements OnInit {
     this.selectedValue = value;
   }
 
+  // if image uploaded then response the value
+  // handleUpload(data): void {
+  //   if (data && data.response) {
+  //     data = JSON.parse(data.response);
+  //     this.uploadFile = data;
+
+  //   }
+  //   console.log(this.uploadFile);
+  // }
+
+
   createBoard(event, modal) {
-    let data = this.createBoardForm.value;  // accessing form data.
+    const data = this.createBoardForm.value;  // accessing form data.
     if (this.createBoardForm.value.name) { // if name entered in the form
       this.httpService.postData(Constant.API_ENDPOINT + 'board', data)
         .subscribe(
-        (data): void => {
-          this.boardData = data;
-          this.getAllData();
+        (response): void => {
+          this.boardData = response;
+          this.getAllData();  // for getting all board data;
           this.dismissModal(modal); // dismissing modal
           this.showSuccessMessage(); // creating success message
           console.log(this.boardData);
@@ -83,6 +109,8 @@ export class CreateBoardComponent implements OnInit {
     this.createBoardForm.reset();
   }
 
+
+  // for getting all board data
   getAllData() {
     this.httpService.getData(Constant.API_ENDPOINT + 'board')
       .subscribe(
@@ -92,6 +120,7 @@ export class CreateBoardComponent implements OnInit {
       );
   }
 
+  // for getting all teams.
   getAllTeams() {
     this.httpService.getData(Constant.API_ENDPOINT + 'team')
       .subscribe(
@@ -102,28 +131,31 @@ export class CreateBoardComponent implements OnInit {
       );
   }
 
+  // show success message
   showSuccessMessage(): void {
     this.success = this.boardData.message;
-
   }
 
+  // show error message;
   showErrorMessage(): void {
     this.error = 'Something went wrong, Please try later';
   }
 
+  // dismiss the modal
   dismissModal(modal): void {
-
     this.router.navigate(['/chore/c/' + this.boardData.board.boardId + '/' + this.boardData.board.name]);
     setTimeout(function () {
       modal('Cross click');
     }, 1500);
   }
 
+
+  // functions after modal open
   open(content): void {
-    this.success = undefined;
-    this.error = undefined;
-    this.getAllTeams();
-    this.authService.userData.subscribe((userData) => {
+    this.success = undefined; // success set to initial state
+    this.error = undefined;  // error set to initial state
+    this.getAllTeams(); // get all teams
+    this.authService.userData.subscribe((userData) => { // subscribe auth service
       this.loggedInUserData = userData;
       if (this.loggedInUserData) {
         this.isLoggedIn = true;
@@ -134,16 +166,22 @@ export class CreateBoardComponent implements OnInit {
         } else {
           this.loggedInUserEmail = this.loggedInUserData.local.email;
         }
+
+        // create the form group new instance
+
         this.createBoardForm = this.fb.group({
           name: ['', Validators.required],
           description: ['', Validators.required],
           createdby: [this.loggedInUserEmail, Validators.required],
           isclosed: [''],
           isarchived: [''],
-          teamname: [],
+          teamname: [''],
+          boardimage: ['']
         });
       }
     });
+
+    // open modal service
     this.modalService.open(content);
   }
 }
