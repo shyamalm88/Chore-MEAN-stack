@@ -34,6 +34,7 @@ export class CreateBoardComponent implements OnInit {
   private teamSet;
   public createBoardForm: FormGroup;
   private selectedValue;
+  private fileName = 'Please Select a cover image';
 
 
   uploadFile: any; // uploadFile
@@ -62,7 +63,7 @@ export class CreateBoardComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
 
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.getAllTeams();
@@ -76,14 +77,15 @@ export class CreateBoardComponent implements OnInit {
   }
 
   // if image uploaded then response the value
-  // handleUpload(data): void {
-  //   if (data && data.response) {
-  //     data = JSON.parse(data.response);
-  //     this.uploadFile = data;
+  handleUpload(data): void {
+    if (data && data.response) {
+      data = JSON.parse(data.response);
+      this.uploadFile = data;
+      this.fileName = this.uploadFile.originalname;
+      console.log(this.uploadFile);
+    }
 
-  //   }
-  //   console.log(this.uploadFile);
-  // }
+  }
 
 
   createBoard(event, modal) {
@@ -143,7 +145,7 @@ export class CreateBoardComponent implements OnInit {
 
   // dismiss the modal
   dismissModal(modal): void {
-    this.router.navigate(['/chore/c/' + this.boardData.board.boardId + '/' + this.boardData.board.name]);
+    this.router.navigate(['/chore/c/' + this.boardData.board.boardId + '/' + this.boardData.board.name.replace(/ /g,"_")]);
     setTimeout(function () {
       modal('Cross click');
     }, 1500);

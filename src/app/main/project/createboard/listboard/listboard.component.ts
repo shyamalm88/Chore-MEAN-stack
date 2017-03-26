@@ -5,6 +5,7 @@ import { HttpService } from '../../../../common/services/http.service';
 import { Subscription } from 'rxjs/Rx';
 import { Constant } from '../../../../common/constant/constant';
 import { Router } from '@angular/router';
+import * as _ from 'underscore';
 
 @Component({
     selector: 'chore-list-board',
@@ -27,6 +28,16 @@ export class ListBoardComponent implements OnInit {
     private teamSet;
     private selectedValue;
     public updateBoardForm: FormGroup;
+    private fileName;
+    private imageUploadDisplay: Boolean = false;
+    private imageDisplay: Boolean = true;
+    uploadFile: any; // uploadFile
+    postId: number; // postId assign for the cover image post
+    options: Object = {
+        url: '/api/imageUpload',  // upload url for temporary usage
+        fieldName: 'cover', // field name for uploading image.
+        params: { 'post_id': this.postId } // postID
+    };
 
     @Input() displayData: any;
 
@@ -41,7 +52,7 @@ export class ListBoardComponent implements OnInit {
         private httpService: HttpService,
         public fb: FormBuilder,
         private router: Router,
-    ) { }
+    ) {}
 
     /**
      * =============================================
@@ -51,11 +62,24 @@ export class ListBoardComponent implements OnInit {
      */
     ngOnInit() {
         this.getAllTeams();
+        this.imageDisplay = true;
+        this.imageUploadDisplay = false;
     }
 
     onSelected(value: boolean) {
         console.log(value);
         this.selectedValue = value;
+    }
+
+    // if image uploaded then response the value
+    handleUpload(data): void {
+        if (data && data.response) {
+            data = JSON.parse(data.response);
+            this.uploadFile = data;
+            this.fileName = this.uploadFile.originalname;
+            console.log(this.uploadFile);
+        }
+
     }
 
     /**
@@ -67,8 +91,7 @@ export class ListBoardComponent implements OnInit {
 
     updateBoard(event, modal) {
         let data = this.updateBoardForm.value;  // accessing form data.
-        console.log(data);
-        if (this.updateBoardForm.value.name) { // if name entered in the form
+        if (data.name) { // if name entered in the form
             this.httpService.editData(Constant.API_ENDPOINT + 'board/' + data.id, data)
                 .subscribe(
                 (data): void => {
@@ -85,6 +108,21 @@ export class ListBoardComponent implements OnInit {
         } else {
             return false;
         }
+    }
+
+    deleteImage(event, boardID, coverImageID, boardData) {
+        event.preventDefault();
+        this.httpService.deleteImage(Constant.API_ENDPOINT + 'deleteImage/' + boardID + '/' + coverImageID, boardData)
+        .subscribe(
+            (response): void => {
+                this.boardDisplayData = response;
+                if(this.boardDisplayData.message === 'Successfully updated the board'){
+                    this.imageDisplay = false; // for removing the image section
+                    this.imageUploadDisplay = true; // for displaying the image upload panel;
+                }
+            }
+        )
+
     }
 
     getAllTeams() {
@@ -119,6 +157,7 @@ export class ListBoardComponent implements OnInit {
      */
 
     dismissModal(modal): void {
+        this.router.navigate(['/chore/c/' + this.boardDisplayData.board.boardId + '/' + this.boardDisplayData.board.name.replace(/ /g,"_")]);
         setTimeout(function () {
             modal('Cross click');
         }, 1500);

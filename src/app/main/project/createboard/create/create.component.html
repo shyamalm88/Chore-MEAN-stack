@@ -61,8 +61,10 @@
          </div>
          <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
             <input type="file"
-       [ng-file-select]="options">
-
+            [ng-file-select]="options" class="inputfile" (onUpload)="handleUpload($event)" placeholder="upload cover image">
+            <label for="">
+                <span>{{fileName}}</span> <strong><i class="fa fa-upload"></i> Choose a file </strong>
+            </label>
 
          </div>
          <div class="clearfix"></div>

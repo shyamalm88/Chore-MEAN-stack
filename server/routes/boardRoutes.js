@@ -30,6 +30,21 @@ app.route("/imageUpload")
         path = req.file.path;
         res.send(req.file);
     });
+app.route('/deleteImage/:boardID/:imageID')
+    .put(function(req, res) {
+        var imageID = req.params.imageID;
+
+        cloudinary.uploader.destroy(imageID, function(result) {
+            if (result.result === 'ok') {
+                var data = req.body;
+                data.coverImageID = '';
+                data.coverImageUrl = '';
+                boardController.editBoard(data, req.params.boardID, function(results) {
+                    res.json(results);
+                });
+            }
+        });
+    });
 
 
 app.route('/board')
@@ -84,9 +99,38 @@ app.route('/board/:index')
         });
     })
     .put(function(req, res) {
-        boardController.editBoard(req.body, req.params.index, function(results) {
-            res.json(results);
-        });
+        if (path) {
+            cloudinary.uploader.upload(path, function(result) {
+                var secureCoverImageUrl = result.secure_url; // cover image url
+                var secureCoverImageId = result.public_id; // cover image id
+                var editData = req.body;
+                //delete temp files from uploads
+                if (path) {
+                    //if path exist then delete
+                    fs.unlink(path, (err) => {
+                        if (err) throw err;
+                        console.log('successfully deleted ' + path);
+                    });
+                }
+                //assign images into board entry
+                if (editData) {
+                    editData.coverImageUrl = secureCoverImageUrl;
+                    editData.coverImageID = secureCoverImageId;
+                    boardController.editBoard(editData, req.params.index, function(results) {
+                        res.json(results);
+                    });
+                }
+            });
+        } else {
+            var editData = req.body;
+            editData.coverImageUrl = '';
+            editData.coverImageID = '';
+            boardController.editBoard(editData, req.params.index, function(results) {
+                res.json(results);
+            });
+
+        }
+
     })
     .delete(function(req, res) {
         boardController.deleteBoard(req.params.index, function(results) {

@@ -4370,3 +4370,38 @@ main.viewEditBoard {
 .v-m {
     vertical-align: middle;
 }
+
+.inputfile {
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: 9;
+    cursor: pointer;
+    &+label {
+        border: 1px solid #e3e3e3;
+        background-color: #fff;
+        padding: 0;
+        color: #98a6b2;
+        width: 100%;
+        font-weight: normal;
+        span {
+            min-height: 2em;
+            display: inline-block;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            vertical-align: top;
+            padding: 10px;
+        }
+        strong {
+            color: #fff;
+            background-color: #009688;
+            display: inline-block;
+            padding: 10px;
+            text-align: right;
+            float: right;
+        }
+    }
+}
