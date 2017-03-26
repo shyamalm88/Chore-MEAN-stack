@@ -45,6 +45,17 @@ export class HttpService {
       });
   }
 
+  // delete data
+  public deleteImage(url: string, data: any): Observable<Response> {
+    console.log(data);
+    return this.http
+      .put(url, data)
+      .map(this.extractData)
+      .catch(err => {
+        return this.handleError(err);
+      });
+  }
+
   private extractData(res: Response) {
     const body = res.json();
     return body || {};
