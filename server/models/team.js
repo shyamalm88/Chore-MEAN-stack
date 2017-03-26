@@ -47,7 +47,7 @@ module.exports.addNewTeam = function(body, callback) {
         created_by: body.createdby || "",
         closed: false,
         cards: [],
-        teamname: body.teamname || "",
+        teamname: body.teamname || "Personal",
     });
     team.save(function(err, result) {
         if (err) throw err;

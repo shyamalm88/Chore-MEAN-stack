@@ -48,8 +48,11 @@
             </label>
          </div>
          <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-            <chore-single-select [teams]="teamSet" (onSelected)="onSelected($event)"></chore-single-select>
-            <input type="hidden" formControlName="teamname" [(ngModel)]="selectedValue">
+             <select class="form-control" formControlName="teamname">
+                <option *ngFor="let item of teamSet" >{{item.name}}</option>
+            </select>
+            <!--<chore-single-select [teams]="teamSet" (onSelected)="onSelected($event)"></chore-single-select>
+            <input type="hidden" formControlName="teamname" [(ngModel)]="selectedValue">-->
          </div>
          <div class="clearfix"></div>
      </div>

@@ -31,6 +31,7 @@ export class ListBoardComponent implements OnInit {
     private fileName;
     private imageUploadDisplay: Boolean = false;
     private imageDisplay: Boolean = true;
+    private coverImageUrl;
     uploadFile: any; // uploadFile
     postId: number; // postId assign for the cover image post
     options: Object = {
@@ -112,6 +113,8 @@ export class ListBoardComponent implements OnInit {
 
     deleteImage(event, boardID, coverImageID, boardData) {
         event.preventDefault();
+        boardData.coverImageUrl = '';
+        boardData.coverImageID = '';
         this.httpService.deleteImage(Constant.API_ENDPOINT + 'deleteImage/' + boardID + '/' + coverImageID, boardData)
         .subscribe(
             (response): void => {
@@ -176,6 +179,7 @@ export class ListBoardComponent implements OnInit {
             description: ['', Validators.required],
             id: [''],
             teamname: [],
+            coverImageUrl: [''],
         });
         this.modalService.open(content);
     }

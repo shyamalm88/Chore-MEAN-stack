@@ -117,15 +117,20 @@ app.route('/board/:index')
                     editData.coverImageUrl = secureCoverImageUrl;
                     editData.coverImageID = secureCoverImageId;
                     boardController.editBoard(editData, req.params.index, function(results) {
+                        path = null;
                         res.json(results);
                     });
                 }
             });
         } else {
             var editData = req.body;
-            editData.coverImageUrl = '';
-            editData.coverImageID = '';
+            if (editData.coverImageUrl === '' && editData.coverImageID === '') {
+                editData.coverImageUrl = '';
+                editData.coverImageID = '';
+            }
+
             boardController.editBoard(editData, req.params.index, function(results) {
+                path = null;
                 res.json(results);
             });
 
