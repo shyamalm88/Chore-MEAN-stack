@@ -55,7 +55,7 @@ export class CreateEditBoardComponent implements OnInit {
             };
         }).value();
 
-        console.log(this.grouped);
+        //console.log(this.grouped);
     }
 
 

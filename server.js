@@ -27,11 +27,12 @@ app.use(cookieParser());
 
 var api = require('./server/routes/boardRoutes');
 var teamApi = require('./server/routes/teamRoutes');
+var portletApi = require('./server/models/portlet');
 // // REGISTER OUR ROUTES -------------------------------
 // // all of our routes will be prefixed with /api
 app.use('/api', api);
 app.use('/api', teamApi);
-
+app.use('/api', portletApi);
 
 var localAuth = require('./server/routes/localAuthRoutes');
 app.use('/auth', localAuth);
@@ -112,5 +113,5 @@ mongoose.connect(configDB.url);
 
 var port = process.env.PORT || 8080;
 app.listen(port, function() {
-    console.log('Server up: http://localhost:' + port);
+    //console.log('Server up: http://localhost:' + port);
 });

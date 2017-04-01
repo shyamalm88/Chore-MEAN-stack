@@ -30,12 +30,12 @@ export class LoginComponent implements OnInit {
 
     login(value, isValid: boolean) {
         this.submitted = true; // set form submit to true
-        console.log(this.logInForm.value)
+        //console.log(this.logInForm.value)
         this.httpService.postData(Constant.ROUTE_ENDPOINT + 'login', this.logInForm.value)
             .subscribe(
             (data): void => {
                 this.userLoggedIndata = data;
-                console.log(this.userLoggedIndata.message);
+                //console.log(this.userLoggedIndata.message);
                 if (this.userLoggedIndata.message === 'successfully logged in') {
                     this.loginSuccessMessage = true;
                     this.loginUserErrorMessage = false;
@@ -53,7 +53,7 @@ export class LoginComponent implements OnInit {
                 }
             },
             (err): void => { //error catching method
-                console.log(err)
+                //console.log(err)
             },
         );
     }

@@ -1,46 +1,104 @@
-import { Component, ViewEncapsulation} from "@angular/core";
+import { Component, ViewEncapsulation, OnInit, Input, ViewChild } from '@angular/core';
 import { DragulaService } from 'ng2-dragula/ng2-dragula';
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-import { Router } from '@angular/router';
+import { NgbModal, ModalDismissReasons, NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
+import { Constant } from '../../../../common/constant/constant';
+import { HttpService } from '../../../../common/services/http.service';
+import { Router, ActivatedRoute, Params } from '@angular/router';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { Response } from '@angular/http';
+
 
 @Component({
 
-    selector: 'chore-portlet',
-    templateUrl: './portlet.component.html',
-    encapsulation: ViewEncapsulation.None
+  selector: 'chore-portlet',
+  templateUrl: './portlet.component.html',
+  encapsulation: ViewEncapsulation.None
 })
 
-export class PortletComponent{
+export class PortletComponent implements OnInit {
 
-    constructor(private dragulaService: DragulaService, private modalService: NgbModal, private router: Router) {
-      // var self = this;
-      // setTimeout(function() {
-      //   self.router.navigateByUrl('/board');
-      // }, 3000);
+  @ViewChild(NgbDropdown)
+  private dropdown: NgbDropdown;
 
-    // dragulaService.setOptions('first-bag', {
-    //   removeOnSpill: true
-    // });
+
+  private portletData;
+  private boardIndex;
+  private portletDataArray;
+  public updatePortletForm;
+
+  constructor(
+    private dragulaService: DragulaService,
+    private modalService: NgbModal,
+    private router: Router,
+    private httpService: HttpService,
+    private activatedRoute: ActivatedRoute,
+    public fb: FormBuilder,
+
+  ) {
+
     dragulaService.drag.subscribe((value) => {
-        console.log(value);
+      //console.log(value);
       this.onDrag(value.slice(1));
     });
     dragulaService.drop.subscribe((value) => {
-        console.log(value);
+      //console.log(value);
       this.onDrop(value.slice(1));
     });
     dragulaService.over.subscribe((value) => {
-        console.log(value);
+      //console.log(value);
       this.onOver(value.slice(1));
     });
     dragulaService.out.subscribe((value) => {
-        console.log(value);
+      //console.log(value);
       this.onOut(value.slice(1));
+    });
+
+    this.updatePortletForm = this.fb.group({
+      portletname: ['', Validators.required]
     });
 
   }
 
-//modal open
+
+
+  ngOnInit() {
+    this.activatedRoute.params.subscribe((params: Params) => {
+      this.boardIndex = params['boardid'];
+    });
+    this.getAllPortlets();
+  }
+
+  portletUpdate(responseFromChild) {
+    this.portletDataArray = responseFromChild;
+  }
+
+
+  getAllPortlets() {
+    this.httpService.getData(Constant.API_ENDPOINT + 'portlet/' + this.boardIndex)
+      .subscribe(
+      (data): void => {
+        this.portletData = data;
+        this.portletDataArray = this.portletData.portlet;
+      }
+      );
+  }
+
+  addPortlet(index) {
+    if (this.updatePortletForm.value.portletname) {
+      const data = this.updatePortletForm.value;
+      data.boardId = this.boardIndex;
+      this.httpService.editData(Constant.API_ENDPOINT + 'portlet/' + this.boardIndex, data)
+        .subscribe(
+        (response: Response): void => {
+          this.portletData = response;
+          this.portletDataArray = this.portletData.board.portlet;
+          this.updatePortletForm.reset();
+          this.dropdown.close();
+        }
+        );
+    }
+  }
+  //modal open
   open(content) {
     this.modalService.open(content)
   }

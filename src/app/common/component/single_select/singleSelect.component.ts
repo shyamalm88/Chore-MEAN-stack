@@ -36,16 +36,16 @@ export class SingleSelectComponent implements OnChanges {
     }
 
     public selected(value: any): void {
-        console.log('Selected value is: ', value);
+        //console.log('Selected value is: ', value);
         this.onSelected.emit(value.text);
     }
 
     public removed(value: any): void {
-        console.log('Removed value is: ', value);
+        //console.log('Removed value is: ', value);
     }
 
     public typed(value: any): void {
-        console.log('New search input: ', value);
+        //console.log('New search input: ', value);
     }
 
     public refreshValue(value: any): void {

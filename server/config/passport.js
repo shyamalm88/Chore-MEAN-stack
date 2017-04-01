@@ -107,7 +107,7 @@ module.exports = function(passport) {
                             // if there is no user, create them
                             User.findOne({ 'local.email': (profile.emails[0].value || '').toLowerCase() }, function(err, user) {
                                 if (err) {
-                                    console.log(err);
+                                    //console.log(err);
                                 }
                                 if (user) {
                                     user.facebook.token = token;
@@ -219,7 +219,7 @@ module.exports = function(passport) {
                         } else {
                             User.findOne({ 'local.email': (profile.emails[0].value || '').toLowerCase() }, function(err, user) {
                                 if (err) {
-                                    console.log(err);
+                                    //console.log(err);
                                 }
                                 if (user) {
                                     user.google.token = token;
