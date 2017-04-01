@@ -64,12 +64,12 @@ export class SignupComponent implements OnInit {
                         self.router.navigate(['login']);
                     }, 1000);
                 }else{
-                    console.log('problem in signup')
+                    //console.log('problem in signup')
                     this.errorMessage = true;
                 }
             },
             (err): void => { //error catching method
-                console.log(err)
+                //console.log(err)
                 this.errorMessage = true;
             },
         );

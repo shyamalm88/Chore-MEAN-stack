@@ -47,7 +47,7 @@ export class CreateTeamComponent implements OnInit {
         },
         (err): void => {            //error catching method
           this.showErrorMessage(); //show error message
-          console.log(err);
+          //console.log(err);
         },
       );
     } else {

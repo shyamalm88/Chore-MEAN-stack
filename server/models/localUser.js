@@ -23,7 +23,7 @@ module.exports.findAll = function(callback) {
 module.exports.addNewUser = function(body, callback) {
     User.findOne({ $or: [{ 'facebook.email': body.user.email }, { 'google.email': body.user.email }, { 'local.email': body.user.email }] }, function(err, user) {
         if (err) {
-            console.log(err);
+            //console.log(err);
         }
         if (user) {
             user.local.name = body.firstName + ' ' + body.lastName;

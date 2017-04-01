@@ -1,3 +1,6 @@
+var mongoose = require('mongoose');
+var Board = mongoose.model('Board');
+
 module.exports = function(app, passport) {
     // LOGOUT ==============================
     app.get('/logout', function(req, res) {
@@ -177,6 +180,21 @@ module.exports = function(app, passport) {
         next();
     });
     app.get('/chore/c/:boardid/:boardname', isLoggedIn, function(req, res, next) {
+        next();
+    });
+
+    app.get('/chore/c/:boardid/:boardname', function(req, res, next) {
+        //console.log(req.params.boardid, 187);
+        Board.findOne({ 'boardId': req.params.boardid }, function(err, result) {
+            if (err) {
+                //console.log(err);
+                //res.redirect('/board');
+                throw err;
+            }
+            if (!result) {
+                res.redirect('/board');
+            }
+        });
         next();
     });
 

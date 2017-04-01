@@ -203,6 +203,7 @@ h6 {
     .portlet-heading {
         padding: 5px 10px 5px 10px;
         margin: -1px 0px 0 0px;
+        border-radius: 4px 4px 0px 0px;
         .portlet-title {
             text-overflow: ellipsis;
             width: 85%;
@@ -4404,4 +4405,33 @@ main.viewEditBoard {
             float: right;
         }
     }
+}
+
+.v-m {
+    vertical-align: middle;
+}
+
+.v-t {
+    vertical-align: top;
+}
+
+.v-b {
+    vertical-align: bottom;
+}
+
+.i-b {
+    display: inline-block;
+}
+
+.newPortlet {
+    background: #009688;
+    color: #fff;
+    display: block;
+    padding: 12px 10px 12px 10px;
+    font-size: 13px;
+    font-weight: 400;
+    margin-bottom: 0;
+    letter-spacing: 0.03em;
+    border-radius: 3px;
+    cursor: pointer;
 }

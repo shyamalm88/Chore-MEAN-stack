@@ -10,8 +10,8 @@
             <div class="clearfix"></div>
         </div>
         <div class="panel-collapse">
-            <div class="portlet-body">
-                <span aria-haspopup="true" class="ion-edit list-card-operation dropdown-toggle dropdown" ngbdropdown="" ngbdropdowntoggle="" aria-expanded="false" (click)="open(content, board)"></span> {{board.description}}
+            <div class="portlet-body" (click)="navigateToBoard(board.boardId, board.name)">
+                <span aria-haspopup="true" class="ion-edit list-card-operation dropdown-toggle dropdown" ngbdropdown="" ngbdropdowntoggle="" aria-expanded="false" (click)="open($event, content, board)"></span> {{board.description}}
             </div>
         </div>
     </div>

@@ -53,7 +53,7 @@ export class ListBoardComponent implements OnInit {
         private httpService: HttpService,
         public fb: FormBuilder,
         private router: Router,
-    ) {}
+    ) { }
 
     /**
      * =============================================
@@ -68,7 +68,7 @@ export class ListBoardComponent implements OnInit {
     }
 
     onSelected(value: boolean) {
-        console.log(value);
+        //console.log(value);
         this.selectedValue = value;
     }
 
@@ -78,7 +78,7 @@ export class ListBoardComponent implements OnInit {
             data = JSON.parse(data.response);
             this.uploadFile = data;
             this.fileName = this.uploadFile.originalname;
-            console.log(this.uploadFile);
+            //console.log(this.uploadFile);
         }
 
     }
@@ -99,11 +99,11 @@ export class ListBoardComponent implements OnInit {
                     this.boardDisplayData = data;
                     this.dismissModal(modal); // dismissing modal
                     this.showSuccessMessage(); // creating success message
-                    //console.log(this.boardDisplayData);
+                    ////console.log(this.boardDisplayData);
                 },
                 (err): void => { //error catching method
                     this.showErrorMessage(); //show error message
-                    console.log(err)
+                    //console.log(err)
                 },
             );
         } else {
@@ -116,15 +116,15 @@ export class ListBoardComponent implements OnInit {
         boardData.coverImageUrl = '';
         boardData.coverImageID = '';
         this.httpService.deleteImage(Constant.API_ENDPOINT + 'deleteImage/' + boardID + '/' + coverImageID, boardData)
-        .subscribe(
+            .subscribe(
             (response): void => {
                 this.boardDisplayData = response;
-                if(this.boardDisplayData.message === 'Successfully updated the board'){
+                if (this.boardDisplayData.message === 'Successfully updated the board') {
                     this.imageDisplay = false; // for removing the image section
                     this.imageUploadDisplay = true; // for displaying the image upload panel;
                 }
             }
-        )
+            )
 
     }
 
@@ -133,7 +133,7 @@ export class ListBoardComponent implements OnInit {
             .subscribe(
             (data): void => {
                 this.teamSet = data;
-                console.log(this.teamSet);
+                //console.log(this.teamSet);
             }
             );
     }
@@ -144,7 +144,7 @@ export class ListBoardComponent implements OnInit {
 
     showSuccessMessage(): void {
         this.success = this.boardDisplayData.message;
-        console.log(this.success);
+        //console.log(this.success);
     }
 
     /**
@@ -160,18 +160,24 @@ export class ListBoardComponent implements OnInit {
      */
 
     dismissModal(modal): void {
-        this.router.navigate(['/chore/c/' + this.boardDisplayData.board.boardId + '/' + this.boardDisplayData.board.name.replace(/ /g,"_")]);
+        this.router.navigate(['/chore/c/' + this.boardDisplayData.board.boardId + '/' + this.boardDisplayData.board.name.replace(/ /g, "_")]);
         setTimeout(function () {
             modal('Cross click');
         }, 1500);
 
     }
 
+    navigateToBoard(id, name) {
+        //console.log(id, name);
+        this.router.navigate(['/chore/c/' + id + '/' + name.replace(/ /g, "_")]);
+    }
+
     /**
      * open modal method to open the board edit modal
      */
 
-    open(content): void {
+    open(event, content): void {
+        event.stopPropagation();
         this.success = undefined;
         this.error = undefined;
         this.updateBoardForm = this.fb.group({

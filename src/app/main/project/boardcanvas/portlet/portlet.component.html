@@ -1,11 +1,12 @@
-<div class="col-lg-3">
+<div class="col-lg-3" *ngFor="let item of portletDataArray">
     <div class="portlet">
         <div class="portlet-heading bg-teal">
             <h3 class="portlet-title">
-                Getting Started
+                {{item.portletName}}
             </h3>
+
             <div class="portlet-widgets">
-                <chore-portlet-actions></chore-portlet-actions>
+                <chore-portlet-actions [portlet]="item" (portletUpdate)="portletUpdate($event)"></chore-portlet-actions>
             </div>
             <div class="clearfix"></div>
         </div>
@@ -51,4 +52,19 @@
     </div>
 
     <div class="clearfix"></div>
+</div>
+<div class="col-lg-3">
+    <span class="newPortlet" ngbDropdownToggle ngbDropdown #portletAddDrop="ngbDropdown">Add a Portlet</span>
+    <div class="pop-over dropdown-menu" style="left:15px; top: -1px;" (click)="$event.stopPropagation(); portletAddDrop.open();">
+        <div class="popover-content">
+            <form [formGroup]="updatePortletForm" (ngSubmit)="addPortlet(boardIndex)">
+                <div class="form-group m-b-0">
+                    <label class="control-label sr-only" for="Name">Add a Portlet</label>
+                    <input id="Name" name="Name" type="text" placeholder="Add a Portlet" class="form-control input-md textboxchange" formControlName="portletname">
+                    <button class="btn btn-teal m-t-10 v-m i-b" type="submit">Add</button>
+                    <a href="#" class="icon-sm ion-close m-l-10 v-m i-b m-t-10" (click)="$event.stopPropagation(); $event.preventDefault(); portletAddDrop.close();"></a>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>

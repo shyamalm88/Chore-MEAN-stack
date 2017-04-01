@@ -26,7 +26,7 @@ app.use(function(req, res, next) {
 var path = null;
 app.route("/imageUpload")
     .post(multer({ dest: "./uploads/" }).single("cover"), function(req, res) {
-        console.log(req);
+        //console.log(req);
         path = req.file.path;
         res.send(req.file);
     });
@@ -64,7 +64,7 @@ app.route('/board')
                         //if path exist then delete
                         fs.unlink(path, (err) => {
                             if (err) throw err;
-                            console.log('successfully deleted ' + path);
+                            //console.log('successfully deleted ' + path);
                         });
                     }
                     //assign images into board entry
@@ -109,7 +109,7 @@ app.route('/board/:index')
                     //if path exist then delete
                     fs.unlink(path, (err) => {
                         if (err) throw err;
-                        console.log('successfully deleted ' + path);
+                        //console.log('successfully deleted ' + path);
                     });
                 }
                 //assign images into board entry
@@ -142,6 +142,9 @@ app.route('/board/:index')
             res.json(results);
         });
     });
+
+
+
 
 
 

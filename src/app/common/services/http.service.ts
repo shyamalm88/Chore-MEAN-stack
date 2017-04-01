@@ -47,10 +47,18 @@ export class HttpService {
 
   // delete data
   public deleteImage(url: string, data: any): Observable<Response> {
-    console.log(data);
+    //console.log(data);
     return this.http
       .put(url, data)
       .map(this.extractData)
+      .catch(err => {
+        return this.handleError(err);
+      });
+  }
+
+  public deleteData(url: string): Observable<Response> {
+    return this.http
+      .delete(url)
       .catch(err => {
         return this.handleError(err);
       });
@@ -67,7 +75,7 @@ export class HttpService {
     let errMsg: string;
     if (error instanceof Response) {
       if (error.status === 401) {
-        console.log('not loggedin');
+        //console.log('not loggedin');
         //this.router.navigate(['/login']);
       } else {
         const body = error.json() || {};
