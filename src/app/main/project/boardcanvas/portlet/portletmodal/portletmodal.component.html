@@ -3,12 +3,19 @@
     <div class=" card-detail-window u-clearfix ">
         <div class="templateImage " style="background-image: url( '../images/bg.png') "></div>
         <div class="window-header "><span class="window-header-icon fa fa-2x ion-card "></span>
-            <div class="window-title ">
-                <h2 class="card-detail-title-assist js-title-helper " dir="auto ">Trello Basics Bla Bla Bla Bla Bla Bla Bla Bla</h2>
+            <div class="window-title">
+                <h2 class="card-detail-title-assist" dir="auto" *ngIf="viewLabel" (click)="editLabel()">{{card.portletCardName}}</h2>
+                <form [formGroup]="editLabelForm" *ngIf="!viewLabel">
+                    <input type="text" formControlName="cardlabel" [(ngModel)]="card.portletCardName" autofocus class="editModalTextBox v-m" focus="true">
+                    <button type="button" class="btn btn-teal v-m" (click)="editDoneLabel()">Save</button>
+                </form>
+
             </div>
             <div class="window-header-inline-content quiet js-current-list ">
-                <p class="u-inline-block u-bottom ">in list <a class="js-open-move-from-header " href="# ">Stuff To Try (this is a list)</a></p>
+                <p class="u-inline-block u-bottom">in list Stuff To Try (this is a list)</p>
             </div>
+            <a href="javascript:void" class="btn btn-xs btn-default">Edit</a>
+
             <div class="window-header-inline-content js-subscribed-indicator-header "><span class="icon-sm icon-subscribe "></span></div>
         </div>
         <div class="window-main-col ">
@@ -49,7 +56,15 @@
                     <h3 class="card-detail-item-header js-show-with-desc ">Description</h3><a class="card-detail-item-header-edit hide-on-edit js-show-with-desc js-edit-desc " href="# ">Edit</a>
                     <div class="description-content js-desc-content ">
                         <div class="description-content-fade-button "><span class="description-content-fade-button-text ">Show full description.</span></div>
-                        <div class="current markeddown hide-on-edit js-card-desc js-show-with-desc " dir="auto ">
+                        <div class="current markeddown hide-on-edit" dir="auto ">
+
+                            <a href="javascript:void" class="btn btn-default btn-sm pull-left m-b-10" (click)="showCKEditor()">Add Description</a>
+                            <div class="clearfix"></div>
+                            <ckeditor *ngIf="addDescription" [(ngModel)]="ckeditorContent" [config]="config" debounce="500">
+                            </ckeditor>
+                            <button (click)="getValue()" *ngIf="addDescription" class="btn btn-teal m-t-10">Add</button>
+
+
                             <h3>Three Trello Basics:</h3>
                             <p><strong>1. Boards</strong>: organize a project or just about anything.<br><strong>2. Lists</strong>: are super flexible, but often steps like <em>"To Do, Doing, and Done "</em>.<br><strong>3. Cards</strong>: represent tasks
                                 or store information. </p>
