@@ -23,6 +23,7 @@
     "@ng-bootstrap/ng-bootstrap": "^1.0.0-alpha.20",
     "@types/node": "^6.0.65",
     "@types/underscore": "^1.8.0",
+    "angular2-focus": "^1.1.0",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.17.1",
     "cloudinary": "^1.8.0",

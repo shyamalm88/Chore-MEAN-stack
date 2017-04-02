@@ -38,19 +38,7 @@ app.route('/portlet/:index')
                     message: "Board with ID: " + req.params.index + " not found.",
                 });
             }
-
-            function makeId() { // Public Domain/MIT
-                var d = new Date().getTime();
-                if (typeof performance !== 'undefined' && typeof performance.now === 'function') {
-                    d += performance.now(); //use high-precision timer if available
-                }
-                return 'xyyxyy-xyxyy-xxyx-xyxyx'.replace(/[xy-]/g, function(c) {
-                    var r = (d + Math.random() * 16) % 16 | 0;
-                    d = Math.floor(d / 16);
-                    return (c === 'y' ? r : (r & 0x3 | 0x8)).toString(16);
-                });
-            }
-            var portletId = makeId();
+            var portletId = makeId('xyyxyy-xyxyy-xxyx-xyxyx');
             if (result) {
                 result.portlet.push({
                     "portletName": req.body.portletname,
@@ -58,6 +46,7 @@ app.route('/portlet/:index')
                     "portletCards": [],
                     "portletCreatedOn": new Date()
                 });
+                result.markModified('portlet');
                 result.save(function(err, result) {
                     if (err) throw err;
                     res.json({
@@ -75,15 +64,14 @@ app.route('/portlet/:index')
 app.route('/edit/portlet/:portletId')
     .put(function(req, res) {
         Board.findOne({ 'portlet.portletId': req.params.portletId }, function(err, result) {
-            var result = result;
-            var dataToSave;
-            result.portlet.forEach(function(element) {
+            var responseResult = result;
+            responseResult.portlet.forEach(function(element) {
                 if (element.portletId === req.params.portletId) {
                     var index = result.portlet.indexOf(element);
-                    result.portlet.splice(index, 1);
+                    responseResult.portlet.splice(index, 1);
                 }
             });
-            result.save(function(err, result) {
+            responseResult.save(function(err, result) {
                 if (err) throw err;
                 res.json({
                     message: 'Successfully deleted the portlet',
@@ -95,5 +83,62 @@ app.route('/edit/portlet/:portletId')
         });
     });
 
+app.route('/add/cards/:portletId')
+    .put(function(req, res) {
+        Board.findOne({ 'portlet.portletId': req.params.portletId }, function(err, result) {
+            if (err) throw err;
+            if (!result) {
+                res.json({
+                    message: "Board with ID: " + req.params.portletId + " not found.",
+                });
+            }
+            var portletCardId = makeId('yxcay-xyxyy-xayx-xycyx');
+            if (result) {
+                var responseCardResult = result;
+                responseCardResult.portlet.forEach(function(element) {
+                    if (element.portletId === req.params.portletId) {
+                        element.portletCards.push({
+                            "portletCardName": req.body.cardlabel,
+                            "portletCardId": portletCardId,
+                            "portletCardCreatedOn": new Date(),
+                            "portletCardsImages": [],
+                            "portletCardsComments": [],
+                            "portletCardsMembers": [],
+                            "portletCardsTodo": [],
+                            "portletCardsDescription": {},
+                            "portletCardsCoverImageId": "",
+                            "portletCardsCoverImageUrl": "",
+                        });
+
+                        responseCardResult.markModified('portlet');
+                        responseCardResult.save(function(err, result) {
+                            if (err) {
+                                throw err;
+                            }
+                            res.json({
+                                message: 'Successfully added card',
+                                board: result
+                            });
+                        });
+                    }
+                });
+            }
+        });
+
+    });
+
+
+
+function makeId(pattern) { // Public Domain/MIT
+    var d = new Date().getTime();
+    if (typeof performance !== 'undefined' && typeof performance.now === 'function') {
+        d += performance.now(); //use high-precision timer if available
+    }
+    return pattern.replace(/[xy-]/g, function(c) {
+        var r = (d + Math.random() * 16) % 16 | 0;
+        d = Math.floor(d / 16);
+        return (c === 'y' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+}
 
 module.exports = app;

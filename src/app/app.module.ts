@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {FocusModule} from 'angular2-focus';
 import { DragulaModule } from 'ng2-dragula/ng2-dragula';
 import { SelectModule } from 'ng2-select';
 import * as _ from 'underscore';
@@ -96,6 +97,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     DragulaModule,
     SelectModule,
+    FocusModule.forRoot()
   ],
   providers: [HttpService, SharedDataService, AuthService],
   bootstrap: [AppComponent]

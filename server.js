@@ -113,5 +113,5 @@ mongoose.connect(configDB.url);
 
 var port = process.env.PORT || 8080;
 app.listen(port, function() {
-    //console.log('Server up: http://localhost:' + port);
+    console.log('Server up: http://localhost:' + port);
 });

@@ -12,7 +12,7 @@ import { Response } from '@angular/http';
 
   selector: 'chore-portlet',
   templateUrl: './portlet.component.html',
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 
 export class PortletComponent implements OnInit {
@@ -25,6 +25,7 @@ export class PortletComponent implements OnInit {
   private boardIndex;
   private portletDataArray;
   public updatePortletForm;
+  public cardCreateForm;
 
   constructor(
     private dragulaService: DragulaService,
@@ -53,8 +54,20 @@ export class PortletComponent implements OnInit {
       this.onOut(value.slice(1));
     });
 
+
+    /**
+     * for the portlet update form
+     */
     this.updatePortletForm = this.fb.group({
       portletname: ['', Validators.required]
+    });
+
+
+    /**
+     * for the card create form
+     */
+    this.cardCreateForm = this.fb.group({
+      cardlabel: ['', Validators.required]
     });
 
   }
@@ -68,11 +81,18 @@ export class PortletComponent implements OnInit {
     this.getAllPortlets();
   }
 
+  /**
+   * this function is used for updating
+   * view from child update
+   * @param responseFromChild
+   */
   portletUpdate(responseFromChild) {
     this.portletDataArray = responseFromChild;
   }
 
-
+  /**
+   * get all portlets from database
+   */
   getAllPortlets() {
     this.httpService.getData(Constant.API_ENDPOINT + 'portlet/' + this.boardIndex)
       .subscribe(
@@ -83,6 +103,10 @@ export class PortletComponent implements OnInit {
       );
   }
 
+  /**
+   *
+   * @param index add portlets into database
+   */
   addPortlet(index) {
     if (this.updatePortletForm.value.portletname) {
       const data = this.updatePortletForm.value;
@@ -92,12 +116,38 @@ export class PortletComponent implements OnInit {
         (response: Response): void => {
           this.portletData = response;
           this.portletDataArray = this.portletData.board.portlet;
+          console.log(this.portletDataArray);
           this.updatePortletForm.reset();
           this.dropdown.close();
         }
         );
     }
   }
+
+  /**
+   * this function is for adding cards into database
+   */
+  addCard(formValue, item) {
+    if (formValue.value.cardlabel) {
+      const data = formValue.value;
+      this.httpService.editData(Constant.API_ENDPOINT + 'add/cards/' + item.portletId, data)
+        .subscribe(
+        (response): void => {
+          this.portletData = response;
+          this.portletDataArray = this.portletData.board.portlet;
+          formValue.reset();
+          this.hideme(item);
+        }
+        );
+    }
+  }
+
+
+
+  hideme(item) {
+    item.hideme = !item.hideme;
+  }
+
   //modal open
   open(content) {
     this.modalService.open(content)
