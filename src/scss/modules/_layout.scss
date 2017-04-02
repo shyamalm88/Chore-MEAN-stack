@@ -1335,7 +1335,8 @@ textarea.mod-card-back-title {
 
 .window-title h2 {
     margin-right: 4px;
-    margin-top: 0;
+    margin-top: -4px;
+    font-weight: 600;
     font-size: 25px;
 }
 
@@ -4458,4 +4459,27 @@ textarea.form-control.textboxchange {
 
 .portlet .portlet-body.addCardBody:hover {
     background-color: #fff;
+}
+
+.editModalTextBox {
+    width: 70%;
+    border: none;
+    height: 35px;
+    font-size: 25px;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+    padding: 10px;
+    font-weight: 600;
+    font-family: "Lato", "sans-serif";
+}
+
+.window-title h2 {
+    padding-left: 10px;
+    margin-top: 0px;
+}
+
+.modal .modal-dialog .modal-content {
+    border-color: #DDDDDD;
+    border-radius: 3px;
+    background: #EDEFF0;
 }

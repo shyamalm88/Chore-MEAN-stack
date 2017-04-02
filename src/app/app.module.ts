@@ -5,12 +5,13 @@ import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import {FocusModule} from 'angular2-focus';
+import { CKEditorModule } from 'ng2-ckeditor';
+import { FocusModule } from 'angular2-focus';
 import { DragulaModule } from 'ng2-dragula/ng2-dragula';
 import { SelectModule } from 'ng2-select';
 import * as _ from 'underscore';
 //import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-upload/ng2-file-upload';
-import {UPLOAD_DIRECTIVES} from 'ng2-file-uploader/ng2-file-uploader';
+import { UPLOAD_DIRECTIVES } from 'ng2-file-uploader/ng2-file-uploader';
 
 import { HttpService } from './common/services/http.service';
 import { AuthService } from './common/services/auth.service';
@@ -97,7 +98,8 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     DragulaModule,
     SelectModule,
-    FocusModule.forRoot()
+    FocusModule.forRoot(),
+    CKEditorModule
   ],
   providers: [HttpService, SharedDataService, AuthService],
   bootstrap: [AppComponent]

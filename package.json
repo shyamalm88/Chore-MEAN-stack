@@ -42,6 +42,7 @@
     "mongoose": "^4.8.6",
     "morgan": "^1.8.1",
     "multer": "^1.3.0",
+    "ng2-ckeditor": "^1.1.6",
     "ng2-dragula": "^1.3.0",
     "ng2-file-uploader": "^0.1.4",
     "ng2-select": "^1.2.0",
