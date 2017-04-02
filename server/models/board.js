@@ -27,9 +27,7 @@ var BoardSchema = new Schema({
 
 BoardSchema.pre('save', function(next) {
     var now = new Date();
-
     this.updated_at = now;
-    this.boardId = rString;
     if (!this.created_at) {
         this.created_at = now;
     }
