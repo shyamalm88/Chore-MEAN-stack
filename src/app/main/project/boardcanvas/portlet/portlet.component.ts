@@ -9,7 +9,6 @@ import { Response } from '@angular/http';
 
 
 @Component({
-
   selector: 'chore-portlet',
   templateUrl: './portlet.component.html',
   encapsulation: ViewEncapsulation.None,
