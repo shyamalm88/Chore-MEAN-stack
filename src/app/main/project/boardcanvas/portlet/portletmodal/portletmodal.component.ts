@@ -117,7 +117,7 @@ export class PortletModalComponent implements OnInit {
   addTagline() {
     this.editAddTagLineVisible = true;
     this.addTagLineForm = this.fb.group({
-      portletCardTagLine: [ this.card.portletCardTagLine , Validators.required]
+      portletCardTagLine: [this.card.portletCardTagLine, Validators.required]
     });
   }
 
@@ -184,16 +184,21 @@ export class PortletModalComponent implements OnInit {
     console.log(this.addDescriptionForm.value);
     const data = this.addDescriptionForm.value;
     let id = portletCardId;
-    this.httpService.editData(Constant.API_ENDPOINT + 'edit/cards/' + id + '/portletCardsDescription', data)
-      .subscribe(
-      (response): void => {
-        console.log(response);
-        this.cardResponseBoard = response;
-        this.cardResponseBoard = this.cardResponseBoard.board.portlet;
-        this.cardUpdate.emit(this.cardResponseBoard);
-        this.addDescription = false;
-      }
-      )
+    if (this.addDescriptionForm.value.portletCardsDescription) {
+      this.httpService.editData(Constant.API_ENDPOINT + 'edit/cards/' + id + '/portletCardsDescription', data)
+        .subscribe(
+        (response): void => {
+          console.log(response);
+          this.cardResponseBoard = response;
+          this.cardResponseBoard = this.cardResponseBoard.board.portlet;
+          this.cardUpdate.emit(this.cardResponseBoard);
+          this.addDescription = false;
+        }
+        )
+    }else{
+      this.addDescription = false;
+    }
+
   }
 
   /**

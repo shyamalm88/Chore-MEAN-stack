@@ -13,7 +13,7 @@
             </div>
             <div class="window-header-inline-content quiet js-current-list ">
                 <p class="u-inline-block u-bottom text-capitalize" *ngIf="card.portletCardTagLine">{{card.portletCardTagLine}}</p>
-                <button class="btn btn-xs btn-default m-l-15" (click)="addTagline()">Add / Edit a Tag Line</button>
+                <button class="btn btn-xs btn-default" [ngClass]="{'m-l-15':card.portletCardTagLine}" (click)="addTagline()">Add / Edit</button>
                 <div>
                     <form [formGroup]="addTagLineForm" *ngIf="editAddTagLineVisible">
                         <input type="text" formControlName="portletCardTagLine" [(ngModel)]="card.portletCardTagLine" autofocus class="editModalTextBox textSmall v-m m-t-5" focus="true">
@@ -71,16 +71,14 @@
                     <div></div>
                 </div>
                 <div class="card-detail-item card-detail-item-block u-clearfix editable " attr="desc ">
-                    <a href="javascript:void" class="btn btn-default btn-xs pull-right m-b-10" (click)="showCKEditor()">Add/Edit</a>
+
                     <h3 class="card-detail-item-header js-show-with-desc "><i class="fa fa-file-text-o" aria-hidden="true"></i> Description</h3>
+                    <a href="javascript:void" class="btn btn-default btn-xs" (click)="showCKEditor()">Add/Edit</a>
 
                     <div class="description-content js-desc-content ">
                         <div class="current markeddown hide-on-edit" dir="auto">
                             <div class="description m-t-10 m-b-10" [innerHTML]="card.portletCardsDescription | safeHtml" *ngIf="card.portletCardsDescription && !addDescription"></div>
-
-
-
-                            <div class="clearfix"></div>
+                            <div class="clearfix m-b-10"></div>
                             <form [formGroup]="addDescriptionForm" *ngIf="addDescription">
                                 <ckeditor *ngIf="addDescription" formControlName="portletCardsDescription" [(ngModel)]="card.portletCardsDescription" [config]="config" debounce="0" focus="true"></ckeditor>
                                 <button (click)="addEditDescriptionValue(card.portletCardId)" *ngIf="addDescription" class="btn btn-teal m-t-10">Add</button>
