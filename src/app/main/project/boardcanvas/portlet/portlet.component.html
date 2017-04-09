@@ -10,6 +10,9 @@
             <div class="clearfix"></div>
         </div>
         <div class="list-cards" [dragula]='"first-bag"'>
+            <div class="portletAddIns" *ngIf="item.portletCards.length <= 0">
+                Please Add a card
+            </div>
             <div class="portlet-body" (click)="open(content)" *ngFor="let card of item.portletCards">
 
                 <chore-portlet-card-label [card]="card"></chore-portlet-card-label>
