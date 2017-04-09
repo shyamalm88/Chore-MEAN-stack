@@ -4483,3 +4483,228 @@ textarea.form-control.textboxchange {
     border-radius: 3px;
     background: #EDEFF0;
 }
+
+.description {
+    border: 1px solid #e4e3e3;
+    padding: 10px;
+    img {
+        width: 100%;
+    }
+    table {
+        width: 100%;
+        border: 1px solid #ccc;
+        th {
+            background: #dadada;
+            padding: 5px;
+        }
+        td {
+            padding: 5px;
+            table {
+                padding: 10px;
+            }
+        }
+    }
+    &:after {
+        content: '';
+        display: block;
+        clear: both;
+    }
+    .marker {
+        background: yellow;
+    }
+    ul {
+        padding-left: 40px;
+        list-style: disc;
+        margin-bottom: 10px;
+    }
+}
+
+.slim-loading-bar {
+    position: relative;
+    z-index: 99999999;
+}
+
+#loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -2.7em;
+    margin-left: -2.7em;
+    width: 5.4em;
+    height: 5.4em;
+    background-color: transparent;
+}
+
+#hill {
+    position: absolute;
+    width: 7.1em;
+    height: 7.1em;
+    top: 1.7em;
+    left: 1.7em;
+    background-color: transparent;
+    border-left: .25em solid whitesmoke;
+    transform: rotate(45deg);
+}
+
+#hill:after {
+    content: '';
+    position: absolute;
+    width: 7.1em;
+    height: 7.1em;
+    left: 0;
+    background-color: transparent;
+}
+
+#box {
+    position: absolute;
+    left: 0;
+    bottom: -.1em;
+    width: 1em;
+    height: 1em;
+    background-color: transparent;
+    border: .25em solid whitesmoke;
+    border-radius: 15%;
+    transform: translate(0, -1em) rotate(-45deg);
+    animation: push 2.5s cubic-bezier(.79, 0, .47, .97) infinite;
+}
+
+@keyframes push {
+    0% {
+        transform: translate(0, -1em) rotate(-45deg);
+    }
+    5% {
+        transform: translate(0, -1em) rotate(-50deg);
+    }
+    20% {
+        transform: translate(1em, -2em) rotate(47deg);
+    }
+    25% {
+        transform: translate(1em, -2em) rotate(45deg);
+    }
+    30% {
+        transform: translate(1em, -2em) rotate(40deg);
+    }
+    45% {
+        transform: translate(2em, -3em) rotate(137deg);
+    }
+    50% {
+        transform: translate(2em, -3em) rotate(135deg);
+    }
+    55% {
+        transform: translate(2em, -3em) rotate(130deg);
+    }
+    70% {
+        transform: translate(3em, -4em) rotate(217deg);
+    }
+    75% {
+        transform: translate(3em, -4em) rotate(220deg);
+    }
+    100% {
+        transform: translate(0, -1em) rotate(-225deg);
+    }
+}
+
+.d-inline-block {
+    display: inline-block!important;
+}
+
+.rounded {
+    border-radius: .25rem;
+}
+
+.pt-1 {
+    padding-top: .25rem!important;
+}
+
+.rounded-right,
+.rounded-top {
+    border-top-right-radius: .25rem;
+}
+
+.rounded-top {
+    border-top-left-radius: .25rem;
+}
+
+.bg-faded {
+    background-color: #f7f7f7;
+}
+
+.justify-content-between {
+    -webkit-box-pack: justify!important;
+    -ms-flex-pack: justify!important;
+    justify-content: space-between!important;
+}
+
+.px-1 {
+    padding-right: .25rem!important;
+}
+
+.pl-1,
+.px-1 {
+    padding-left: .25rem!important;
+}
+
+.pb-1 {
+    padding-bottom: .25rem!important;
+}
+
+.d-flex {
+    display: -webkit-box!important;
+    display: -ms-flexbox!important;
+    display: flex!important;
+}
+
+.ngb-dp-day,
+.ngb-dp-week-number {
+    width: 2em !important;
+    height: 2em !important;
+    color: #333;
+}
+
+.ngb-dp-weekday {
+    width: 2em !important;
+}
+
+.ngb-dp-week-number {
+    line-height: 2em !important;
+}
+
+.ngb-dp-weekday {
+    &small,
+    &.small {
+        font-size: 100%;
+    }
+}
+
+.ngb-dp-day {
+    background: #fff;
+}
+
+ngb-datepicker {
+    position: relative;
+    .btn-secondary:hover {
+        color: #292b2c;
+        background-color: #e6e6e6;
+        border-color: #adadad;
+    }
+    .outside {
+        opacity: 0 !important;
+    }
+}
+
+select.custom-select {
+    padding: 0.25em 0.5em !important;
+    font-size: 0.875em !important;
+    line-height: 1.25;
+    height: inherit;
+    width: 50%;
+    color: #333;
+}
+
+ngb-datepicker-navigation-select {
+    width: 9em !important;
+}
+
+.input-group-addon {
+    border: 1px solid #ccc;
+}

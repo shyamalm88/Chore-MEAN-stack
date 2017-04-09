@@ -2,20 +2,25 @@
 <div class="window-wrapper js-tab-parent">
     <div class=" card-detail-window u-clearfix ">
         <div class="templateImage " style="background-image: url( '../images/bg.png') "></div>
-        <div class="window-header "><span class="window-header-icon fa fa-2x ion-card "></span>
+        <div class="window-header "><span class="window-header-icon fa fa-2x fa-file-text-o"></span>
             <div class="window-title">
                 <h2 class="card-detail-title-assist" dir="auto" *ngIf="viewLabel" (click)="editLabel()">{{card.portletCardName}}</h2>
                 <form [formGroup]="editLabelForm" *ngIf="!viewLabel">
-                    <input type="text" formControlName="cardlabel" [(ngModel)]="card.portletCardName" autofocus class="editModalTextBox v-m" focus="true">
-                    <button type="button" class="btn btn-teal v-m" (click)="editDoneLabel()">Save</button>
+                    <input type="text" formControlName="portletCardName" [(ngModel)]="card.portletCardName" autofocus class="editModalTextBox v-m" focus="true">
+                    <button type="button" class="btn btn-teal v-m" (click)="editDoneLabel(card.portletCardId)">Save</button>
                 </form>
 
             </div>
             <div class="window-header-inline-content quiet js-current-list ">
-                <p class="u-inline-block u-bottom">in list Stuff To Try (this is a list)</p>
+                <p class="u-inline-block u-bottom text-capitalize" *ngIf="card.portletCardTagLine">{{card.portletCardTagLine}}</p>
+                <button class="btn btn-xs btn-default m-l-15" (click)="addTagline()">Add / Edit a Tag Line</button>
+                <div>
+                    <form [formGroup]="addTagLineForm" *ngIf="editAddTagLineVisible">
+                        <input type="text" formControlName="portletCardTagLine" [(ngModel)]="card.portletCardTagLine" autofocus class="editModalTextBox v-m m-t-5" focus="true">
+                        <button type="button" class="btn btn-teal v-m m-t-5" (click)="editDoneTagLine(card.portletCardId)">Save</button>
+                    </form>
+                </div>
             </div>
-            <a href="javascript:void" class="btn btn-xs btn-default">Edit</a>
-
             <div class="window-header-inline-content js-subscribed-indicator-header "><span class="icon-sm icon-subscribe "></span></div>
         </div>
         <div class="window-main-col ">
@@ -29,61 +34,60 @@
         " title="This member has Trello Gold. "></span></div>
                         <div class="member js-member-on-card-menu member-virtual " data-idmem="589ef642a34124f9eee3573e "><span class="member-initials " title="sguha1988.life (sguha1988life) ">S</span><span class="member-gold-badge " title="This member
         has Trello Gold. "></span></div>
-                        <a class="card-detail-item-add-button dark-hover js-details-edit-members "><span class="fa fa-lg ion-android-add "></span></a>
+                        <a class="card-detail-item-add-button dark-hover js-details-edit-members "><span class="fa fa-lg ion-android-add "></span></a> <span class="clearfix"></span>
                     </div>
                 </div>
-                <div class="card-detail-item card-detail-item-labels u-clearfix hide js-card-detail-labels ">
-                    <h3 class="card-detail-item-header ">Labels</h3>
-                    <div class="u-clearfix js-card-detail-labels-list js-edit-label "><a class="card-detail-item-add-button dark-hover js-details-edit-labels "><span class="icon-sm icon-add "></span></a></div>
+                <div class="card-detail-item card-detail-item-labels u-clearfix js-card-detail-labels ">
+                    <h3 class="card-detail-item-header "><i class="fa fa-bookmark"></i> Labels</h3>
+
                 </div>
-                <div class="card-detail-item hide js-card-detail-due-date ">
-                    <h3 class="card-detail-item-header ">Due Date</h3><span class="card-detail-badge card-detail-due-date-badge js-card-detail-due-date-badge "><span class="card-detail-badge-due-date-complete-box js-card-detail-due-date-badge-complete
-        "><span class="icon-sm icon-check card-detail-badge-due-date-complete-icon "></span></span>
-                    <span class="js-date-text card-detail-due-date-text "></span></span>
+                <div class="card-detail-item card-due-date js-card-detail-due-date" style="position:relative">
+                    <h3 class="card-detail-item-header"> <i class="fa fa-calendar-check-o"></i> Due Date</h3>
+                    <span class="clearfix"></span>
+                    <span class="btn btn-default" [ngClass]="{'btn-success': diffDays >= 0, 'btn-danger' : diffDays < 0}">
+                        <i class="fa fa-calendar-check-o"></i>
+                        <span *ngIf="card.portletCardDueDate" (click)="d.toggle()">{{date | date}}</span>
+                    <span *ngIf="!card.portletCardDueDate" (click)="d.toggle()">Choose a Date</span>
+                    <form [formGroup]="addDueDateForm">
+                        <input class="form-control" placeholder="yyyy-mm-dd" formControlName="portletCardDueDate" [(ngModel)]="card.portletCardDueDate" ngbDatepicker #d="ngbDatepicker" type="hidden" (ngModelChange)="onChange(card.portletCardId)">
+                    </form>
+                    </span>
+
+
                 </div>
-                <div class="card-detail-item hide js-card-detail-votes ">
-                    <h3 class="card-detail-item-header ">Votes</h3>
-                    <a class="card-detail-badge is-clickable js-card-detail-votes-badge js-show-votes " href="# "></a>
+
+                <div class="card-detail-item">
+                    <h3 class="card-detail-item-header "> <i class="fa fa-thumbs-o-up"></i> Votes</h3>
+                    <a class="card-detail-badge is-clickable js-card-detail-votes-badge" href="# "></a>
                 </div>
-                <div class="card-detail-item hide js-card-detail-age ">
-                    <h3 class="card-detail-item-header ">Last Updated</h3>
-                    <div class="card-detail-badge date mod-last-updated js-card-detail-age-badge "></div>
+                <div class="card-detail-item">
+                    <h3 class="card-detail-item-header "><i class="fa fa-clock-o"></i> Last Updated</h3>
+                    <div class="card-detail-badge date mod-last-updated js-card-detail-age-badge ">
+                        <span class="time">{{card.portletCardUpdatedOn | date: 'fullDate'}}</span>
+                        <span class="time">{{card.portletCardUpdatedOn | date: 'shortTime'}}</span>
+
+                    </div>
                 </div>
                 <div class="js-plugin-badges ">
                     <div></div>
                 </div>
                 <div class="card-detail-item card-detail-item-block u-clearfix editable " attr="desc ">
-                    <h3 class="card-detail-item-header js-show-with-desc ">Description</h3><a class="card-detail-item-header-edit hide-on-edit js-show-with-desc js-edit-desc " href="# ">Edit</a>
+                    <a href="javascript:void" class="btn btn-default btn-xs pull-right m-b-10" (click)="showCKEditor()">Add/Edit</a>
+                    <h3 class="card-detail-item-header js-show-with-desc "><i class="fa fa-file-text-o" aria-hidden="true"></i> Description</h3>
+
                     <div class="description-content js-desc-content ">
-                        <div class="description-content-fade-button "><span class="description-content-fade-button-text ">Show full description.</span></div>
-                        <div class="current markeddown hide-on-edit" dir="auto ">
+                        <div class="current markeddown hide-on-edit" dir="auto">
+                            <div class="description m-t-10 m-b-10" [innerHTML]="card.portletCardsDescription | safeHtml" *ngIf="card.portletCardsDescription && !addDescription"></div>
 
-                            <a href="javascript:void" class="btn btn-default btn-sm pull-left m-b-10" (click)="showCKEditor()">Add Description</a>
+
+
                             <div class="clearfix"></div>
-                            <ckeditor *ngIf="addDescription" [(ngModel)]="ckeditorContent" [config]="config" debounce="500">
-                            </ckeditor>
-                            <button (click)="getValue()" *ngIf="addDescription" class="btn btn-teal m-t-10">Add</button>
+                            <form [formGroup]="addDescriptionForm" *ngIf="addDescription">
+                                <ckeditor *ngIf="addDescription" formControlName="portletCardsDescription" [(ngModel)]="card.portletCardsDescription" [config]="config" debounce="0" focus="true"></ckeditor>
+                                <button (click)="addEditDescriptionValue(card.portletCardId)" *ngIf="addDescription" class="btn btn-teal m-t-10">Add</button>
+                            </form>
 
-
-                            <h3>Three Trello Basics:</h3>
-                            <p><strong>1. Boards</strong>: organize a project or just about anything.<br><strong>2. Lists</strong>: are super flexible, but often steps like <em>"To Do, Doing, and Done "</em>.<br><strong>3. Cards</strong>: represent tasks
-                                or store information. </p>
-                            <p>Watch this short video to learn more: </p>
-
-                            <hr>
-                            <p>You're inside the <em>Tutorial (Start Here!)</em> <strong>board</strong> right now. </p>
-                            <p>You're reading a <strong>card</strong> called <em>The Trello Basics</em>.</p>
-                            <p>Everything in this <em>Stuff to Try</em> <strong>list</strong> is a <strong>card</strong>. </p>
-                            <p>You can add as many <strong>lists</strong> and <strong>cards</strong> to a <strong>board</strong> as you want.</p>
-                            <hr>
-                            <p><strong>Click</strong> the "X " in the <strong>top right corner</strong> of this <strong>card</strong> to close the card and <strong>drag it</strong> over to the <em>"Tried It "</em> <strong>list</strong> because you're all
-                                done! 🎉
-                            </p>
                         </div>
-                        <p class="u-bottom "><a class="quiet-button mod-with-image hide-on-edit js-edit-desc js-hide-with-desc hide " href="# "><span class="icon-sm icon-description quiet-button-icon "></span>&nbsp;Edit the description…</a></p>
-                        <div class="card-detail-edit edit "><a class="helper js-format-help " href="# ">Formatting help</a></div>
-                        <p class="edits-warning quiet ">You have unsaved edits on this field. <a class="js-view-edits " href="# ">View edits</a> - <a class="js-discard-edits " href="# ">Discard</a></p>
-                        <p class="edits-error error ">Edit not saved.</p>
                     </div>
                 </div>
             </div>
@@ -129,7 +133,7 @@
                                 <div class="comment-box-options "><a class="comment-box-options-item js-comment-add-attachment " href="# " title="Add an attachment… "><span class="icon-sm fa fa-paperclip "></span></a>
                                     <a class="comment-box-options-item js-comment-mention-member " href="# " title="Mention a member… "><span class="icon-sm fa ion-at "></span></a>
                                     <a class="comment-box-options-item js-comment-add-emoji " href="# " title="Add emoji… "><span class="icon-sm fa ion-happy-outline "></span></a>
-                                    <a class="comment-box-options-item js-comment-add-card " href="# " title="Add card… "><span class="icon-sm fa fa-comment "></span></a>
+                                    <a class="comment-box-options-item js-comment-add-card " href="# " title="Add card… "><span class="icon-sm fa fa-comments-o "></span></a>
                                 </div>
                             </div>
                         </div>
@@ -271,8 +275,10 @@
         <div class="window-sidebar ">
             <div class="window-module u-clearfix ">
                 <h3>Add</h3>
-                <div class="u-clearfix "><a class="button-link js-change-card-members " href="# "><span class="icon-sm icon-member "></span>&nbsp;Members</a><a class="button-link js-edit-labels " href="# "><span class="icon-sm icon-label "></span>&nbsp;Labels</a>
-                    <a class="button-link js-add-checklist-menu " href="# "><span class="icon-sm icon-checklist "></span>&nbsp;Checklist</a><a class="button-link js-add-due-date " href="# "><span class="icon-sm icon-clock "></span>&nbsp;Due Date</a>
+                <div class="u-clearfix ">
+                    <a class="button-link js-change-card-members " href="# "><span class="icon-sm icon-member "></span>&nbsp;Members</a>
+                    <a class="button-link js-edit-labels " href="# "><span class="icon-sm icon-label "></span>&nbsp;Labels</a>
+                    <a class="button-link js-add-checklist-menu " href="# "><span class="icon-sm icon-checklist "></span>&nbsp;Checklist</a>
                     <a class="button-link js-attach " href="# "><span class="icon-sm icon-attachment "></span>&nbsp;Attachment</a>
                 </div>
             </div>

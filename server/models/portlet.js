@@ -100,14 +100,16 @@ app.route('/add/cards/:portletId')
                         element.portletCards.push({
                             "portletCardName": req.body.cardlabel,
                             "portletCardId": portletCardId,
+                            "portletCardTagLine": "",
                             "portletCardCreatedOn": new Date(),
+                            "portletCardUpdatedOn": new Date(),
                             "portletCardsImages": [],
+                            "portletCardsAttachments": [],
                             "portletCardsComments": [],
                             "portletCardsMembers": [],
                             "portletCardsTodo": [],
-                            "portletCardsDescription": {},
-                            "portletCardsCoverImageId": "",
-                            "portletCardsCoverImageUrl": "",
+                            "portletCardsDescription": '',
+                            "portletCardDueDate": '',
                         });
 
                         responseCardResult.markModified('portlet');
@@ -127,7 +129,42 @@ app.route('/add/cards/:portletId')
 
     });
 
+app.route('/edit/cards/:portletId/:editField')
+    .put(function(req, res) {
+        var editField = req.params.editField;
+        Board.findOne({ 'portlet.portletCards.portletCardId': req.params.portletId }, function(err, result) {
+            if (err) throw err;
+            if (!result) {
+                res.json({
+                    message: "portlet card with ID: " + req.params.portletId + " not found.",
+                });
+            }
+            if (result) {
+                var responseCardResult = result;
+                responseCardResult.portlet.forEach(function(element) {
+                    var elm = element;
+                    elm.portletCards.forEach(function(card) {
+                        if (card.portletCardId === req.params.portletId) {
+                            card[editField] = req.body[editField];
+                            console.log(req.body)
+                            card.portletCardUpdatedOn = new Date();
+                            responseCardResult.markModified('portlet');
+                            responseCardResult.save(function(err, result) {
+                                if (err) {
+                                    throw err;
+                                }
+                                res.json({
+                                    message: 'Successfully added card',
+                                    board: result
+                                });
+                            });
+                        }
+                    })
+                });
 
+            }
+        })
+    })
 
 function makeId(pattern) { // Public Domain/MIT
     var d = new Date().getTime();
