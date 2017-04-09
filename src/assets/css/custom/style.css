@@ -394,6 +394,7 @@ html,
   min-height: 0;
   margin-top: 10px;
   margin-bottom: -10px;
+  min-height: 20px;
 }
 .list-cards input[type="text"] {
   margin-top: 10px;
@@ -402,6 +403,15 @@ html,
 }
 .list-cards button.add {
   margin-bottom: 10px;
+}
+.list-cards .portletAddIns {
+  text-align: center;
+  border: 2px dotted #bdbbbb;
+  padding: 10px;
+  font-size: 12px;
+  background: #eaeaea;
+  color: #929191;
+  margin: 0px 20px;
 }
 
 .board-header {
@@ -3791,7 +3801,8 @@ main.viewEditBoard .portlet .portlet-body.createTeam:hover .boardIcon {
 main.viewEditBoard .portlet.haveCover {
   background-size: cover !important;
   background-repeat: no-repeat !important;
-  border: 0px;
+  border: 0;
+  background-position: 50% 50% !important;
 }
 main.viewEditBoard .portlet.haveCover .portlet-heading.bg-teal {
   background: transparent !important;
@@ -3848,6 +3859,7 @@ main.viewEditBoard .portlet.haveCover .panel-collapse .portlet-body .list-card-o
   overflow: hidden;
   vertical-align: top;
   padding: 10px;
+  width: 70%;
 }
 .inputfile + label strong {
   color: #fff;

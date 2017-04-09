@@ -89,7 +89,7 @@
             </div>
             <input type="hidden" formControlName="coverImageUrl" [(ngModel)]="board.coverImageUrl">
             <div *ngIf="board.coverImageUrl==''">
-                <input type="file" [ng-file-select]="options" class="inputfile" (onUpload)="handleUpload($event)" placeholder="upload cover image">
+                <input type="file" [ng-file-select]="options" class="inputfile" (onUpload)="handleUpload($event)" placeholder="upload cover image" accept="image/*">
                 <label for="">
                             <span>{{fileName}}</span> <strong><i class="fa fa-upload"></i> Choose a file </strong>
                         </label>
