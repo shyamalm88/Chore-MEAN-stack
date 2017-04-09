@@ -16,7 +16,7 @@
                 <button class="btn btn-xs btn-default m-l-15" (click)="addTagline()">Add / Edit a Tag Line</button>
                 <div>
                     <form [formGroup]="addTagLineForm" *ngIf="editAddTagLineVisible">
-                        <input type="text" formControlName="portletCardTagLine" [(ngModel)]="card.portletCardTagLine" autofocus class="editModalTextBox v-m m-t-5" focus="true">
+                        <input type="text" formControlName="portletCardTagLine" [(ngModel)]="card.portletCardTagLine" autofocus class="editModalTextBox textSmall v-m m-t-5" focus="true">
                         <button type="button" class="btn btn-teal v-m m-t-5" (click)="editDoneTagLine(card.portletCardId)">Save</button>
                     </form>
                 </div>
@@ -45,9 +45,8 @@
                     <h3 class="card-detail-item-header"> <i class="fa fa-calendar-check-o"></i> Due Date</h3>
                     <span class="clearfix"></span>
                     <span class="btn btn-default" [ngClass]="{'btn-success': diffDays >= 0, 'btn-danger' : diffDays < 0}">
-                        <i class="fa fa-calendar-check-o"></i>
-                        <span *ngIf="card.portletCardDueDate" (click)="d.toggle()">{{date | date}}</span>
-                    <span *ngIf="!card.portletCardDueDate" (click)="d.toggle()">Choose a Date</span>
+                        <span *ngIf="card.portletCardDueDate" (click)="d.toggle()"><i class="fa fa-calendar-check-o"></i> {{date | date}}</span>
+                    <span *ngIf="!card.portletCardDueDate" (click)="d.toggle()"><i class="fa fa-calendar-plus-o"></i> Choose a Date</span>
                     <form [formGroup]="addDueDateForm">
                         <input class="form-control" placeholder="yyyy-mm-dd" formControlName="portletCardDueDate" [(ngModel)]="card.portletCardDueDate" ngbDatepicker #d="ngbDatepicker" type="hidden" (ngModelChange)="onChange(card.portletCardId)">
                     </form>
