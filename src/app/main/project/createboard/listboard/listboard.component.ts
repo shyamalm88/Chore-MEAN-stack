@@ -32,6 +32,7 @@ export class ListBoardComponent implements OnInit {
     private imageUploadDisplay: Boolean = false;
     private imageDisplay: Boolean = true;
     private coverImageUrl;
+    private BoardUID;
     uploadFile: any; // uploadFile
     postId: number; // postId assign for the cover image post
     options: Object = {
@@ -115,6 +116,7 @@ export class ListBoardComponent implements OnInit {
         event.preventDefault();
         boardData.coverImageUrl = '';
         boardData.coverImageID = '';
+        this.BoardUID = boardID;
         this.httpService.deleteImage(Constant.API_ENDPOINT + 'deleteImage/' + boardID + '/' + coverImageID, boardData)
             .subscribe(
             (response): void => {
@@ -160,6 +162,7 @@ export class ListBoardComponent implements OnInit {
      */
 
     dismissModal(modal): void {
+
         this.router.navigate(['/chore/c/' + this.boardDisplayData.board.boardId + '/' + this.boardDisplayData.board.name.replace(/ /g, "_")]);
         setTimeout(function () {
             modal('Cross click');
@@ -186,6 +189,7 @@ export class ListBoardComponent implements OnInit {
             id: [''],
             teamname: [],
             coverImageUrl: [''],
+            boardId: ['', Validators.required]
         });
         this.modalService.open(content);
     }
