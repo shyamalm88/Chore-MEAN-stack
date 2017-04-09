@@ -4483,10 +4483,14 @@ textarea.form-control.textboxchange {
     padding: 10px;
     font-weight: 600;
     font-family: "Lato", "sans-serif";
+    &.textSmall {
+        font-size: 12px;
+        font-weight: normal;
+        color: #333;
+    }
 }
 
 .window-title h2 {
-    padding-left: 10px;
     margin-top: 0px;
 }
 

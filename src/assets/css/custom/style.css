@@ -3926,6 +3926,11 @@ textarea.form-control.textboxchange {
   font-weight: 600;
   font-family: "Lato", "sans-serif";
 }
+.editModalTextBox.textSmall {
+  font-size: 12px;
+  font-weight: normal;
+  color: #333;
+}
 
 .window-title h2 {
   padding-left: 10px;

@@ -4,7 +4,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpService } from '../../../../../common/services/http.service';
 import { Constant } from '../../../../../common/constant/constant';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { DateModel } from 'ng2-datepicker';
 @Component({
   selector: 'chore-portlet-modal',
   templateUrl: './portletmodal.component.html'
@@ -29,7 +28,6 @@ export class PortletModalComponent implements OnInit {
   private portletCardTagLine: Boolean;
   private portletCardTagLineVisible: Boolean;
   private editAddTagLineVisible: Boolean;
-  private model: DateModel;
   private date;
   private Counter = 0;
 
@@ -119,7 +117,7 @@ export class PortletModalComponent implements OnInit {
   addTagline() {
     this.editAddTagLineVisible = true;
     this.addTagLineForm = this.fb.group({
-      portletCardTagLine: [{ value: this.card.portletCardTagLine, disabled: true }, Validators.required]
+      portletCardTagLine: [ this.card.portletCardTagLine , Validators.required]
     });
   }
 
