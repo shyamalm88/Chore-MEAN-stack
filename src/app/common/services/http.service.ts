@@ -3,22 +3,29 @@ import { Http, Response } from '@angular/http';
 import { Router } from '@angular/router';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Rx';
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 
 
 
 @Injectable()
 export class HttpService {
 
-  constructor(private http: Http, private router: Router) { }
+  constructor(
+    private http: Http, private router: Router,
+    private slimLoadingBarService: SlimLoadingBarService
+  ) { }
 
   //get all data
   public getData(url: string): Observable<Response> {
+    this.slimLoadingBarService.start();
     return this.http
       .get(url)
-      .map(this.extractData)
+      .map(this.extractData, this.slimLoadingBarService.complete())
       .catch(err => {
+        this.slimLoadingBarService.complete()
         return this.handleError(err);
-      });
+      })
+      ;
   }
 
   // public socialLogin(url: string): Observable<Response> {
@@ -27,31 +34,36 @@ export class HttpService {
 
   //posting data
   public postData(url: string, data: any): Observable<Response> {
+    this.slimLoadingBarService.start();
     return this.http
       .post(url, data)
-      .map(this.extractData)
+      .map(this.extractData, this.slimLoadingBarService.complete())
       .catch(err => {
+        this.slimLoadingBarService.complete()
         return this.handleError(err);
       });
   }
 
   //editing data
   public editData(url: string, data: any): Observable<Response> {
+    this.slimLoadingBarService.start();
     return this.http
       .put(url, data)
-      .map(this.extractData)
+      .map(this.extractData, this.slimLoadingBarService.complete())
       .catch(err => {
+        this.slimLoadingBarService.complete()
         return this.handleError(err);
       });
   }
 
   // delete data
   public deleteImage(url: string, data: any): Observable<Response> {
-    //console.log(data);
+    this.slimLoadingBarService.start();
     return this.http
       .put(url, data)
-      .map(this.extractData)
+      .map(this.extractData, this.slimLoadingBarService.complete())
       .catch(err => {
+        this.slimLoadingBarService.complete()
         return this.handleError(err);
       });
   }
@@ -68,6 +80,7 @@ export class HttpService {
     const body = res.json();
     return body || {};
   }
+
 
 
   private handleError(error: Response | any) {

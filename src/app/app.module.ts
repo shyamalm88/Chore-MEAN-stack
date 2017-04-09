@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {SlimLoadingBarModule} from 'ng2-slim-loading-bar';
 import { CKEditorModule } from 'ng2-ckeditor';
 import { FocusModule } from 'angular2-focus';
 import { DragulaModule } from 'ng2-dragula/ng2-dragula';
@@ -44,6 +45,7 @@ import { ProfileDetailsComponent } from './header/profile/profile.details.compon
 import { TeamListComponent } from './main/project/createteam/teamlist.component';
 import { CreateTeamComponent } from './main/project/createteam/createteam.component';
 import { SingleSelectComponent } from './common/component/single_select/singleSelect.component';
+import { SafeHtmlPipe } from './common/pipe';
 
 
 
@@ -59,6 +61,7 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
+    SafeHtmlPipe,
     CharCount,
     // FileSelectDirective,
     // FileDropDirective,
@@ -99,7 +102,8 @@ const appRoutes: Routes = [
     DragulaModule,
     SelectModule,
     FocusModule.forRoot(),
-    CKEditorModule
+    CKEditorModule,
+    SlimLoadingBarModule.forRoot(),
   ],
   providers: [HttpService, SharedDataService, AuthService],
   bootstrap: [AppComponent]

@@ -90,6 +90,10 @@ export class PortletComponent implements OnInit {
     this.portletDataArray = responseFromChild;
   }
 
+  cardUpdate(responsefromCardChild){
+    this.portletDataArray = responsefromCardChild;
+  }
+
   /**
    * get all portlets from database
    */
