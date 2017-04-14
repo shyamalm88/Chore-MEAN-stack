@@ -4,12 +4,19 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
 
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {SlimLoadingBarModule} from 'ng2-slim-loading-bar';
+import { CKEditorModule } from 'ng2-ckeditor';
+import { FocusModule } from 'angular2-focus';
 import { DragulaModule } from 'ng2-dragula/ng2-dragula';
+import { SelectModule } from 'ng2-select';
+import * as _ from 'underscore';
+//import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-upload/ng2-file-upload';
+import { UPLOAD_DIRECTIVES } from 'ng2-file-uploader/ng2-file-uploader';
 
 import { HttpService } from './common/services/http.service';
+import { AuthService } from './common/services/auth.service';
 import { SharedDataService } from './common/services/shared.data.services';
-
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -28,28 +35,37 @@ import { PortletAssignedComponent } from './main/project/boardcanvas/portlet/por
 import { PortletCardLabelComponent } from './main/project/boardcanvas/portlet/portletcardlebel/portletcardlabel.component';
 import { PortletCardLabelEditComponent } from './main/project/boardcanvas/portlet/portletcardlebel/portletcardlabeledit.component';
 import { PortletModalComponent } from './main/project/boardcanvas/portlet/portletmodal/portletmodal.component';
-import {CreateEditBoardComponent } from './main/project/createboard/create_edit_board.component';
-import {CreateBoardComponent } from './main/project/createboard/create/create.component';
-import {ListBoardComponent } from './main/project/createboard/listboard/listboard.component';
-import {CharCount } from './common/directive/charcount.directive';
-import {SignupComponent } from './signup/signup.component';
-import {LoginComponent } from './login/login.component';
+import { CreateEditBoardComponent } from './main/project/createboard/create_edit_board.component';
+import { CreateBoardComponent } from './main/project/createboard/create/create.component';
+import { ListBoardComponent } from './main/project/createboard/listboard/listboard.component';
+import { CharCount } from './common/directive/charcount.directive';
+import { SignupComponent } from './signup/signup.component';
+import { LoginComponent } from './login/login.component';
+import { ProfileDetailsComponent } from './header/profile/profile.details.component';
+import { TeamListComponent } from './main/project/createteam/teamlist.component';
+import { CreateTeamComponent } from './main/project/createteam/createteam.component';
+import { SingleSelectComponent } from './common/component/single_select/singleSelect.component';
+import { SafeHtmlPipe } from './common/pipe';
 
 
 
 const appRoutes: Routes = [
-  { path: 'chore', component:  MainComponent},
-  { path: 'login', component:  LoginComponent},
-  // { path: 'login/auth/facebook', component:  LoginComponent},
-  // { path: 'login/auth/google', component:  LoginComponent},
-  { path: 'signup', component:  SignupComponent},
-  { path: '', component: CreateEditBoardComponent },
+  { path: '', redirectTo: '/board', pathMatch: 'full' },
+  { path: 'chore/c/:boardid/:boardname', component: MainComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'signup', component: SignupComponent },
+  { path: 'board', component: CreateEditBoardComponent },
+  { path: 'profile', component: ProfileDetailsComponent },
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
+    SafeHtmlPipe,
     CharCount,
+    // FileSelectDirective,
+    // FileDropDirective,
+    UPLOAD_DIRECTIVES,
     HeaderComponent,
     ChoreDropdownBoard,
     ChoreAddBoardTeam,
@@ -71,8 +87,10 @@ const appRoutes: Routes = [
     ListBoardComponent,
     SignupComponent,
     LoginComponent,
-    // FacebookLoginComponent,
-    // GoogleLoginComponent
+    ProfileDetailsComponent,
+    CreateTeamComponent,
+    TeamListComponent,
+    SingleSelectComponent
   ],
   imports: [
     BrowserModule,
@@ -82,8 +100,12 @@ const appRoutes: Routes = [
     NgbModule.forRoot(),
     RouterModule.forRoot(appRoutes),
     DragulaModule,
+    SelectModule,
+    FocusModule.forRoot(),
+    CKEditorModule,
+    SlimLoadingBarModule.forRoot(),
   ],
-  providers: [HttpService, SharedDataService],
+  providers: [HttpService, SharedDataService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

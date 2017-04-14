@@ -1,4 +1,10 @@
+var express = require('express');
 var mongoose = require('mongoose');
+
+
+var rString;
+
+
 // var dbHost = require(dbHost);
 // var configDB = require('./../config/database.js');
 // mongoose.connect(configDB.url);
@@ -12,12 +18,15 @@ var BoardSchema = new Schema({
     created_by: String,
     closed: Boolean,
     archived: Boolean,
-    cards: Array,
+    portlet: Array,
     teamname: String,
+    boardId: String,
+    coverImageUrl: String,
+    coverImageID: String
 });
 
 BoardSchema.pre('save', function(next) {
-    now = new Date();
+    var now = new Date();
     this.updated_at = now;
     if (!this.created_at) {
         this.created_at = now;
@@ -44,13 +53,29 @@ module.exports.findAll = function(callback) {
 };
 
 module.exports.addNewBoard = function(body, callback) {
+    function makeId() { // Public Domain/MIT
+        var d = new Date().getTime();
+        if (typeof performance !== 'undefined' && typeof performance.now === 'function') {
+            d += performance.now(); //use high-precision timer if available
+        }
+        return 'xxxyxxxx-xxxx-4xxx'.replace(/[xy-]/g, function(c) {
+            var r = (d + Math.random() * 16) % 16 | 0;
+            d = Math.floor(d / 16);
+            return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+        });
+    }
+    rString = makeId();
+
     var board = new Board({
         name: body.name,
         description: body.description,
         created_by: body.createdby || "",
         closed: false,
         cards: [],
-        teamname: body.teamname || "",
+        teamname: body.teamname || "personal board",
+        coverImageUrl: '',
+        coverImageID: '',
+        boardId: rString,
     });
     board.save(function(err, result) {
         if (err) throw err;
@@ -66,15 +91,21 @@ module.exports.editBoard = function(body, index, callback) {
         if (err) throw err;
         if (!result) {
             callback({
-                message: "Board with ISBN: " + index + " not found.",
+                message: "Board with ID: " + index + " not found.",
             });
         }
+        console.log(body)
         result.name = body.name;
         result.description = body.description;
         result.created_by = body.createdby;
         result.closed = body.closed || false;
         result.cards = [];
-        result.teamname = body.teamname || "";
+        //console.log(body.teamname);
+        result.teamname = body.teamname || "personal board";
+        result.coverImageUrl = body.coverImageUrl;
+        result.coverImageID = body.coverImageID;
+        result.boardId = body.boardId;
+
         result.save(function(err, result) {
             if (err) throw err;
             callback({
@@ -84,6 +115,7 @@ module.exports.editBoard = function(body, index, callback) {
         });
     });
 };
+
 
 module.exports.deleteBoard = function(index, callback) {
     Board.remove({ _id: index }, function(err, result) {

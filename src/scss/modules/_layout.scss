@@ -5,7 +5,7 @@
 body {
     color: #eee8d5;
     background-color: #171b23;
-    font-family: "PT Sans", "sans-serif";
+    font-family: "PT Sans", sans-serif;
     color: #444;
     height: 100%;
     height: 100%;
@@ -17,12 +17,12 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: "Lato", "sans-serif";
+    font-family: Lato, sans-serif;
     font-weight: 300;
 }
 
 .btn {
-    font-family: "Lato", "sans-serif";
+    font-family: Lato, sans-serif;
     border-radius: 2px;
 }
 
@@ -32,8 +32,8 @@ h6 {
     background: #181818 !important;
 }
 
-::-webkit-scrollbar-track,
- ::-webkit-scrollbar-corner {
+::-webkit-scrollbar-corner,
+ ::-webkit-scrollbar-track {
     background: #181818 !important;
 }
 
@@ -48,17 +48,32 @@ h6 {
 .choreHeader {
     background: #080d18;
     padding: 5px 0;
+    .profileImage {
+        margin-right: 10px;
+        width: 25px;
+        height: 25px;
+    }
+}
+
+.app-login-box-container .error {
+    background: #fff;
+    border: none;
+    margin-bottom: 10px;
+    font-weight: 400;
+    color: #c00;
+    margin-top: 10px;
+    padding: 0;
 }
 
 .btn-board {
-    background: transparent;
+    background: 0 0;
     border: none;
     color: #009688;
     float: left;
     margin-right: 20px;
-    &:hover,
     &:active,
-    &:focus {
+    &:focus,
+    &:hover {
         background-color: #009688;
         border-color: #009688;
         color: #fff;
@@ -133,9 +148,14 @@ h6 {
     border-radius: 0;
 }
 
+.block {
+    display: block;
+}
+
 .searchChore {
     overflow: hidden;
     position: relative;
+    width: 60%;
     span {
         position: absolute;
         right: 10px;
@@ -157,14 +177,14 @@ h6 {
     background: #e2e4e6;
     border-radius: 3px;
     margin-bottom: 20px;
-    transition: all 0.4s;
-    border: 2px solid #f3f3f3;
+    transition: all .4s;
+    border: 0 solid #f3f3f3;
     display: flex;
     flex-direction: column;
     max-height: 100%;
     .portlet-body {
         color: #333;
-        margin-top: 10px;
+        margin-bottom: 10px;
         padding: 6px 30px 6px 8px;
         cursor: pointer;
         border-bottom: 1px solid #ccc;
@@ -174,15 +194,21 @@ h6 {
                 visibility: visible;
             }
         }
+        &:last-child {
+            margin-bottom: 0;
+        }
     }
     .portlet-heading {
-        padding: 5px 20px 5px 10px;
+        padding: 5px 10px 5px 10px;
+        margin: -1px 0 0 0;
+        border-radius: 4px 4px 0 0;
         .portlet-title {
             text-overflow: ellipsis;
             width: 85%;
             white-space: nowrap;
+            font-size: 13px;
             overflow: hidden;
-            font-family: "Lato", "sans-serif";
+            font-family: Lato, sans-serif;
         }
     }
 }
@@ -191,11 +217,11 @@ h6 {
     background-color: #edeff0;
     background-clip: padding-box;
     background-origin: padding-box;
-    border-radius: 3px;
+    border-radius: 0;
     padding: 4px;
     position: absolute;
-    right: 3px;
-    top: 3px;
+    right: 0;
+    top: 4px;
     visibility: hidden;
     z-index: 40;
 }
@@ -233,6 +259,9 @@ main {
     flex-grow: 1;
     -webkit-box-flex: 1;
     &.viewEditBoard {
+        .panel-collapse {
+            margin-bottom: 0;
+        }
         .dividerBoard {
             background: rgba(8, 13, 24, 0.68);
         }
@@ -246,7 +275,7 @@ main {
             margin-top: 0;
             border-bottom: none;
             padding: 6px 6px 6px 8px;
-            height: 113px;
+            height: 90px;
             overflow-y: auto;
             &.createBoard {
                 display: table;
@@ -255,7 +284,7 @@ main {
                     display: table-cell;
                     text-align: center;
                     vertical-align: middle;
-                    height: 139px;
+                    height: 117px;
                     color: #009688;
                 }
             }
@@ -342,8 +371,8 @@ main {
     height: 100%;
 }
 
-html,
-.wrapper {
+.wrapper,
+html {
     height: 100%;
     height: 100%;
 }
@@ -352,8 +381,17 @@ html,
     position: absolute;
     left: 0;
     right: 0;
-    top: 20px;
+    top: 0;
     bottom: 0;
+    &.bgCover {
+        top: 0;
+        background-position: 50% 50% !important;
+        background-repeat: no-repeat !important;
+        background-size: cover !important;
+        .btn-board {
+            color: #fff;
+        }
+    }
 }
 
 .list-cards {
@@ -367,7 +405,10 @@ html,
     padding: 0 4px;
     z-index: 1;
     min-height: 0;
-    input[type="text"] {
+    margin-top: 10px;
+    margin-bottom: -10px;
+    min-height: 20px;
+    input[type=text] {
         margin-top: 10px;
         margin-bottom: 10px;
         border: 1px solid #ccc;
@@ -375,10 +416,19 @@ html,
     button.add {
         margin-bottom: 10px;
     }
+    .portletAddIns {
+        text-align: center;
+        border: 2px dotted #bdbbbb;
+        padding: 10px;
+        font-size: 12px;
+        background: #eaeaea;
+        color: #929191;
+        margin: 0 20px;
+    }
 }
 
 .board-header {
-    margin: 0 5px;
+    margin: 20px 0 5px;
 }
 
 .margin-right-0 {
@@ -400,6 +450,7 @@ html,
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    margin-top: 10px;
 }
 
 .list-card-members {
@@ -427,7 +478,7 @@ html,
 
 .colorLable {
     position: absolute;
-    top: -2px;
+    top: 0;
     width: 100%;
     left: 0;
     span {
@@ -724,35 +775,35 @@ hr {
 }
 
 .attachment-thumbnail-preview-dropbox-logo {
-    background-image: url("https://d78fikflryjgj.cloudfront.net/images/services/275d8a966e5d9d2b8e22ade7ea2c9ddd/dropbox-preview-logo.svg");
+    background-image: url(https://d78fikflryjgj.cloudfront.net/images/services/275d8a966e5d9d2b8e22ade7ea2c9ddd/dropbox-preview-logo.svg);
 }
 
 .attachment-thumbnail-preview-fogbugz-logo {
-    background-image: url("https://d78fikflryjgj.cloudfront.net/images/services/3875991b3c671e428a421b8999fbe1bb/fogbugz-preview-logo.svg");
+    background-image: url(https://d78fikflryjgj.cloudfront.net/images/services/3875991b3c671e428a421b8999fbe1bb/fogbugz-preview-logo.svg);
 }
 
 .attachment-thumbnail-preview-github-logo {
-    background-image: url("https://d78fikflryjgj.cloudfront.net/images/services/346c8ad70711bd0f575babb6254994ca/github-preview-logo.svg");
+    background-image: url(https://d78fikflryjgj.cloudfront.net/images/services/346c8ad70711bd0f575babb6254994ca/github-preview-logo.svg);
 }
 
 .attachment-thumbnail-preview-google-drive-logo {
-    background-image: url("https://d78fikflryjgj.cloudfront.net/images/services/64011cc7e495af6d55d07cb64233250d/google-drive-preview-logo.svg");
+    background-image: url(https://d78fikflryjgj.cloudfront.net/images/services/64011cc7e495af6d55d07cb64233250d/google-drive-preview-logo.svg);
 }
 
 .attachment-thumbnail-preview-kiln-logo {
-    background-image: url("https://d78fikflryjgj.cloudfront.net/images/services/d23187d129d386fcae7b929f94451dcf/kiln-preview-logo.svg");
+    background-image: url(https://d78fikflryjgj.cloudfront.net/images/services/d23187d129d386fcae7b929f94451dcf/kiln-preview-logo.svg);
 }
 
 .attachment-thumbnail-preview-trello-logo {
-    background-image: url("https://d78fikflryjgj.cloudfront.net/images/services/07db7adfabb199709ad3d9c8fcede6a7/trello-preview-logo.svg");
+    background-image: url(https://d78fikflryjgj.cloudfront.net/images/services/07db7adfabb199709ad3d9c8fcede6a7/trello-preview-logo.svg);
 }
 
 .attachment-thumbnail-preview-one-drive-logo {
-    background-image: url("https://d78fikflryjgj.cloudfront.net/images/services/e4e5ea0947583d430483bcdbbb9fab64/onedrive-preview-logo.svg");
+    background-image: url(https://d78fikflryjgj.cloudfront.net/images/services/e4e5ea0947583d430483bcdbbb9fab64/onedrive-preview-logo.svg);
 }
 
 .attachment-thumbnail-preview-box-logo {
-    background-image: url("https://d78fikflryjgj.cloudfront.net/images/services/f49ae2b057b81e9080b0db7e7f5b5a3a/box-preview-logo.svg");
+    background-image: url(https://d78fikflryjgj.cloudfront.net/images/services/f49ae2b057b81e9080b0db7e7f5b5a3a/box-preview-logo.svg);
 }
 
 .attachment-thumbnail-preview-ext {
@@ -1093,7 +1144,7 @@ a {
 }
 
 .textboxchange {
-    background: rgba(23, 27, 35, 0.16);
+    background: rgba(23, 27, 35, 0.07);
     color: #2b2b2b;
 }
 
@@ -1105,9 +1156,7 @@ chore-project {
     position: fixed !important;
     margin: 0 !important;
     z-index: 9999 !important;
-    opacity: 0.8;
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
-    filter: alpha(opacity=80);
+    opacity: .8;
 }
 
 .gu-hide {
@@ -1122,9 +1171,7 @@ chore-project {
 }
 
 .gu-transit {
-    opacity: 0.2;
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
-    filter: alpha(opacity=20);
+    opacity: .2;
 }
 
 .modal-open {
@@ -1132,7 +1179,7 @@ chore-project {
         opacity: 1;
     }
     .modal-backdrop.fade {
-        opacity: 0.8;
+        opacity: .8;
     }
 }
 
@@ -1196,7 +1243,7 @@ chore-project {
         .app-login-box-container {
             float: left;
             width: 100%;
-            padding: 0 30px 30px;
+            padding: 0 30px 10px;
             >.title {
                 float: left;
                 width: 100%;
@@ -1228,7 +1275,7 @@ chore-project {
             padding: 30px 30px 0;
             img {
                 width: 100px;
-                border: 1px solid #DBE0E4;
+                border: 1px solid #dbe0e4;
                 padding: 5px;
                 -webkit-border-radius: 50%;
                 -moz-border-radius: 50%;
@@ -1301,7 +1348,8 @@ textarea.mod-card-back-title {
 
 .window-title h2 {
     margin-right: 4px;
-    margin-top: 0;
+    margin-top: -4px;
+    font-weight: 600;
     font-size: 25px;
 }
 
@@ -1337,16 +1385,6 @@ textarea.mod-card-back-title {
     -o-transform: translate(0, 0);
     transform: translate(0, 0);
 }
-
-
-/*
- * Social Buttons for Bootstrap
- *
- * Copyright 2013-2016 Panayiotis Lipiridis
- * Licensed under the MIT License
- *
- * https://github.com/lipis/bootstrap-social
- */
 
 .btn-social {
     position: relative;
@@ -1466,11 +1504,11 @@ textarea.mod-card-back-title {
     color: #fff;
     background-color: #d87a68;
     border-color: rgba(0, 0, 0, 0.2);
-    &:focus,
+    &.active,
     &.focus,
-    &:hover,
     &:active,
-    &.active {
+    &:focus,
+    &:hover {
         color: #fff;
         background-color: #ce563f;
         border-color: rgba(0, 0, 0, 0.2);
@@ -1484,8 +1522,8 @@ textarea.mod-card-back-title {
 }
 
 .btn-adn {
-    &:active:hover,
-    &.active:hover {
+    &.active:hover,
+    &:active:hover {
         color: #fff;
         background-color: #b94630;
         border-color: rgba(0, 0, 0, 0.2);
@@ -1499,8 +1537,8 @@ textarea.mod-card-back-title {
 }
 
 .btn-adn {
-    &:active:focus,
-    &.active:focus {
+    &.active:focus,
+    &:active:focus {
         color: #fff;
         background-color: #b94630;
         border-color: rgba(0, 0, 0, 0.2);
@@ -1514,8 +1552,8 @@ textarea.mod-card-back-title {
 }
 
 .btn-adn {
-    &:active.focus,
-    &.active.focus {
+    &.active.focus,
+    &:active.focus {
         color: #fff;
         background-color: #b94630;
         border-color: rgba(0, 0, 0, 0.2);
@@ -1529,8 +1567,8 @@ textarea.mod-card-back-title {
 }
 
 .btn-adn {
-    &:active,
-    &.active {
+    &.active,
+    &:active {
         background-image: none;
     }
 }
@@ -1587,11 +1625,11 @@ fieldset[disabled] .btn-adn.focus {
     color: #fff;
     background-color: #205081;
     border-color: rgba(0, 0, 0, 0.2);
-    &:focus,
+    &.active,
     &.focus,
-    &:hover,
     &:active,
-    &.active {
+    &:focus,
+    &:hover {
         color: #fff;
         background-color: #163758;
         border-color: rgba(0, 0, 0, 0.2);
@@ -1605,8 +1643,8 @@ fieldset[disabled] .btn-adn.focus {
 }
 
 .btn-bitbucket {
-    &:active:hover,
-    &.active:hover {
+    &.active:hover,
+    &:active:hover {
         color: #fff;
         background-color: #0f253c;
         border-color: rgba(0, 0, 0, 0.2);
@@ -1620,8 +1658,8 @@ fieldset[disabled] .btn-adn.focus {
 }
 
 .btn-bitbucket {
-    &:active:focus,
-    &.active:focus {
+    &.active:focus,
+    &:active:focus {
         color: #fff;
         background-color: #0f253c;
         border-color: rgba(0, 0, 0, 0.2);
@@ -1635,8 +1673,8 @@ fieldset[disabled] .btn-adn.focus {
 }
 
 .btn-bitbucket {
-    &:active.focus,
-    &.active.focus {
+    &.active.focus,
+    &:active.focus {
         color: #fff;
         background-color: #0f253c;
         border-color: rgba(0, 0, 0, 0.2);
@@ -1650,8 +1688,8 @@ fieldset[disabled] .btn-adn.focus {
 }
 
 .btn-bitbucket {
-    &:active,
-    &.active {
+    &.active,
+    &:active {
         background-image: none;
     }
 }
@@ -1708,11 +1746,11 @@ fieldset[disabled] .btn-bitbucket.focus {
     color: #fff;
     background-color: #1087dd;
     border-color: rgba(0, 0, 0, 0.2);
-    &:focus,
+    &.active,
     &.focus,
-    &:hover,
     &:active,
-    &.active {
+    &:focus,
+    &:hover {
         color: #fff;
         background-color: #0d6aad;
         border-color: rgba(0, 0, 0, 0.2);
@@ -1726,8 +1764,8 @@ fieldset[disabled] .btn-bitbucket.focus {
 }
 
 .btn-dropbox {
-    &:active:hover,
-    &.active:hover {
+    &.active:hover,
+    &:active:hover {
         color: #fff;
         background-color: #0a568c;
         border-color: rgba(0, 0, 0, 0.2);
@@ -1741,8 +1779,8 @@ fieldset[disabled] .btn-bitbucket.focus {
 }
 
 .btn-dropbox {
-    &:active:focus,
-    &.active:focus {
+    &.active:focus,
+    &:active:focus {
         color: #fff;
         background-color: #0a568c;
         border-color: rgba(0, 0, 0, 0.2);
@@ -1756,8 +1794,8 @@ fieldset[disabled] .btn-bitbucket.focus {
 }
 
 .btn-dropbox {
-    &:active.focus,
-    &.active.focus {
+    &.active.focus,
+    &:active.focus {
         color: #fff;
         background-color: #0a568c;
         border-color: rgba(0, 0, 0, 0.2);
@@ -1771,8 +1809,8 @@ fieldset[disabled] .btn-bitbucket.focus {
 }
 
 .btn-dropbox {
-    &:active,
-    &.active {
+    &.active,
+    &:active {
         background-image: none;
     }
 }
@@ -1829,11 +1867,11 @@ fieldset[disabled] .btn-dropbox.focus {
     color: #fff;
     background-color: #3b5998;
     border-color: rgba(0, 0, 0, 0.2);
-    &:focus,
+    &.active,
     &.focus,
-    &:hover,
     &:active,
-    &.active {
+    &:focus,
+    &:hover {
         color: #fff;
         background-color: #2d4373;
         border-color: rgba(0, 0, 0, 0.2);
@@ -1847,8 +1885,8 @@ fieldset[disabled] .btn-dropbox.focus {
 }
 
 .btn-facebook {
-    &:active:hover,
-    &.active:hover {
+    &.active:hover,
+    &:active:hover {
         color: #fff;
         background-color: #23345a;
         border-color: rgba(0, 0, 0, 0.2);
@@ -1862,8 +1900,8 @@ fieldset[disabled] .btn-dropbox.focus {
 }
 
 .btn-facebook {
-    &:active:focus,
-    &.active:focus {
+    &.active:focus,
+    &:active:focus {
         color: #fff;
         background-color: #23345a;
         border-color: rgba(0, 0, 0, 0.2);
@@ -1877,8 +1915,8 @@ fieldset[disabled] .btn-dropbox.focus {
 }
 
 .btn-facebook {
-    &:active.focus,
-    &.active.focus {
+    &.active.focus,
+    &:active.focus {
         color: #fff;
         background-color: #23345a;
         border-color: rgba(0, 0, 0, 0.2);
@@ -1892,8 +1930,8 @@ fieldset[disabled] .btn-dropbox.focus {
 }
 
 .btn-facebook {
-    &:active,
-    &.active {
+    &.active,
+    &:active {
         background-image: none;
     }
 }
@@ -1950,11 +1988,11 @@ fieldset[disabled] .btn-facebook.focus {
     color: #fff;
     background-color: #ff0084;
     border-color: rgba(0, 0, 0, 0.2);
-    &:focus,
+    &.active,
     &.focus,
-    &:hover,
     &:active,
-    &.active {
+    &:focus,
+    &:hover {
         color: #fff;
         background-color: #cc006a;
         border-color: rgba(0, 0, 0, 0.2);
@@ -1968,8 +2006,8 @@ fieldset[disabled] .btn-facebook.focus {
 }
 
 .btn-flickr {
-    &:active:hover,
-    &.active:hover {
+    &.active:hover,
+    &:active:hover {
         color: #fff;
         background-color: #a80057;
         border-color: rgba(0, 0, 0, 0.2);
@@ -1983,8 +2021,8 @@ fieldset[disabled] .btn-facebook.focus {
 }
 
 .btn-flickr {
-    &:active:focus,
-    &.active:focus {
+    &.active:focus,
+    &:active:focus {
         color: #fff;
         background-color: #a80057;
         border-color: rgba(0, 0, 0, 0.2);
@@ -1998,8 +2036,8 @@ fieldset[disabled] .btn-facebook.focus {
 }
 
 .btn-flickr {
-    &:active.focus,
-    &.active.focus {
+    &.active.focus,
+    &:active.focus {
         color: #fff;
         background-color: #a80057;
         border-color: rgba(0, 0, 0, 0.2);
@@ -2013,8 +2051,8 @@ fieldset[disabled] .btn-facebook.focus {
 }
 
 .btn-flickr {
-    &:active,
-    &.active {
+    &.active,
+    &:active {
         background-image: none;
     }
 }
@@ -2071,11 +2109,11 @@ fieldset[disabled] .btn-flickr.focus {
     color: #fff;
     background-color: #f94877;
     border-color: rgba(0, 0, 0, 0.2);
-    &:focus,
+    &.active,
     &.focus,
-    &:hover,
     &:active,
-    &.active {
+    &:focus,
+    &:hover {
         color: #fff;
         background-color: #f71752;
         border-color: rgba(0, 0, 0, 0.2);
@@ -2089,8 +2127,8 @@ fieldset[disabled] .btn-flickr.focus {
 }
 
 .btn-foursquare {
-    &:active:hover,
-    &.active:hover {
+    &.active:hover,
+    &:active:hover {
         color: #fff;
         background-color: #e30742;
         border-color: rgba(0, 0, 0, 0.2);
@@ -2104,8 +2142,8 @@ fieldset[disabled] .btn-flickr.focus {
 }
 
 .btn-foursquare {
-    &:active:focus,
-    &.active:focus {
+    &.active:focus,
+    &:active:focus {
         color: #fff;
         background-color: #e30742;
         border-color: rgba(0, 0, 0, 0.2);
@@ -2119,8 +2157,8 @@ fieldset[disabled] .btn-flickr.focus {
 }
 
 .btn-foursquare {
-    &:active.focus,
-    &.active.focus {
+    &.active.focus,
+    &:active.focus {
         color: #fff;
         background-color: #e30742;
         border-color: rgba(0, 0, 0, 0.2);
@@ -2134,8 +2172,8 @@ fieldset[disabled] .btn-flickr.focus {
 }
 
 .btn-foursquare {
-    &:active,
-    &.active {
+    &.active,
+    &:active {
         background-image: none;
     }
 }
@@ -2192,11 +2230,11 @@ fieldset[disabled] .btn-foursquare.focus {
     color: #fff;
     background-color: #444;
     border-color: rgba(0, 0, 0, 0.2);
-    &:focus,
+    &.active,
     &.focus,
-    &:hover,
     &:active,
-    &.active {
+    &:focus,
+    &:hover {
         color: #fff;
         background-color: #2b2b2b;
         border-color: rgba(0, 0, 0, 0.2);
@@ -2210,8 +2248,8 @@ fieldset[disabled] .btn-foursquare.focus {
 }
 
 .btn-github {
-    &:active:hover,
-    &.active:hover {
+    &.active:hover,
+    &:active:hover {
         color: #fff;
         background-color: #191919;
         border-color: rgba(0, 0, 0, 0.2);
@@ -2225,8 +2263,8 @@ fieldset[disabled] .btn-foursquare.focus {
 }
 
 .btn-github {
-    &:active:focus,
-    &.active:focus {
+    &.active:focus,
+    &:active:focus {
         color: #fff;
         background-color: #191919;
         border-color: rgba(0, 0, 0, 0.2);
@@ -2240,8 +2278,8 @@ fieldset[disabled] .btn-foursquare.focus {
 }
 
 .btn-github {
-    &:active.focus,
-    &.active.focus {
+    &.active.focus,
+    &:active.focus {
         color: #fff;
         background-color: #191919;
         border-color: rgba(0, 0, 0, 0.2);
@@ -2255,8 +2293,8 @@ fieldset[disabled] .btn-foursquare.focus {
 }
 
 .btn-github {
-    &:active,
-    &.active {
+    &.active,
+    &:active {
         background-image: none;
     }
 }
@@ -2313,11 +2351,11 @@ fieldset[disabled] .btn-github.focus {
     color: #fff;
     background-color: #dd4b39;
     border-color: rgba(0, 0, 0, 0.2);
-    &:focus,
+    &.active,
     &.focus,
-    &:hover,
     &:active,
-    &.active {
+    &:focus,
+    &:hover {
         color: #fff;
         background-color: #c23321;
         border-color: rgba(0, 0, 0, 0.2);
@@ -2331,8 +2369,8 @@ fieldset[disabled] .btn-github.focus {
 }
 
 .btn-google {
-    &:active:hover,
-    &.active:hover {
+    &.active:hover,
+    &:active:hover {
         color: #fff;
         background-color: #a32b1c;
         border-color: rgba(0, 0, 0, 0.2);
@@ -2346,8 +2384,8 @@ fieldset[disabled] .btn-github.focus {
 }
 
 .btn-google {
-    &:active:focus,
-    &.active:focus {
+    &.active:focus,
+    &:active:focus {
         color: #fff;
         background-color: #a32b1c;
         border-color: rgba(0, 0, 0, 0.2);
@@ -2361,8 +2399,8 @@ fieldset[disabled] .btn-github.focus {
 }
 
 .btn-google {
-    &:active.focus,
-    &.active.focus {
+    &.active.focus,
+    &:active.focus {
         color: #fff;
         background-color: #a32b1c;
         border-color: rgba(0, 0, 0, 0.2);
@@ -2376,8 +2414,8 @@ fieldset[disabled] .btn-github.focus {
 }
 
 .btn-google {
-    &:active,
-    &.active {
+    &.active,
+    &:active {
         background-image: none;
     }
 }
@@ -2434,11 +2472,11 @@ fieldset[disabled] .btn-google.focus {
     color: #fff;
     background-color: #3f729b;
     border-color: rgba(0, 0, 0, 0.2);
-    &:focus,
+    &.active,
     &.focus,
-    &:hover,
     &:active,
-    &.active {
+    &:focus,
+    &:hover {
         color: #fff;
         background-color: #305777;
         border-color: rgba(0, 0, 0, 0.2);
@@ -2452,8 +2490,8 @@ fieldset[disabled] .btn-google.focus {
 }
 
 .btn-instagram {
-    &:active:hover,
-    &.active:hover {
+    &.active:hover,
+    &:active:hover {
         color: #fff;
         background-color: #26455d;
         border-color: rgba(0, 0, 0, 0.2);
@@ -2467,8 +2505,8 @@ fieldset[disabled] .btn-google.focus {
 }
 
 .btn-instagram {
-    &:active:focus,
-    &.active:focus {
+    &.active:focus,
+    &:active:focus {
         color: #fff;
         background-color: #26455d;
         border-color: rgba(0, 0, 0, 0.2);
@@ -2482,8 +2520,8 @@ fieldset[disabled] .btn-google.focus {
 }
 
 .btn-instagram {
-    &:active.focus,
-    &.active.focus {
+    &.active.focus,
+    &:active.focus {
         color: #fff;
         background-color: #26455d;
         border-color: rgba(0, 0, 0, 0.2);
@@ -2497,8 +2535,8 @@ fieldset[disabled] .btn-google.focus {
 }
 
 .btn-instagram {
-    &:active,
-    &.active {
+    &.active,
+    &:active {
         background-image: none;
     }
 }
@@ -2555,11 +2593,11 @@ fieldset[disabled] .btn-instagram.focus {
     color: #fff;
     background-color: #007bb6;
     border-color: rgba(0, 0, 0, 0.2);
-    &:focus,
+    &.active,
     &.focus,
-    &:hover,
     &:active,
-    &.active {
+    &:focus,
+    &:hover {
         color: #fff;
         background-color: #005983;
         border-color: rgba(0, 0, 0, 0.2);
@@ -2573,8 +2611,8 @@ fieldset[disabled] .btn-instagram.focus {
 }
 
 .btn-linkedin {
-    &:active:hover,
-    &.active:hover {
+    &.active:hover,
+    &:active:hover {
         color: #fff;
         background-color: #00405f;
         border-color: rgba(0, 0, 0, 0.2);
@@ -2588,8 +2626,8 @@ fieldset[disabled] .btn-instagram.focus {
 }
 
 .btn-linkedin {
-    &:active:focus,
-    &.active:focus {
+    &.active:focus,
+    &:active:focus {
         color: #fff;
         background-color: #00405f;
         border-color: rgba(0, 0, 0, 0.2);
@@ -2603,8 +2641,8 @@ fieldset[disabled] .btn-instagram.focus {
 }
 
 .btn-linkedin {
-    &:active.focus,
-    &.active.focus {
+    &.active.focus,
+    &:active.focus {
         color: #fff;
         background-color: #00405f;
         border-color: rgba(0, 0, 0, 0.2);
@@ -2618,8 +2656,8 @@ fieldset[disabled] .btn-instagram.focus {
 }
 
 .btn-linkedin {
-    &:active,
-    &.active {
+    &.active,
+    &:active {
         background-image: none;
     }
 }
@@ -2676,11 +2714,11 @@ fieldset[disabled] .btn-linkedin.focus {
     color: #fff;
     background-color: #2672ec;
     border-color: rgba(0, 0, 0, 0.2);
-    &:focus,
+    &.active,
     &.focus,
-    &:hover,
     &:active,
-    &.active {
+    &:focus,
+    &:hover {
         color: #fff;
         background-color: #125acd;
         border-color: rgba(0, 0, 0, 0.2);
@@ -2694,8 +2732,8 @@ fieldset[disabled] .btn-linkedin.focus {
 }
 
 .btn-microsoft {
-    &:active:hover,
-    &.active:hover {
+    &.active:hover,
+    &:active:hover {
         color: #fff;
         background-color: #0f4bac;
         border-color: rgba(0, 0, 0, 0.2);
@@ -2709,8 +2747,8 @@ fieldset[disabled] .btn-linkedin.focus {
 }
 
 .btn-microsoft {
-    &:active:focus,
-    &.active:focus {
+    &.active:focus,
+    &:active:focus {
         color: #fff;
         background-color: #0f4bac;
         border-color: rgba(0, 0, 0, 0.2);
@@ -2724,8 +2762,8 @@ fieldset[disabled] .btn-linkedin.focus {
 }
 
 .btn-microsoft {
-    &:active.focus,
-    &.active.focus {
+    &.active.focus,
+    &:active.focus {
         color: #fff;
         background-color: #0f4bac;
         border-color: rgba(0, 0, 0, 0.2);
@@ -2739,8 +2777,8 @@ fieldset[disabled] .btn-linkedin.focus {
 }
 
 .btn-microsoft {
-    &:active,
-    &.active {
+    &.active,
+    &:active {
         background-image: none;
     }
 }
@@ -2797,11 +2835,11 @@ fieldset[disabled] .btn-microsoft.focus {
     color: #fff;
     background-color: #f4731c;
     border-color: rgba(0, 0, 0, 0.2);
-    &:focus,
+    &.active,
     &.focus,
-    &:hover,
     &:active,
-    &.active {
+    &:focus,
+    &:hover {
         color: #fff;
         background-color: #d35b0a;
         border-color: rgba(0, 0, 0, 0.2);
@@ -2815,8 +2853,8 @@ fieldset[disabled] .btn-microsoft.focus {
 }
 
 .btn-odnoklassniki {
-    &:active:hover,
-    &.active:hover {
+    &.active:hover,
+    &:active:hover {
         color: #fff;
         background-color: #b14c09;
         border-color: rgba(0, 0, 0, 0.2);
@@ -2830,8 +2868,8 @@ fieldset[disabled] .btn-microsoft.focus {
 }
 
 .btn-odnoklassniki {
-    &:active:focus,
-    &.active:focus {
+    &.active:focus,
+    &:active:focus {
         color: #fff;
         background-color: #b14c09;
         border-color: rgba(0, 0, 0, 0.2);
@@ -2845,8 +2883,8 @@ fieldset[disabled] .btn-microsoft.focus {
 }
 
 .btn-odnoklassniki {
-    &:active.focus,
-    &.active.focus {
+    &.active.focus,
+    &:active.focus {
         color: #fff;
         background-color: #b14c09;
         border-color: rgba(0, 0, 0, 0.2);
@@ -2860,8 +2898,8 @@ fieldset[disabled] .btn-microsoft.focus {
 }
 
 .btn-odnoklassniki {
-    &:active,
-    &.active {
+    &.active,
+    &:active {
         background-image: none;
     }
 }
@@ -2918,11 +2956,11 @@ fieldset[disabled] .btn-odnoklassniki.focus {
     color: #fff;
     background-color: #f7931e;
     border-color: rgba(0, 0, 0, 0.2);
-    &:focus,
+    &.active,
     &.focus,
-    &:hover,
     &:active,
-    &.active {
+    &:focus,
+    &:hover {
         color: #fff;
         background-color: #da7908;
         border-color: rgba(0, 0, 0, 0.2);
@@ -2936,8 +2974,8 @@ fieldset[disabled] .btn-odnoklassniki.focus {
 }
 
 .btn-openid {
-    &:active:hover,
-    &.active:hover {
+    &.active:hover,
+    &:active:hover {
         color: #fff;
         background-color: #b86607;
         border-color: rgba(0, 0, 0, 0.2);
@@ -2951,8 +2989,8 @@ fieldset[disabled] .btn-odnoklassniki.focus {
 }
 
 .btn-openid {
-    &:active:focus,
-    &.active:focus {
+    &.active:focus,
+    &:active:focus {
         color: #fff;
         background-color: #b86607;
         border-color: rgba(0, 0, 0, 0.2);
@@ -2966,8 +3004,8 @@ fieldset[disabled] .btn-odnoklassniki.focus {
 }
 
 .btn-openid {
-    &:active.focus,
-    &.active.focus {
+    &.active.focus,
+    &:active.focus {
         color: #fff;
         background-color: #b86607;
         border-color: rgba(0, 0, 0, 0.2);
@@ -2981,8 +3019,8 @@ fieldset[disabled] .btn-odnoklassniki.focus {
 }
 
 .btn-openid {
-    &:active,
-    &.active {
+    &.active,
+    &:active {
         background-image: none;
     }
 }
@@ -3039,11 +3077,11 @@ fieldset[disabled] .btn-openid.focus {
     color: #fff;
     background-color: #cb2027;
     border-color: rgba(0, 0, 0, 0.2);
-    &:focus,
+    &.active,
     &.focus,
-    &:hover,
     &:active,
-    &.active {
+    &:focus,
+    &:hover {
         color: #fff;
         background-color: #9f191f;
         border-color: rgba(0, 0, 0, 0.2);
@@ -3057,8 +3095,8 @@ fieldset[disabled] .btn-openid.focus {
 }
 
 .btn-pinterest {
-    &:active:hover,
-    &.active:hover {
+    &.active:hover,
+    &:active:hover {
         color: #fff;
         background-color: #801419;
         border-color: rgba(0, 0, 0, 0.2);
@@ -3072,8 +3110,8 @@ fieldset[disabled] .btn-openid.focus {
 }
 
 .btn-pinterest {
-    &:active:focus,
-    &.active:focus {
+    &.active:focus,
+    &:active:focus {
         color: #fff;
         background-color: #801419;
         border-color: rgba(0, 0, 0, 0.2);
@@ -3087,8 +3125,8 @@ fieldset[disabled] .btn-openid.focus {
 }
 
 .btn-pinterest {
-    &:active.focus,
-    &.active.focus {
+    &.active.focus,
+    &:active.focus {
         color: #fff;
         background-color: #801419;
         border-color: rgba(0, 0, 0, 0.2);
@@ -3102,8 +3140,8 @@ fieldset[disabled] .btn-openid.focus {
 }
 
 .btn-pinterest {
-    &:active,
-    &.active {
+    &.active,
+    &:active {
         background-image: none;
     }
 }
@@ -3160,11 +3198,11 @@ fieldset[disabled] .btn-pinterest.focus {
     color: #000;
     background-color: #eff7ff;
     border-color: rgba(0, 0, 0, 0.2);
-    &:focus,
+    &.active,
     &.focus,
-    &:hover,
     &:active,
-    &.active {
+    &:focus,
+    &:hover {
         color: #000;
         background-color: #bcddff;
         border-color: rgba(0, 0, 0, 0.2);
@@ -3178,8 +3216,8 @@ fieldset[disabled] .btn-pinterest.focus {
 }
 
 .btn-reddit {
-    &:active:hover,
-    &.active:hover {
+    &.active:hover,
+    &:active:hover {
         color: #000;
         background-color: #98ccff;
         border-color: rgba(0, 0, 0, 0.2);
@@ -3193,8 +3231,8 @@ fieldset[disabled] .btn-pinterest.focus {
 }
 
 .btn-reddit {
-    &:active:focus,
-    &.active:focus {
+    &.active:focus,
+    &:active:focus {
         color: #000;
         background-color: #98ccff;
         border-color: rgba(0, 0, 0, 0.2);
@@ -3208,8 +3246,8 @@ fieldset[disabled] .btn-pinterest.focus {
 }
 
 .btn-reddit {
-    &:active.focus,
-    &.active.focus {
+    &.active.focus,
+    &:active.focus {
         color: #000;
         background-color: #98ccff;
         border-color: rgba(0, 0, 0, 0.2);
@@ -3223,8 +3261,8 @@ fieldset[disabled] .btn-pinterest.focus {
 }
 
 .btn-reddit {
-    &:active,
-    &.active {
+    &.active,
+    &:active {
         background-image: none;
     }
 }
@@ -3281,11 +3319,11 @@ fieldset[disabled] .btn-reddit.focus {
     color: #fff;
     background-color: #f50;
     border-color: rgba(0, 0, 0, 0.2);
-    &:focus,
+    &.active,
     &.focus,
-    &:hover,
     &:active,
-    &.active {
+    &:focus,
+    &:hover {
         color: #fff;
         background-color: #c40;
         border-color: rgba(0, 0, 0, 0.2);
@@ -3299,8 +3337,8 @@ fieldset[disabled] .btn-reddit.focus {
 }
 
 .btn-soundcloud {
-    &:active:hover,
-    &.active:hover {
+    &.active:hover,
+    &:active:hover {
         color: #fff;
         background-color: #a83800;
         border-color: rgba(0, 0, 0, 0.2);
@@ -3314,8 +3352,8 @@ fieldset[disabled] .btn-reddit.focus {
 }
 
 .btn-soundcloud {
-    &:active:focus,
-    &.active:focus {
+    &.active:focus,
+    &:active:focus {
         color: #fff;
         background-color: #a83800;
         border-color: rgba(0, 0, 0, 0.2);
@@ -3329,8 +3367,8 @@ fieldset[disabled] .btn-reddit.focus {
 }
 
 .btn-soundcloud {
-    &:active.focus,
-    &.active.focus {
+    &.active.focus,
+    &:active.focus {
         color: #fff;
         background-color: #a83800;
         border-color: rgba(0, 0, 0, 0.2);
@@ -3344,8 +3382,8 @@ fieldset[disabled] .btn-reddit.focus {
 }
 
 .btn-soundcloud {
-    &:active,
-    &.active {
+    &.active,
+    &:active {
         background-image: none;
     }
 }
@@ -3402,11 +3440,11 @@ fieldset[disabled] .btn-soundcloud.focus {
     color: #fff;
     background-color: #2c4762;
     border-color: rgba(0, 0, 0, 0.2);
-    &:focus,
+    &.active,
     &.focus,
-    &:hover,
     &:active,
-    &.active {
+    &:focus,
+    &:hover {
         color: #fff;
         background-color: #1c2d3f;
         border-color: rgba(0, 0, 0, 0.2);
@@ -3420,8 +3458,8 @@ fieldset[disabled] .btn-soundcloud.focus {
 }
 
 .btn-tumblr {
-    &:active:hover,
-    &.active:hover {
+    &.active:hover,
+    &:active:hover {
         color: #fff;
         background-color: #111c26;
         border-color: rgba(0, 0, 0, 0.2);
@@ -3435,8 +3473,8 @@ fieldset[disabled] .btn-soundcloud.focus {
 }
 
 .btn-tumblr {
-    &:active:focus,
-    &.active:focus {
+    &.active:focus,
+    &:active:focus {
         color: #fff;
         background-color: #111c26;
         border-color: rgba(0, 0, 0, 0.2);
@@ -3450,8 +3488,8 @@ fieldset[disabled] .btn-soundcloud.focus {
 }
 
 .btn-tumblr {
-    &:active.focus,
-    &.active.focus {
+    &.active.focus,
+    &:active.focus {
         color: #fff;
         background-color: #111c26;
         border-color: rgba(0, 0, 0, 0.2);
@@ -3465,8 +3503,8 @@ fieldset[disabled] .btn-soundcloud.focus {
 }
 
 .btn-tumblr {
-    &:active,
-    &.active {
+    &.active,
+    &:active {
         background-image: none;
     }
 }
@@ -3523,11 +3561,11 @@ fieldset[disabled] .btn-tumblr.focus {
     color: #fff;
     background-color: #55acee;
     border-color: rgba(0, 0, 0, 0.2);
-    &:focus,
+    &.active,
     &.focus,
-    &:hover,
     &:active,
-    &.active {
+    &:focus,
+    &:hover {
         color: #fff;
         background-color: #2795e9;
         border-color: rgba(0, 0, 0, 0.2);
@@ -3541,8 +3579,8 @@ fieldset[disabled] .btn-tumblr.focus {
 }
 
 .btn-twitter {
-    &:active:hover,
-    &.active:hover {
+    &.active:hover,
+    &:active:hover {
         color: #fff;
         background-color: #1583d7;
         border-color: rgba(0, 0, 0, 0.2);
@@ -3556,8 +3594,8 @@ fieldset[disabled] .btn-tumblr.focus {
 }
 
 .btn-twitter {
-    &:active:focus,
-    &.active:focus {
+    &.active:focus,
+    &:active:focus {
         color: #fff;
         background-color: #1583d7;
         border-color: rgba(0, 0, 0, 0.2);
@@ -3571,8 +3609,8 @@ fieldset[disabled] .btn-tumblr.focus {
 }
 
 .btn-twitter {
-    &:active.focus,
-    &.active.focus {
+    &.active.focus,
+    &:active.focus {
         color: #fff;
         background-color: #1583d7;
         border-color: rgba(0, 0, 0, 0.2);
@@ -3586,8 +3624,8 @@ fieldset[disabled] .btn-tumblr.focus {
 }
 
 .btn-twitter {
-    &:active,
-    &.active {
+    &.active,
+    &:active {
         background-image: none;
     }
 }
@@ -3644,11 +3682,11 @@ fieldset[disabled] .btn-twitter.focus {
     color: #fff;
     background-color: #1ab7ea;
     border-color: rgba(0, 0, 0, 0.2);
-    &:focus,
+    &.active,
     &.focus,
-    &:hover,
     &:active,
-    &.active {
+    &:focus,
+    &:hover {
         color: #fff;
         background-color: #1295bf;
         border-color: rgba(0, 0, 0, 0.2);
@@ -3662,8 +3700,8 @@ fieldset[disabled] .btn-twitter.focus {
 }
 
 .btn-vimeo {
-    &:active:hover,
-    &.active:hover {
+    &.active:hover,
+    &:active:hover {
         color: #fff;
         background-color: #0f7b9f;
         border-color: rgba(0, 0, 0, 0.2);
@@ -3677,8 +3715,8 @@ fieldset[disabled] .btn-twitter.focus {
 }
 
 .btn-vimeo {
-    &:active:focus,
-    &.active:focus {
+    &.active:focus,
+    &:active:focus {
         color: #fff;
         background-color: #0f7b9f;
         border-color: rgba(0, 0, 0, 0.2);
@@ -3692,8 +3730,8 @@ fieldset[disabled] .btn-twitter.focus {
 }
 
 .btn-vimeo {
-    &:active.focus,
-    &.active.focus {
+    &.active.focus,
+    &:active.focus {
         color: #fff;
         background-color: #0f7b9f;
         border-color: rgba(0, 0, 0, 0.2);
@@ -3707,8 +3745,8 @@ fieldset[disabled] .btn-twitter.focus {
 }
 
 .btn-vimeo {
-    &:active,
-    &.active {
+    &.active,
+    &:active {
         background-image: none;
     }
 }
@@ -3765,11 +3803,11 @@ fieldset[disabled] .btn-vimeo.focus {
     color: #fff;
     background-color: #587ea3;
     border-color: rgba(0, 0, 0, 0.2);
-    &:focus,
+    &.active,
     &.focus,
-    &:hover,
     &:active,
-    &.active {
+    &:focus,
+    &:hover {
         color: #fff;
         background-color: #466482;
         border-color: rgba(0, 0, 0, 0.2);
@@ -3783,8 +3821,8 @@ fieldset[disabled] .btn-vimeo.focus {
 }
 
 .btn-vk {
-    &:active:hover,
-    &.active:hover {
+    &.active:hover,
+    &:active:hover {
         color: #fff;
         background-color: #3a526b;
         border-color: rgba(0, 0, 0, 0.2);
@@ -3798,8 +3836,8 @@ fieldset[disabled] .btn-vimeo.focus {
 }
 
 .btn-vk {
-    &:active:focus,
-    &.active:focus {
+    &.active:focus,
+    &:active:focus {
         color: #fff;
         background-color: #3a526b;
         border-color: rgba(0, 0, 0, 0.2);
@@ -3813,8 +3851,8 @@ fieldset[disabled] .btn-vimeo.focus {
 }
 
 .btn-vk {
-    &:active.focus,
-    &.active.focus {
+    &.active.focus,
+    &:active.focus {
         color: #fff;
         background-color: #3a526b;
         border-color: rgba(0, 0, 0, 0.2);
@@ -3828,8 +3866,8 @@ fieldset[disabled] .btn-vimeo.focus {
 }
 
 .btn-vk {
-    &:active,
-    &.active {
+    &.active,
+    &:active {
         background-image: none;
     }
 }
@@ -3886,11 +3924,11 @@ fieldset[disabled] .btn-vk.focus {
     color: #fff;
     background-color: #720e9e;
     border-color: rgba(0, 0, 0, 0.2);
-    &:focus,
+    &.active,
     &.focus,
-    &:hover,
     &:active,
-    &.active {
+    &:focus,
+    &:hover {
         color: #fff;
         background-color: #500a6f;
         border-color: rgba(0, 0, 0, 0.2);
@@ -3904,8 +3942,8 @@ fieldset[disabled] .btn-vk.focus {
 }
 
 .btn-yahoo {
-    &:active:hover,
-    &.active:hover {
+    &.active:hover,
+    &:active:hover {
         color: #fff;
         background-color: #39074e;
         border-color: rgba(0, 0, 0, 0.2);
@@ -3919,8 +3957,8 @@ fieldset[disabled] .btn-vk.focus {
 }
 
 .btn-yahoo {
-    &:active:focus,
-    &.active:focus {
+    &.active:focus,
+    &:active:focus {
         color: #fff;
         background-color: #39074e;
         border-color: rgba(0, 0, 0, 0.2);
@@ -3934,8 +3972,8 @@ fieldset[disabled] .btn-vk.focus {
 }
 
 .btn-yahoo {
-    &:active.focus,
-    &.active.focus {
+    &.active.focus,
+    &:active.focus {
         color: #fff;
         background-color: #39074e;
         border-color: rgba(0, 0, 0, 0.2);
@@ -3949,8 +3987,8 @@ fieldset[disabled] .btn-vk.focus {
 }
 
 .btn-yahoo {
-    &:active,
-    &.active {
+    &.active,
+    &:active {
         background-image: none;
     }
 }
@@ -4001,4 +4039,666 @@ fieldset[disabled] .btn-yahoo.focus {
 .btn-yahoo .badge {
     color: #720e9e;
     background-color: #fff;
+}
+
+.margin-top-10 {
+    margin-top: 10px;
+}
+
+.profileContainer {
+    background: #fff;
+    min-height: 100%;
+    padding: 30px 25px;
+    .card-box {
+        border: 2px solid #f3f3f3;
+        -webkit-border-radius: 5px;
+        border-radius: 5px;
+        -moz-border-radius: 5px;
+        background-clip: padding-box;
+        margin-bottom: 20px;
+        background-color: #fff;
+    }
+    .member-card .member-thumb {
+        position: relative;
+    }
+    .thumb-xl {
+        height: 120px;
+        width: 120px;
+    }
+    .img-circle {
+        border-radius: 50%;
+    }
+    .member-card .member-star {
+        position: absolute;
+        top: 12px;
+        right: 10px;
+        font-size: 16px;
+        background-color: #fff;
+        height: 20px;
+        width: 20px;
+        border-radius: 50%;
+        line-height: 20px;
+        text-align: center;
+    }
+    .social-links li a {
+        border-radius: 50%;
+        color: rgba(121, 121, 121, 0.5);
+        display: inline-block;
+        height: 30px;
+        line-height: 30px;
+        border: 2px solid rgba(121, 121, 121, 0.5);
+        text-align: center;
+        width: 30px;
+    }
+    .text-success {
+        color: #4bd396 !important;
+    }
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-weight: 600;
+    }
+    h4 {
+        color: #505458;
+        margin: 10px 0;
+    }
+    .text-custom {
+        color: #188ae2 !important;
+    }
+    .inbox-widget .inbox-item {
+        border-bottom: 1px solid rgba(243, 243, 243, 0.9);
+        overflow: hidden;
+        padding: 10px 0;
+        position: relative;
+        .inbox-item-img {
+            display: block;
+            float: left;
+            margin-right: 15px;
+            width: 40px;
+        }
+        img {
+            width: 40px;
+        }
+        .inbox-item-author {
+            color: #313a46;
+            display: block;
+            margin: 0;
+        }
+        .inbox-item-text {
+            color: #a0a0a0;
+            display: block;
+            font-size: 12px;
+            margin: 0;
+        }
+        .inbox-item-date {
+            color: #a9a9a9;
+            font-size: 11px;
+            position: absolute;
+            right: 7px;
+            top: 2px;
+        }
+    }
+    .card-box {
+        padding: 20px;
+    }
+}
+
+.p-0 {
+    padding: 0 !important;
+}
+
+.p-20 {
+    padding: 20px !important;
+}
+
+.p-30 {
+    padding: 30px !important;
+}
+
+.p-l-0 {
+    padding-left: 0 !important;
+}
+
+.p-r {
+    position: relative;
+}
+
+.p-a {
+    position: absolute;
+}
+
+.p-r-0 {
+    padding-right: 0 !important;
+}
+
+.p-t-0 {
+    padding-top: 0 !important;
+}
+
+.p-b-0 {
+    padding-bottom: 0 !important;
+}
+
+.p-t-10 {
+    padding-top: 10px !important;
+}
+
+.p-b-10 {
+    padding-bottom: 10px !important;
+}
+
+.p-l-r-10 {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.text-muted {
+    color: #98a6ad !important;
+}
+
+.font-13 {
+    font-size: 13px !important;
+}
+
+.m-0 {
+    margin: 0 !important;
+}
+
+.m-r-5 {
+    margin-right: 5px !important;
+}
+
+.m-r-10 {
+    margin-right: 10px !important;
+}
+
+.m-r-15 {
+    margin-right: 15px !important;
+}
+
+.m-l-5 {
+    margin-left: 5px !important;
+}
+
+.m-l-10 {
+    margin-left: 10px !important;
+}
+
+.m-l-15 {
+    margin-left: 15px !important;
+}
+
+.m-t-5 {
+    margin-top: 5px !important;
+}
+
+.m-t-0 {
+    margin-top: 0 !important;
+}
+
+.m-t-10 {
+    margin-top: 10px !important;
+}
+
+.m-t-15 {
+    margin-top: 15px !important;
+}
+
+.m-t-20 {
+    margin-top: 20px !important;
+}
+
+.m-t-30 {
+    margin-top: 30px !important;
+}
+
+.m-t-40 {
+    margin-top: 40px !important;
+}
+
+.m-t-50 {
+    margin-top: 50px !important;
+}
+
+.m-b-0 {
+    margin-bottom: 0 !important;
+}
+
+.m-b-5 {
+    margin-bottom: 5px !important;
+}
+
+.m-b-10 {
+    margin-bottom: 10px !important;
+}
+
+.m-b-15 {
+    margin-bottom: 15px !important;
+}
+
+.m-b-20 {
+    margin-bottom: 20px !important;
+}
+
+.m-b-25 {
+    margin-bottom: 25px !important;
+}
+
+.m-b-30 {
+    margin-bottom: 30px !important;
+}
+
+.form-control.has-error {
+    border: 1px solid #c00;
+}
+
+.pos-abs {
+    position: absolute;
+}
+
+main.viewEditBoard .portlet {
+    .teamListPanel {
+        overflow: hidden;
+    }
+    .portlet-body.createTeam {
+        .boardDescription {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: 8px;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+        .boardIcon {
+            height: 101px;
+            top: 121px;
+            position: relative;
+            z-index: 9;
+            background: #edeff0;
+            transition-property: top, bottom;
+            transition-duration: .5s;
+            span {
+                padding-left: 20px;
+                padding-right: 20px;
+                color: #01635a;
+                overflow: hidden;
+                display: inline-block;
+                i {
+                    display: block;
+                }
+            }
+        }
+        &:hover .boardIcon {
+            top: 0;
+        }
+    }
+    &.haveCover {
+        background-size: cover !important;
+        background-repeat: no-repeat !important;
+        border: 0;
+        background-position: 50% 50% !important;
+        .portlet-heading.bg-teal {
+            background: 0 0 !important;
+            background: -moz-linear-gradient(top, rgba(0, 0, 0, 0.65) 0, rgba(0, 0, 0, 0.65) 99%, rgba(0, 0, 0, 0.65) 100%) !important;
+            background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.65) 0, rgba(0, 0, 0, 0.65) 99%, rgba(0, 0, 0, 0.65) 100%) !important;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.65) 0, rgba(0, 0, 0, 0.65) 99%, rgba(0, 0, 0, 0.65) 100%) !important;
+        }
+        .panel-collapse .portlet-body {
+            color: #fff;
+            border-radius: 0;
+            background: 0 0;
+            background: -moz-linear-gradient(top, rgba(0, 0, 0, 0.65) 0, rgba(0, 0, 0, 0.4) 50%, transparent 100%) !important;
+            background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.65) 0, rgba(0, 0, 0, 0.4) 50%, transparent 100%) !important;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.65) 0, rgba(0, 0, 0, 0.4) 50%, transparent 100%) !important;
+            .list-card-operation {
+                background: 0 0;
+            }
+        }
+    }
+}
+
+.posRel {
+    position: relative;
+}
+
+.inlineBlock {
+    display: inline-block;
+}
+
+.v-m {
+    vertical-align: middle;
+}
+
+.inputfile {
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: 9;
+    cursor: pointer;
+    +label {
+        border: 1px solid #e3e3e3;
+        background-color: #fff;
+        padding: 0;
+        color: #98a6b2;
+        width: 100%;
+        font-weight: 400;
+        span {
+            min-height: 2em;
+            display: inline-block;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            vertical-align: top;
+            padding: 10px;
+            width: 70%;
+        }
+        strong {
+            color: #fff;
+            background-color: #009688;
+            display: inline-block;
+            padding: 10px;
+            text-align: right;
+            float: right;
+        }
+    }
+}
+
+.v-m {
+    vertical-align: middle;
+}
+
+.v-t {
+    vertical-align: top;
+}
+
+.v-b {
+    vertical-align: bottom;
+}
+
+.i-b {
+    display: inline-block;
+}
+
+.newPortlet {
+    background: #009688;
+    color: #fff;
+    display: block;
+    padding: 12px 10px 12px 10px;
+    font-size: 13px;
+    font-weight: 400;
+    margin-bottom: 0;
+    letter-spacing: .03em;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.portlet .portlet-body {
+    padding: 10px;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+textarea.form-control.textboxchange {
+    min-height: 30px;
+}
+
+.portlet .portlet-body.addCardBody:hover {
+    background-color: #fff;
+}
+
+.editModalTextBox {
+    width: 70%;
+    border: none;
+    height: 35px;
+    font-size: 25px;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+    padding: 10px;
+    font-weight: 600;
+    font-family: Lato, sans-serif;
+    &.textSmall {
+        font-size: 12px;
+        font-weight: 400;
+        color: #333;
+    }
+}
+
+.window-title h2 {
+    margin-top: 0;
+}
+
+.modal .modal-dialog .modal-content {
+    border-color: #ddd;
+    border-radius: 3px;
+    background: #edeff0;
+}
+
+.description {
+    border: 1px solid #e4e3e3;
+    padding: 10px;
+    img {
+        width: 100%;
+    }
+    table {
+        width: 100%;
+        border: 1px solid #ccc;
+        th {
+            background: #dadada;
+            padding: 5px;
+        }
+        td {
+            padding: 5px;
+            table {
+                padding: 10px;
+            }
+        }
+    }
+    &:after {
+        content: '';
+        display: block;
+        clear: both;
+    }
+    .marker {
+        background: #ff0;
+    }
+    ul {
+        padding-left: 40px;
+        list-style: disc;
+        margin-bottom: 10px;
+    }
+}
+
+.slim-loading-bar {
+    position: relative;
+    z-index: 99999999;
+}
+
+#loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -2.7em;
+    margin-left: -2.7em;
+    width: 5.4em;
+    height: 5.4em;
+    background-color: transparent;
+}
+
+#hill {
+    position: absolute;
+    width: 7.1em;
+    height: 7.1em;
+    top: 1.7em;
+    left: 1.7em;
+    background-color: transparent;
+    border-left: .25em solid #f5f5f5;
+    transform: rotate(45deg);
+    &:after {
+        content: '';
+        position: absolute;
+        width: 7.1em;
+        height: 7.1em;
+        left: 0;
+        background-color: transparent;
+    }
+}
+
+#box {
+    position: absolute;
+    left: 0;
+    bottom: -.1em;
+    width: 1em;
+    height: 1em;
+    background-color: transparent;
+    border: .25em solid #f5f5f5;
+    border-radius: 15%;
+    transform: translate(0, -1em) rotate(-45deg);
+    animation: push 2.5s cubic-bezier(0.79, 0, 0.47, 0.97) infinite;
+}
+
+@keyframes push {
+    0% {
+        transform: translate(0, -1em) rotate(-45deg);
+    }
+    5% {
+        transform: translate(0, -1em) rotate(-50deg);
+    }
+    20% {
+        transform: translate(1em, -2em) rotate(47deg);
+    }
+    25% {
+        transform: translate(1em, -2em) rotate(45deg);
+    }
+    30% {
+        transform: translate(1em, -2em) rotate(40deg);
+    }
+    45% {
+        transform: translate(2em, -3em) rotate(137deg);
+    }
+    50% {
+        transform: translate(2em, -3em) rotate(135deg);
+    }
+    55% {
+        transform: translate(2em, -3em) rotate(130deg);
+    }
+    70% {
+        transform: translate(3em, -4em) rotate(217deg);
+    }
+    75% {
+        transform: translate(3em, -4em) rotate(220deg);
+    }
+    100% {
+        transform: translate(0, -1em) rotate(-225deg);
+    }
+}
+
+.d-inline-block {
+    display: inline-block !important;
+}
+
+.rounded {
+    border-radius: .25rem;
+}
+
+.pt-1 {
+    padding-top: 0.25rem !important;
+}
+
+.rounded-right {
+    border-top-right-radius: .25rem;
+}
+
+.rounded-top {
+    border-top-right-radius: .25rem;
+    border-top-left-radius: .25rem;
+}
+
+.bg-faded {
+    background-color: #f7f7f7;
+}
+
+.justify-content-between {
+    -webkit-box-pack: justify !important;
+    -ms-flex-pack: justify !important;
+    justify-content: space-between !important;
+}
+
+.px-1 {
+    padding-right: 0.25rem !important;
+}
+
+.pl-1,
+.px-1 {
+    padding-left: 0.25rem !important;
+}
+
+.pb-1 {
+    padding-bottom: 0.25rem !important;
+}
+
+.d-flex {
+    display: -webkit-box !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+}
+
+.ngb-dp-day,
+.ngb-dp-week-number {
+    width: 2em !important;
+    height: 2em !important;
+    color: #333;
+}
+
+.ngb-dp-weekday {
+    width: 2em !important;
+}
+
+.ngb-dp-week-number {
+    line-height: 2em !important;
+}
+
+.ngb-dp-weekday.small,
+.ngb-dp-weekdaysmall {
+    font-size: 100%;
+}
+
+.ngb-dp-day {
+    background: #fff;
+}
+
+ngb-datepicker {
+    position: relative;
+    .btn-secondary:hover {
+        color: #292b2c;
+        background-color: #e6e6e6;
+        border-color: #adadad;
+    }
+    .outside {
+        opacity: 0 !important;
+    }
+}
+
+select.custom-select {
+    padding: 0.25em 0.5em !important;
+    font-size: 0.875em !important;
+    line-height: 1.25;
+    height: inherit;
+    width: 50%;
+    color: #333;
+}
+
+ngb-datepicker-navigation-select {
+    width: 9em !important;
+}
+
+.input-group-addon {
+    border: 1px solid #ccc;
 }

@@ -1,17 +1,21 @@
-<div class="col-lg-3">
+<div class="col-lg-3" *ngFor="let item of portletDataArray">
     <div class="portlet">
         <div class="portlet-heading bg-teal">
             <h3 class="portlet-title">
-                Getting Started
+                {{item.portletName}}
             </h3>
             <div class="portlet-widgets">
-                <chore-portlet-actions></chore-portlet-actions>
+                <chore-portlet-actions [portlet]="item" (portletUpdate)="portletUpdate($event)"></chore-portlet-actions>
             </div>
             <div class="clearfix"></div>
         </div>
-        <div class="list-cards" [dragula]='"first-bag"'>
-            <div class="portlet-body" (click)="open(content)">
-                <chore-portlet-card-label></chore-portlet-card-label>
+        <div class="list-cards" [dragula]='"first-bag"' [attr.data-portlet-id]="item.portletId">
+            <div class="portletAddIns" *ngIf="item.portletCards.length <= 0">
+                Please Add a card
+            </div>
+            <div class="portlet-body" (click)="open(content)" *ngFor="let card of item.portletCards" [attr.data-card-id]="card.portletCardId" [attr.data-portlet-id]="item.portletId">
+
+                <chore-portlet-card-label [card]="card"></chore-portlet-card-label>
                 <div class="js-badges">
                     <div class="faicons" title="This card has a description."><span class="badge-icon fa fa-align-left"></span></div>
                     <div class="faicons" title="Attachments"><span class="badge-icon fa fa-paperclip"></span><span class="badge-text"> 1</span></div>
@@ -25,29 +29,40 @@
                 <chore-portlet-assined></chore-portlet-assined>
                 <template #content let-c="close" let-d="dismiss">
                     <a class="fa fa-lg ion-close dialog-close-button" href="javascript:void(0)" (click)="d('Cross click')"></a>
-                    <chore-portlet-modal></chore-portlet-modal>
+                    <chore-portlet-modal [card]="card" (cardUpdate)="cardUpdate($event)"></chore-portlet-modal>
                 </template>
-
-
-
             </div>
-            <div class="portlet-body" (click)="open(content)">
-                <chore-portlet-card-label></chore-portlet-card-label>
-                <div class="js-badges">
-                    <div class="faicons" title="This card has a description."><span class="badge-icon fa fa-align-left"></span></div>
-                    <div class="faicons" title="Attachments"><span class="badge-icon fa fa-paperclip"></span><span class="badge-text"> 1</span></div>
-                    <div class="faicons" title="Attachments"><span class="badge-icon fa fa-comment"></span><span class="badge-text"> 1</span></div>
-                    <div class="faicons" title="Attachments"><span class="badge-icon fa fa-check-square-o"></span><span class="badge-text"> 1</span></div>
+            <form #form="ngForm" (ngSubmit)="addCard(form, item)">
+                <div class="portlet-body addCardBody" [hidden]="!item.hideme">
+                    <div class="form-group m-b-0">
+                        <label class="control-label sr-only" for="card">Add a Card</label>
+                        <textarea id="card" type="text" placeholder="Add a Card" class="form-control input-md textboxchange" focus="true" name="cardlabel" ngModel></textarea>
+                        <button class="btn btn-teal m-t-10 v-m i-b" type="submit">Add</button>
+                        <a href="#" class="icon-sm ion-close m-l-10 v-m i-b m-t-10" (click)="$event.stopPropagation(); $event.preventDefault();item.hideme = !item.hideme"></a>
+                    </div>
                 </div>
-                <div class="colorLable">
-                    <span class="bg-amber"></span>
-                </div>
-                <chore-portlet-assined></chore-portlet-assined>
-            </div>
-            <a class="open-card-composer" href="#">Add a card…</a>
+            </form>
+
+
         </div>
+        <a class="open-card-composer" href="#" (click)="$event.stopPropagation(); $event.preventDefault();item.hideme = !item.hideme">Add a card…</a>
         <div class="clearfix"></div>
     </div>
 
     <div class="clearfix"></div>
+</div>
+<div class="col-lg-3">
+    <span class="newPortlet" ngbDropdownToggle ngbDropdown #portletAddDrop="ngbDropdown">Add a Portlet</span>
+    <div class="pop-over dropdown-menu" style="left:15px; top: -1px;" (click)="$event.stopPropagation(); portletAddDrop.open();">
+        <div class="popover-content">
+            <form [formGroup]="updatePortletForm" (ngSubmit)="addPortlet(boardIndex)">
+                <div class="form-group m-b-0">
+                    <label class="control-label sr-only" for="Name">Add a Portlet</label>
+                    <input id="Name" name="Name" type="text" placeholder="Add a Portlet" class="form-control input-md textboxchange" formControlName="portletname" focus="true">
+                    <button class="btn btn-teal m-t-10 v-m i-b" type="submit">Add</button>
+                    <a href="#" class="icon-sm ion-close m-l-10 v-m i-b m-t-10" (click)="$event.stopPropagation(); $event.preventDefault(); portletAddDrop.close();"></a>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>

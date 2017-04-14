@@ -8,15 +8,48 @@
                 <div class="subtitle">Sign in to your account</div>
             </div>
             <div class="app-login-box-container">
-                <form action="index.html" method="post">
-                    <div class="form-group"><input type="text" class="form-control" name="login" placeholder="Email Address"></div>
-                    <div class="form-group"><input type="password" class="form-control" name="password" placeholder="Password"></div>
+
+                <div class="alert alert-success" *ngIf="loginSuccessMessage">
+                    <i class="fa fa-check-circle-o" aria-hidden="true"></i> You have successfully logged in.
+                </div>
+                <div class="alert alert-danger" *ngIf="loginUserErrorMessage">
+                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> You are not a registered user.
+                </div>
+                <div class="alert alert-danger" *ngIf="loginPasswordErrorMessage">
+                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> Please provide valid password
+                </div>
+
+                <form [formGroup]="logInForm" novalidate (ngSubmit)="login(logInForm.value, logInForm.valid)">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="login" placeholder="Email Address" formControlName="email">
+                        <div class="row">
+                            <div class="col-md-12 ">
+                                <div class="alert alert-danger fade in error " *ngIf="logInForm.controls['email'].hasError('required') && logInForm.controls['email'].touched">
+                                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> Email must be filled in
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" name="password" placeholder="Password" formControlName="password">
+                        <div class="row">
+                            <div class="col-md-12 ">
+                                <div class="alert alert-danger fade in error " *ngIf="logInForm.controls['password'].hasError('required') && logInForm.controls['password'].touched">
+                                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> Password must be filled in
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="form-group">
                         <div class="row">
                             <div class="col-md-6 col-xs-6">
                                 <div class="app-checkbox"><label><input type="checkbox" name="app-checkbox-1" value="0"> Remember me<span></span></label></div>
+
                             </div>
-                            <div class="col-md-6 col-xs-6"><button class="btn btn-teal btn-block">Sign In</button></div>
+                            <div class="col-md-6 col-xs-6"><button class="btn btn-teal btn-block" [disabled]="!logInForm.valid ">Sign In</button></div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 margin-top-10">
+                                <a routerLink="/signup"> <i class="fa fa-exclamation-circle" aria-hidden="true"></i> Not a user? Register with us.</a>
+                            </div>
                         </div>
                     </div>
                 </form>

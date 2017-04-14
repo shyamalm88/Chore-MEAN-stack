@@ -1,21 +1,23 @@
-<button type="button" class="btn btn-board margin-right-0" ngbDropdownToggle ngbDropdown #projectRenameDrop="ngbDropdown"><span class="ion-ios-color-filter"></span> Project Name</button>
-<div class="pop-over dropdown-menu" style="left: 0px; top: 30px;">
-    <div data-reactroot="">
-        <div class="pop-over-header"><span class="pop-over-header-title">Project Rename</span>
-            <a href="#" class="pop-over-header-close-btn icon-sm ion-close" (click)="$event.preventDefault(); projectRenameDrop.close();"></a>
-        </div>
-        <div>
-            <div class="popover-content">
-                <div>
+<div class="posRel inlineBlock v-m">
+    <button type="button" class="btn btn-board margin-right-0 pull-right" ngbDropdownToggle ngbDropdown #projectRenameDrop="ngbDropdown"><span class="ion-ios-color-filter"></span> Project Name</button>
+    <div class="pop-over dropdown-menu" style="right:0px;left:auto; top: 40px;">
+        <div data-reactroot="">
+            <div class="pop-over-header"><span class="pop-over-header-title">Project Rename</span>
+                <a href="#" class="pop-over-header-close-btn icon-sm ion-close" (click)="$event.preventDefault(); projectRenameDrop.close();"></a>
+            </div>
+            <div>
+                <div class="popover-content">
                     <div>
-                        <form>
-                            <div class="form-group">
-                                <label class="control-label" for="Name">Name of your project</label>
-                                <input id="Name" name="Name" type="text" placeholder="Name of your project" class="form-control input-md textboxchange">
-                                <span class="help-block">rename your project name</span>
-                                <input class="btn btn-success" type="submit" value="Rename">
-                            </div>
-                        </form>
+                        <div>
+                            <form>
+                                <div class="form-group">
+                                    <label class="control-label" for="Name">Name of your project</label>
+                                    <input id="Name" name="Name" type="text" placeholder="Name of your project" class="form-control input-md textboxchange">
+                                    <span class="help-block">rename your project name</span>
+                                    <input class="btn btn-success" type="submit" value="Rename">
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

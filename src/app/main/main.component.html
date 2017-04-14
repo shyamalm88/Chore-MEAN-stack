@@ -1,7 +1,9 @@
-<div class="clearfix"></div>
+<chore-header></chore-header>
+<div class="clearfix">
+</div>
 <div id="surface">
     <main class="mainBoard">
-        <div class="board-wrapper">
+        <div class="board-wrapper" [style.background]="'url('+boardCoverImage+')'" [ngClass]="{'haveBg bgCover': boardCoverImage}" data-adaptive-background="1">
             <div class="board-main-content">
                 <chore-project></chore-project>
             </div>

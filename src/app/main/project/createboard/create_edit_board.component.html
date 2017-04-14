@@ -1,43 +1,28 @@
-<div class="clearfix"></div>
+<chore-header>
+</chore-header>
 <div id="surface">
     <main class="mainBoard viewEditBoard">
-
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <h2 class="boardHeading"> <i class="ion-person"></i> Personal Board</h2>
-        </div>
-
-        <chore-create-board></chore-create-board>
-        <chore-list-board></chore-list-board>
-        <div class="clearfix"></div>
-
-
-
-
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <h2 class="boardHeading"> <i class=" fa fa-lg ion-ios-people"></i> Team Members Board</h2>
-        </div>
-
-        <div class="col-lg-3">
-            <div class="portlet">
-                <div class="portlet-heading bg-teal">
-                    <h3 class="portlet-title">
-                        Teal Heading
-                    </h3>
-                    <div class="portlet-widgets">
-                        <a href="javascript:;" data-toggle="reload"><i class="ion-refresh"></i></a>
-                        <span class="divider"></span>
-                        <a data-toggle="collapse" data-parent="#accordion1" href="#bg-teal"><i class="ion-minus-round"></i></a>
-                        <span class="divider"></span>
-                        <a href="#" data-toggle="remove"><i class="ion-close-round"></i></a>
-                    </div>
-                    <div class="clearfix"></div>
+        <div *ngIf="grouped.length > 0">
+            <div *ngFor="let item of grouped">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <h2 class="boardHeading"> <i class="ion-person"></i> {{item.teamName}}</h2>
                 </div>
-                <div class="panel-collapse collapse in">
-                    <div class="portlet-body">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce elementum, nulla vel pellentesque consequat, ante nulla hendrerit arcu, ac tincidunt mauris lacus sed leo. vamus suscipit molestie vestibulum.
-                    </div>
-                </div>
+
+                <chore-create-board [boardData]="item.boards"></chore-create-board>
+
+                <!--<chore-list-board *ngFor="let individual of item.boards"></chore-list-board>-->
             </div>
         </div>
+        <div *ngIf="!grouped.length > 0">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <h2 class="boardHeading"> <i class="ion-person"></i> Personal Board</h2>
+            </div>
+            <chore-create-board></chore-create-board>
+        </div>
+        <div class="clearfix"></div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <h2 class="boardHeading"> <i class=" fa fa-lg ion-ios-people"></i> Teams</h2>
+        </div>
+        <chore-create-team></chore-create-team>
     </main>
 </div>

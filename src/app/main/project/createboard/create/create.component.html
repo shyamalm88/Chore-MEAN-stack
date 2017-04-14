@@ -3,12 +3,18 @@
         <div class="panel-collapse">
             <div class="portlet-body createBoard">
                 <div class="boardIcon">
-                    <i class="fa fa-3x ion-android-add-circle"></i>
+                    <i aria-hidden="true" class="fa fa-tasks fa-2x fa-rotate-90"></i>
+                    <i class="fa fa-plus pos-abs" aria-hidden="true"></i>
+                    <span class="block m-t-10">Add Board</span>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
+<chore-list-board [displayData]="dataSet"></chore-list-board>
+
 
 <template #content let-c="close" let-d="dismiss">
     <div class="modal-header">
@@ -16,8 +22,8 @@
       <span aria-hidden="true">&times;</span>
     </button>
     <h4 class="modal-title">Create board</h4>
-</div>
-<div class="modal-body">
+    </div>
+    <div class="modal-body">
     <div class="alert alert-success" *ngIf="success">
         {{success}}
     </div>
@@ -38,6 +44,36 @@
      </div>
      <div class="form-group">
          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+             <label class="control-label requiredField" for="name">Assigned Team
+            </label>
+         </div>
+         <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+             <select class="form-control" formControlName="teamname">
+                <option *ngFor="let item of teamSet" >{{item.name}}</option>
+            </select>
+            <!--<chore-single-select [teams]="teamSet" (onSelected)="onSelected($event)"></chore-single-select>
+            <input type="hidden" formControlName="teamname" [(ngModel)]="selectedValue">-->
+         </div>
+         <div class="clearfix"></div>
+     </div>
+     <div class="form-group">
+         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <label class="control-label " for="file">
+            Upload Board Cover Image
+            </label>
+         </div>
+         <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+            <input type="file"
+            [ng-file-select]="options" class="inputfile" (onUpload)="handleUpload($event)" placeholder="upload cover image" accept="image/*">
+            <label for="">
+                <span>{{fileName}}</span> <strong><i class="fa fa-upload"></i> Choose a file </strong>
+            </label>
+
+         </div>
+         <div class="clearfix"></div>
+     </div>
+     <div class="form-group">
+         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
       <label class="control-label " for="description">
        Description
       </label>
@@ -49,8 +85,20 @@
          <div class="clearfix"></div>
      </div>
      <div class="form-group">
+         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+      <label class="control-label" for="description">
+       Created by
+      </label>
+         </div>
+         <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+      <input class="form-control input-sm" id="name" formControlName="createdby" type="text" readonly/>
+
+         </div>
+         <div class="clearfix"></div>
+     </div>
+     <div class="form-group">
       <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-md-push-4">
-       <button class="btn btn-teal" name="submit" type="submit">
+       <button class="btn btn-teal" name="submit" type="submit" [disabled]="!createBoardForm.valid ">
         Save
        </button>
 
@@ -58,5 +106,5 @@
       <div class="clearfix"></div>
      </div>
     </form>
-</div>
+    </div>
 </template>

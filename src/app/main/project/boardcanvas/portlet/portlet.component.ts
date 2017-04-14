@@ -1,39 +1,171 @@
-import { Component, ViewEncapsulation} from "@angular/core";
+import { Component, ViewEncapsulation, OnInit, Input, ViewChild } from '@angular/core';
 import { DragulaService } from 'ng2-dragula/ng2-dragula';
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, ModalDismissReasons, NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
+import { Constant } from '../../../../common/constant/constant';
+import { HttpService } from '../../../../common/services/http.service';
+import { Router, ActivatedRoute, Params } from '@angular/router';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { Response } from '@angular/http';
+
 
 @Component({
-    moduleId: module.id,
-    selector: 'chore-portlet', 
-    templateUrl: './portlet.component.html',
-    encapsulation: ViewEncapsulation.None
+  selector: 'chore-portlet',
+  templateUrl: './portlet.component.html',
+  encapsulation: ViewEncapsulation.None,
 })
 
-export class PortletComponent{
-    constructor(private dragulaService: DragulaService, private modalService: NgbModal) {
-    dragulaService.setOptions('first-bag', {
-      removeOnSpill: true
-    });
+export class PortletComponent implements OnInit {
+
+  @ViewChild(NgbDropdown)
+  private dropdown: NgbDropdown;
+
+
+  private portletData;
+  private boardIndex;
+  private portletDataArray;
+  public updatePortletForm;
+  public cardCreateForm;
+
+  constructor(
+    private dragulaService: DragulaService,
+    private modalService: NgbModal,
+    private router: Router,
+    private httpService: HttpService,
+    private activatedRoute: ActivatedRoute,
+    public fb: FormBuilder,
+
+  ) {
+
     dragulaService.drag.subscribe((value) => {
-        console.log(value);
+      // console.log(value);
       this.onDrag(value.slice(1));
     });
     dragulaService.drop.subscribe((value) => {
-        console.log(value);
+      const movedCardId = value[1].dataset.cardId;
+      const movedFromPortletId = value[1].dataset.portletId;
+      const movedIntoPortletId = value[1].parentElement.dataset.portletId;
+      console.log('moved cardid' + value[1].dataset.cardId);
+      console.log('moved from portletid' + value[1].dataset.portletId);
+      console.log('moved into portletid' + value[1].parentElement.dataset.portletId);
+      this.httpService.editData(Constant.API_ENDPOINT + 'move/' + movedCardId + '/' + movedFromPortletId + '/' + movedIntoPortletId, movedCardId)
+        .subscribe(
+        (data) => {
+          console.log(data);
+          this.portletData = data;
+          this.portletDataArray = this.portletData.board.portlet;
+        }
+        )
+      console.log(Constant.API_ENDPOINT + 'move/' + movedCardId + '/' + movedFromPortletId + '/' + movedIntoPortletId)
       this.onDrop(value.slice(1));
     });
     dragulaService.over.subscribe((value) => {
-        console.log(value);
+      // console.log(value);
       this.onOver(value.slice(1));
     });
     dragulaService.out.subscribe((value) => {
-        console.log(value);
+      //console.log(value[1].dataset.cardId);
       this.onOut(value.slice(1));
     });
-    
+
+
+    /**
+     * for the portlet update form
+     */
+    this.updatePortletForm = this.fb.group({
+      portletname: ['', Validators.required]
+    });
+
+
+    /**
+     * for the card create form
+     */
+    this.cardCreateForm = this.fb.group({
+      cardlabel: ['', Validators.required]
+    });
+
   }
 
-//modal open
+
+
+  ngOnInit() {
+    this.activatedRoute.params.subscribe((params: Params) => {
+      this.boardIndex = params['boardid'];
+    });
+    this.getAllPortlets();
+  }
+
+  /**
+   * this function is used for updating
+   * view from child update
+   * @param responseFromChild
+   */
+  portletUpdate(responseFromChild) {
+    this.portletDataArray = responseFromChild;
+  }
+
+  cardUpdate(responsefromCardChild) {
+    this.portletDataArray = responsefromCardChild;
+  }
+
+  /**
+   * get all portlets from database
+   */
+  getAllPortlets() {
+    this.httpService.getData(Constant.API_ENDPOINT + 'portlet/' + this.boardIndex)
+      .subscribe(
+      (data): void => {
+        this.portletData = data;
+        this.portletDataArray = this.portletData.portlet;
+      }
+      );
+  }
+
+  /**
+   *
+   * @param index add portlets into database
+   */
+  addPortlet(index) {
+    if (this.updatePortletForm.value.portletname) {
+      const data = this.updatePortletForm.value;
+      data.boardId = this.boardIndex;
+      this.httpService.editData(Constant.API_ENDPOINT + 'portlet/' + this.boardIndex, data)
+        .subscribe(
+        (response: Response): void => {
+          this.portletData = response;
+          this.portletDataArray = this.portletData.board.portlet;
+          console.log(this.portletDataArray);
+          this.updatePortletForm.reset();
+          this.dropdown.close();
+        }
+        );
+    }
+  }
+
+  /**
+   * this function is for adding cards into database
+   */
+  addCard(formValue, item) {
+    if (formValue.value.cardlabel) {
+      const data = formValue.value;
+      this.httpService.editData(Constant.API_ENDPOINT + 'add/cards/' + item.portletId, data)
+        .subscribe(
+        (response): void => {
+          this.portletData = response;
+          this.portletDataArray = this.portletData.board.portlet;
+          formValue.reset();
+          this.hideme(item);
+        }
+        );
+    }
+  }
+
+
+
+  hideme(item) {
+    item.hideme = !item.hideme;
+  }
+
+  //modal open
   open(content) {
     this.modalService.open(content)
   }
@@ -76,8 +208,8 @@ export class PortletComponent{
     let [e, el, container] = args;
     this.removeClass(el, 'ex-over');
   }
-  
-  
+
+
 }
 
 
