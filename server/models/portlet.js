@@ -166,6 +166,66 @@ app.route('/edit/cards/:portletId/:editField')
         })
     })
 
+app.route('/move/:movedCardId/:movedFromPortletId/:movedIntoPortletId')
+    .put(function(req, res) {
+        var movedFromPortletId = req.params.movedFromPortletId;
+        var movedIntoPortletId = req.params.movedIntoPortletId;
+        var cardId = req.params.movedCardId;
+
+        Board.findOne({ 'portlet.portletId': movedFromPortletId }, function(err, result) {
+                var copiedElem;
+                if (err) {
+                    throw err;
+                }
+                if (!result) {
+                    res.json({
+                        message: "portlet card with ID: " + movedFromPortletId + " not found.",
+                    });
+                }
+                result.markModified('portlet');
+                var responseResult = result;
+                responseResult.portlet.forEach(function(element) {
+                    if (element.portletId === req.params.movedFromPortletId) {
+                        copiedElem = element.portletCards.splice(index, 1);
+                        var index = result.portlet.indexOf(element);
+                        element.portletCards.splice(index, 1);
+                    }
+                });
+                responseResult.save(function(err, result) {
+                    if (err) {
+                        throw err
+                    }
+                    Board.findOne({ 'portlet.portletId': movedIntoPortletId }, function(err, result) {
+                        //console.log(result);
+                        result.portlet.forEach(function(portlet) {
+                            //console.log(portlet.portletId === movedIntoPortletId)
+                            if (portlet.portletId === movedIntoPortletId) {
+                                portlet.portletCards.push(copiedElem[0]);
+                            }
+                        });
+                        result.markModified('portlet');
+                        result.save(function(err, result) {
+                            if (err) {
+                                throw err;
+                            }
+                            res.json({
+                                message: 'Successfully added card',
+                                board: result
+                            });
+                        });
+
+                    });
+                })
+
+
+
+
+
+            })
+            //console.log(req);
+
+    });
+
 function makeId(pattern) { // Public Domain/MIT
     var d = new Date().getTime();
     if (typeof performance !== 'undefined' && typeof performance.now === 'function') {
