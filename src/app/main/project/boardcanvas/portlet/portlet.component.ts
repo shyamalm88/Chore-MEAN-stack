@@ -44,9 +44,6 @@ export class PortletComponent implements OnInit {
       const movedCardId = value[1].dataset.cardId;
       const movedFromPortletId = value[1].dataset.portletId;
       const movedIntoPortletId = value[1].parentElement.dataset.portletId;
-      console.log('moved cardid' + value[1].dataset.cardId);
-      console.log('moved from portletid' + value[1].dataset.portletId);
-      console.log('moved into portletid' + value[1].parentElement.dataset.portletId);
       var url = Constant.API_ENDPOINT + 'move/' + movedCardId + '/' + movedFromPortletId + '/' + movedIntoPortletId
       this.httpService.editData(url, movedCardId)
         .subscribe(
