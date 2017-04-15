@@ -90,7 +90,7 @@ const appRoutes: Routes = [
     ProfileDetailsComponent,
     CreateTeamComponent,
     TeamListComponent,
-    SingleSelectComponent
+    SingleSelectComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,9 +1,14 @@
-import { Component, ViewEncapsulation, ElementRef, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
+
+import { Component, ViewEncapsulation, ElementRef, OnInit, Input, ViewChild, Output, EventEmitter, NgZone } from '@angular/core';
+
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpService } from '../../../../../common/services/http.service';
 import { Constant } from '../../../../../common/constant/constant';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+
+import { AuthService } from '../../../../../common/services/auth.service';
+
 @Component({
   selector: 'chore-portlet-modal',
   templateUrl: './portletmodal.component.html'
@@ -11,6 +16,8 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 export class PortletModalComponent implements OnInit {
 
   @Input() card: any;
+  @Input() cardIndex;
+  @Input() portletIndex;
   @Output() cardUpdate = new EventEmitter();
 
 
@@ -31,11 +38,21 @@ export class PortletModalComponent implements OnInit {
   private date;
   private Counter = 0;
 
+  private loggedInUserData;
+  private userImage;
+  private userName;
+  public addCommentForm;
+  private name;
+
+
   constructor(private modalService: NgbModal,
     public fb: FormBuilder,
     private httpService: HttpService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
+    private authService: AuthService,
+    private zone: NgZone
+
   ) {
 
 
@@ -73,13 +90,41 @@ export class PortletModalComponent implements OnInit {
 
   }
 
+
+
   ngOnInit() {
+    this.authService.userData.subscribe((userData) => {
+      this.loggedInUserData = userData;
+      if (this.loggedInUserData.facebook) {
+        this.userImage = this.loggedInUserData.facebook.image;
+        this.userName = this.loggedInUserData.facebook.email;
+        this.name = this.loggedInUserData.facebook.name;
+      } else if (this.loggedInUserData.google) {
+        this.userImage = this.loggedInUserData.google.image;
+        this.userName = this.loggedInUserData.google.email;
+        this.name = this.loggedInUserData.google.name;
+      } else {
+        this.userImage = this.loggedInUserData.local.image;
+        this.userName = this.loggedInUserData.local.email;
+        this.name = this.loggedInUserData.local.name;
+      }
+    });
+
     if (this.card.portletCardTagLine) {
       this.portletCardTagLineVisible = true;
     }
     this.addDueDateForm = this.fb.group({
       portletCardDueDate: [this.card.portletCardDueDate, Validators.required]
     });
+
+    this.addCommentForm = this.fb.group({
+      portletCardsComments: ['', Validators.required],
+      portletCardsCommentsCreator: [this.userName, Validators.required],
+      portletCardsCommentsCreatorName: [this.name, Validators.required],
+      portletCardsCommentsCreatorImage: [this.userImage, Validators.required],
+      portletCardsCommentsCreatedAt: [new Date(), Validators.required]
+    });
+
   }
 
 
@@ -91,9 +136,31 @@ export class PortletModalComponent implements OnInit {
   editLabel() {
     this.viewLabel = false;
     this.editLabelForm = this.fb.group({
+
       portletCardName: [this.card.portletCardName, Validators.required]
     });
   }
+
+
+  addComment(portletCardId) {
+    let data = this.addCommentForm.value;
+    let id = portletCardId;
+    this.httpService.editData(Constant.API_ENDPOINT + 'edit/cards/' + id + '/portletCardsComments', data)
+      .subscribe(
+      (response): void => {
+        console.log(response);
+        this.cardResponseBoard = response;
+        this.cardResponseBoard = this.cardResponseBoard.board.portlet;
+        this.cardUpdate.emit(this.cardResponseBoard);
+        this.zone.run(() => { // <== added
+          this.card.portletCardsComments = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardsComments;
+        });
+        this.addCommentForm.controls['portletCardsComments'].reset();
+      }
+      )
+
+  }
+
 
   /**
    * Modal label save function
@@ -195,7 +262,8 @@ export class PortletModalComponent implements OnInit {
           this.addDescription = false;
         }
         )
-    }else{
+
+    } else {
       this.addDescription = false;
     }
 

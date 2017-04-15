@@ -1,7 +1,8 @@
 <!--<template #content let-c="close" let-d="dismiss">-->
 <div class="window-wrapper js-tab-parent">
     <div class=" card-detail-window u-clearfix ">
-        <div class="templateImage " style="background-image: url( '../images/bg.png') "></div>
+        <!--<div class="templateImage " style="background-image: url( '../images/bg.png') "></div>-->
+
         <div class="window-header "><span class="window-header-icon fa fa-2x fa-file-text-o"></span>
             <div class="window-title">
                 <h2 class="card-detail-title-assist" dir="auto" *ngIf="viewLabel" (click)="editLabel()">{{card.portletCardName}}</h2>
@@ -51,8 +52,6 @@
                         <input class="form-control" placeholder="yyyy-mm-dd" formControlName="portletCardDueDate" [(ngModel)]="card.portletCardDueDate" ngbDatepicker #d="ngbDatepicker" type="hidden" (ngModelChange)="onChange(card.portletCardId)">
                     </form>
                     </span>
-
-
                 </div>
 
                 <div class="card-detail-item">
@@ -119,150 +118,169 @@
             </div>
             <div class="checklist-list window-module js-checklist-list js-no-higher-edits ui-sortable "></div>
             <div class="window-module add-comment-section ">
-                <div class="window-module-title window-module-title-no-divider "><span class="window-module-title-icon fa fa-2x fa-comment "></span>
-                    <h3>Add Comment</h3><span class="editing-members js-editing-members hide "></span></div>
-                <div class="new-comment js-new-comment ">
-                    <div class="member member-no-menu "><img class="member-avatar " height="30 " width="30 " src="https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/30.png " srcset="https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/30.png
-        1x, https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/50.png 2x " alt="Arghya Majumder (arghyamajumder) " title="Arghya Majumder (arghyamajumder) "><span class="member-gold-badge " title="This member has Trello Gold. "></span></div>
-                    <form>
-                        <div class="comment-frame ">
-                            <div class="comment-box "><textarea class="comment-box-input js-new-comment-input " placeholder="Write a comment… " tabindex="1 " dir="auto " style="overflow: hidden; word-wrap: break-word; height: 75px; "></textarea>
-                                <div class="comment-box-options "><a class="comment-box-options-item js-comment-add-attachment " href="# " title="Add an attachment… "><span class="icon-sm fa fa-paperclip "></span></a>
-                                    <a class="comment-box-options-item js-comment-mention-member " href="# " title="Mention a member… "><span class="icon-sm fa ion-at "></span></a>
-                                    <a class="comment-box-options-item js-comment-add-emoji " href="# " title="Add emoji… "><span class="icon-sm fa ion-happy-outline "></span></a>
-                                    <a class="comment-box-options-item js-comment-add-card " href="# " title="Add card… "><span class="icon-sm fa fa-comments-o "></span></a>
-                                </div>
-                            </div>
+                <div class="window-module-title window-module-title-no-divider "><span class="window-module-title-icon fa fa-2x fa-comments-o "></span>
+                    <h3>Comments</h3><span class="editing-members js-editing-members hide "></span></div>
+                <div class="phenom mod-other-type" *ngFor="let item of card.portletCardsComments">
+
+                    <div class="phenom-desc ">
+                        <span class="pull-left m-r-10">
+                                    <img alt="{{item.portletCardsCommentsCreator}}" class="member-avatar" height="30 " src="{{item.portletCardsCommentsCreatorImage}}" srcset="{{item.portletCardsCommentsCreatorImage}}" title="" width="30">
+                                </span>
+                        <div class="comments m-b-10" style="overflow:hidden;">
+                            <span class="u-font-weight-bold ">
+                                        <b>{{item.portletCardsCommentsCreatorName}}</b>
+                                    </span> commented "{{item.portletCardsComments}}"
                         </div>
-                        <div class="comment-controls u-clearfix "><input class="primary confirm mod-no-top-bottom-margin btn btn-success bg-teal " disabled=" " type="submit " value="Send " tabindex="3 "></div>
+                    </div>
+                    <p class="phenom-meta quiet "><a class="date" href="javascript:void(0)" title="{{item.portletCardsCommentsCreatedAt}}"><i class="fa fa-clock-o"></i> {{item.portletCardsCommentsCreatedAt | date:'medium'}}</a>
+                    </p>
+                </div>
+                <div class="new-comment js-new-comment ">
+                    <div class="member member-no-menu ">
+                        <img class="member-avatar " height="30" width="30" src="{{userImage}}" srcset="{{userImage}}" alt="{{userName}}" title="{{userName}}">
+                    </div>
+                    <form [formGroup]="addCommentForm" (ngSubmit)="addComment(card.portletCardId)">
+                        <div class="comment-frame ">
+
+                            <div class="comment-box ">
+                                <textarea class="comment-box-input js-new-comment-input" placeholder="Write a comment…" tabindex="1" dir="auto" formControlName="portletCardsComments" style="overflow: hidden; word-wrap: break-word; height: 75px; "></textarea>
+                            </div>
+                            <input type="hidden" formControlName="portletCardsCommentsCreator">
+                            <input type="hidden" formControlName="portletCardsCommentsCreatorImage">
+                            <input type="hidden" formControlName="portletCardsCommentsCreatorName">
+                            <input type="hidden" formControlName="portletCardsCommentsCreatedAt">
+                        </div>
+                        <div class="comment-controls u-clearfix "><button class="btn btn-teal btn-sm" type="submit">Save</button></div>
                     </form>
+
+
 
                 </div>
             </div>
             <div class="window-module ">
                 <div class="window-module-title window-module-title-no-divider "><span class="window-module-title-icon fa fa-2x ion-podium "></span>
                     <h3>Activity</h3>
-                    <div class="window-module-title-options "><a class="quiet hide js-show-details " href="# ">Show Details</a><a class="quiet js-hide-details " href="# ">Hide Details</a></div>
+                    <div class="window-module-title-options "><a class="quiet hide" href="# ">Show Details</a><a class="quiet" href="# ">Hide Details</a></div>
                 </div>
                 <div class="js-list-actions ">
                     <div class="phenom mod-other-type ">
                         <div class="phenom-creator ">
-                            <div class="member js-show-mem-menu " idmember="589ef5f94c55710b85a389e0 "><img class="member-avatar " height="30 " width="30 " src="https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/30.png
+                            <div class="member" idmember="589ef5f94c55710b85a389e0 "><img class="member-avatar " height="30 " width="30 " src="https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/30.png
         " srcset="https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/30.png 1x, https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/50.png 2x " alt="Arghya Majumder (arghyamajumder) " title="Arghya Majumder (arghyamajumder) ">
                                 <span class="member-gold-badge " title="This member has Trello Gold. "></span>
                             </div>
                         </div>
-                        <div class="phenom-desc "><span class="inline-member js-show-mem-menu " idmember="589ef5f94c55710b85a389e0 "><span class="u-font-weight-bold ">Arghya Majumder</span></span> added <span class="inline-member js-show-mem-menu
+                        <div class="phenom-desc "><span class="inline-member" idmember="589ef5f94c55710b85a389e0 "><span class="u-font-weight-bold ">Arghya Majumder</span></span> added <span class="inline-member
         " idmember="589ef642a34124f9eee3573e "><span class="u-font-weight-bold ">sguha1988.life</span></span>
                             to this card</div>
-                        <p class="phenom-meta quiet "><a class="date js-hide-on-sending js-highlight-link " dt="2017-02-18T12:54:01.238Z " href="/c/cVSj9FoJ/2-trello-basics-bla-bla-bla-bla-bla-bla-bla-bla#action-58a843e985d80160e7ade441 " title="February
+                        <p class="phenom-meta quiet "><a class="date   " dt="2017-02-18T12:54:01.238Z " href="/c/cVSj9FoJ/2-trello-basics-bla-bla-bla-bla-bla-bla-bla-bla#action-58a843e985d80160e7ade441 " title="February
         18, 2017 6:24 PM ">yesterday at 6:24 PM</a>
-                            <span class="js-spinner hide "><span class="spinner spinner--inline mod-left small "></span> Sending…</span><span class="js-hide-on-sending "></span></p>
+                            <span class="hide "><span class="spinner spinner--inline mod-left small "></span> Sending…</span><span class=" "></span></p>
                     </div>
                     <div class="phenom mod-other-type ">
                         <div class="phenom-creator ">
-                            <div class="member js-show-mem-menu " idmember="589ef5f94c55710b85a389e0 "><img class="member-avatar " height="30 " width="30 " src="https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/30.png
+                            <div class="member" idmember="589ef5f94c55710b85a389e0 "><img class="member-avatar " height="30 " width="30 " src="https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/30.png
         " srcset="https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/30.png 1x, https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/50.png 2x " alt="Arghya Majumder (arghyamajumder) " title="Arghya Majumder (arghyamajumder) ">
                                 <span class="member-gold-badge " title="This member has Trello Gold. "></span>
                             </div>
                         </div>
-                        <div class="phenom-desc "><span class="inline-member js-show-mem-menu " idmember="589ef5f94c55710b85a389e0 "><span class="u-font-weight-bold ">Arghya Majumder</span></span> joined this card</div>
-                        <p class="phenom-meta quiet "><a class="date js-hide-on-sending js-highlight-link " dt="2017-02-18T12:53:59.657Z " href="/c/cVSj9FoJ/2-trello-basics-bla-bla-bla-bla-bla-bla-bla-bla#action-58a843e7c17a18712220bb7f " title="February
+                        <div class="phenom-desc "><span class="inline-member" idmember="589ef5f94c55710b85a389e0 "><span class="u-font-weight-bold ">Arghya Majumder</span></span> joined this card</div>
+                        <p class="phenom-meta quiet "><a class="date   " dt="2017-02-18T12:53:59.657Z " href="/c/cVSj9FoJ/2-trello-basics-bla-bla-bla-bla-bla-bla-bla-bla#action-58a843e7c17a18712220bb7f " title="February
         18, 2017 6:24 PM ">yesterday at 6:24 PM</a>
-                            <span class="js-spinner hide "><span class="spinner spinner--inline mod-left small "></span> Sending…</span><span class="js-hide-on-sending "></span></p>
+                            <span class="hide "><span class="spinner spinner--inline mod-left small "></span> Sending…</span><span class=" "></span></p>
                     </div>
                     <div class="phenom mod-other-type ">
                         <div class="phenom-creator ">
-                            <div class="member js-show-mem-menu " idmember="589ef5f94c55710b85a389e0 "><img class="member-avatar " height="30 " width="30 " src="https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/30.png
+                            <div class="member" idmember="589ef5f94c55710b85a389e0 "><img class="member-avatar " height="30 " width="30 " src="https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/30.png
         " srcset="https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/30.png 1x, https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/50.png 2x " alt="Arghya Majumder (arghyamajumder) " title="Arghya Majumder (arghyamajumder) ">
                                 <span class="member-gold-badge " title="This member has Trello Gold. "></span>
                             </div>
                         </div>
-                        <div class="phenom-desc "><span class="inline-member js-show-mem-menu " idmember="589ef5f94c55710b85a389e0 "><span class="u-font-weight-bold ">Arghya Majumder</span></span> left this card</div>
-                        <p class="phenom-meta quiet "><a class="date js-hide-on-sending js-highlight-link " dt="2017-02-18T12:53:58.998Z " href="/c/cVSj9FoJ/2-trello-basics-bla-bla-bla-bla-bla-bla-bla-bla#action-58a843e6782fddd98b9b8252 " title="February
+                        <div class="phenom-desc "><span class="inline-member" idmember="589ef5f94c55710b85a389e0 "><span class="u-font-weight-bold ">Arghya Majumder</span></span> left this card</div>
+                        <p class="phenom-meta quiet "><a class="date   " dt="2017-02-18T12:53:58.998Z " href="/c/cVSj9FoJ/2-trello-basics-bla-bla-bla-bla-bla-bla-bla-bla#action-58a843e6782fddd98b9b8252 " title="February
         18, 2017 6:23 PM ">yesterday at 6:23 PM</a>
-                            <span class="js-spinner hide "><span class="spinner spinner--inline mod-left small "></span> Sending…</span><span class="js-hide-on-sending "></span></p>
+                            <span class="hide "><span class="spinner spinner--inline mod-left small "></span> Sending…</span><span class=" "></span></p>
                     </div>
                     <div class="phenom mod-other-type ">
                         <div class="phenom-creator ">
-                            <div class="member js-show-mem-menu " idmember="589ef5f94c55710b85a389e0 "><img class="member-avatar " height="30 " width="30 " src="https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/30.png
+                            <div class="member" idmember="589ef5f94c55710b85a389e0 "><img class="member-avatar " height="30 " width="30 " src="https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/30.png
         " srcset="https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/30.png 1x, https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/50.png 2x " alt="Arghya Majumder (arghyamajumder) " title="Arghya Majumder (arghyamajumder) ">
                                 <span class="member-gold-badge " title="This member has Trello Gold. "></span>
                             </div>
                         </div>
-                        <div class="phenom-desc "><span class="inline-member js-show-mem-menu " idmember="589ef5f94c55710b85a389e0 "><span class="u-font-weight-bold ">Arghya Majumder</span></span> added <span class="inline-member js-show-mem-menu
+                        <div class="phenom-desc "><span class="inline-member" idmember="589ef5f94c55710b85a389e0 "><span class="u-font-weight-bold ">Arghya Majumder</span></span> added <span class="inline-member
         " idmember="50095233f62adbe04d935195 "><span class="u-font-weight-bold ">Taco</span></span>
                             to this card</div>
-                        <p class="phenom-meta quiet "><a class="date js-hide-on-sending js-highlight-link " dt="2017-02-18T12:51:08.447Z " href="/c/cVSj9FoJ/2-trello-basics-bla-bla-bla-bla-bla-bla-bla-bla#action-58a8433cb0c6fe3912c5a06d " title="February
+                        <p class="phenom-meta quiet "><a class="date   " dt="2017-02-18T12:51:08.447Z " href="/c/cVSj9FoJ/2-trello-basics-bla-bla-bla-bla-bla-bla-bla-bla#action-58a8433cb0c6fe3912c5a06d " title="February
         18, 2017 6:21 PM ">yesterday at 6:21 PM</a>
-                            <span class="js-spinner hide "><span class="spinner spinner--inline mod-left small "></span> Sending…</span><span class="js-hide-on-sending "></span></p>
+                            <span class="hide "><span class="spinner spinner--inline mod-left small "></span> Sending…</span><span class=" "></span></p>
                     </div>
                     <div class="phenom mod-other-type ">
                         <div class="phenom-creator ">
-                            <div class="member js-show-mem-menu " idmember="589ef5f94c55710b85a389e0 "><img class="member-avatar " height="30 " width="30 " src="https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/30.png
+                            <div class="member" idmember="589ef5f94c55710b85a389e0 "><img class="member-avatar " height="30 " width="30 " src="https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/30.png
         " srcset="https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/30.png 1x, https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/50.png 2x " alt="Arghya Majumder (arghyamajumder) " title="Arghya Majumder (arghyamajumder) ">
                                 <span class="member-gold-badge " title="This member has Trello Gold. "></span>
                             </div>
                         </div>
-                        <div class="phenom-desc "><span class="inline-member js-show-mem-menu " idmember="589ef5f94c55710b85a389e0 "><span class="u-font-weight-bold ">Arghya Majumder</span></span> joined this card</div>
-                        <p class="phenom-meta quiet "><a class="date js-hide-on-sending js-highlight-link " dt="2017-02-18T12:51:04.020Z " href="/c/cVSj9FoJ/2-trello-basics-bla-bla-bla-bla-bla-bla-bla-bla#action-58a843387a51433047a33e89 " title="February
+                        <div class="phenom-desc "><span class="inline-member" idmember="589ef5f94c55710b85a389e0 "><span class="u-font-weight-bold ">Arghya Majumder</span></span> joined this card</div>
+                        <p class="phenom-meta quiet "><a class="date   " dt="2017-02-18T12:51:04.020Z " href="/c/cVSj9FoJ/2-trello-basics-bla-bla-bla-bla-bla-bla-bla-bla#action-58a843387a51433047a33e89 " title="February
         18, 2017 6:21 PM ">yesterday at 6:21 PM</a>
-                            <span class="js-spinner hide "><span class="spinner spinner--inline mod-left small "></span> Sending…</span><span class="js-hide-on-sending "></span></p>
+                            <span class="hide "><span class="spinner spinner--inline mod-left small "></span> Sending…</span><span class=" "></span></p>
                     </div>
                     <div class="phenom mod-comment-type ">
                         <div class="phenom-creator ">
-                            <div class="member js-show-mem-menu " idmember="589ef5f94c55710b85a389e0 "><img class="member-avatar " height="30 " width="30 " src="https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/30.png
+                            <div class="member" idmember="589ef5f94c55710b85a389e0 "><img class="member-avatar " height="30 " width="30 " src="https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/30.png
         " srcset="https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/30.png 1x, https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/50.png 2x " alt="Arghya Majumder (arghyamajumder) " title="Arghya Majumder (arghyamajumder) ">
                                 <span class="member-gold-badge " title="This member has Trello Gold. "></span>
                             </div>
                         </div>
-                        <div class="phenom-desc "><span class="inline-member js-show-mem-menu " idmember="589ef5f94c55710b85a389e0 "><span class="u-font-weight-bold ">Arghya Majumder</span></span>
+                        <div class="phenom-desc "><span class="inline-member" idmember="589ef5f94c55710b85a389e0 "><span class="u-font-weight-bold ">Arghya Majumder</span></span>
                             <div class="comment-container ">
-                                <div class="action-comment markeddown js-comment " dir="auto ">
-                                    <div class="current-comment js-friendly-links js-open-card ">
+                                <div class="action-comment markeddown" dir="auto ">
+                                    <div class="current-comment">
                                         <p>jgfjfjhfjfj</p>
                                     </div>
                                     <div class="comment-box ">
-                                        <div class="comment-box-options "><a class="comment-box-options-item js-comment-add-attachment " href="# " title="Add an attachment… "><span class="icon-sm icon-attachment "></span></a><a class="comment-box-options-item
-        js-comment-mention-member " href="# " title="Mention a member… "><span class="icon-sm icon-mention "></span></a><a class="comment-box-options-item js-comment-add-emoji " href="# " title="Add emoji… "><span class="icon-sm icon-emoji "></span></a>
-                                            <a class="comment-box-options-item js-comment-add-card " href="# " title="Add card… "><span class="icon-sm icon-card "></span></a>
+                                        <div class="comment-box-options "><a class="comment-box-options-item " href="# " title="Add an attachment… "><span class="icon-sm icon-attachment "></span></a><a class="comment-box-options-item
+        " href="# " title="Mention a member… "><span class="icon-sm icon-mention "></span></a><a class="comment-box-options-item " href="# " title="Add emoji… "><span class="icon-sm icon-emoji "></span></a>
+                                            <a class="comment-box-options-item " href="# " title="Add card… "><span class="icon-sm icon-card "></span></a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="hide embedly js-embedly "></div>
                         </div>
-                        <p class="phenom-meta quiet "><a class="date js-hide-on-sending js-highlight-link " dt="2017-02-18T12:46:10.211Z " href="/c/cVSj9FoJ/2-trello-basics-bla-bla-bla-bla-bla-bla-bla-bla#comment-58a84212885fbf6a47f34484 " title="February
+                        <p class="phenom-meta quiet "><a class="date   " dt="2017-02-18T12:46:10.211Z " href="/c/cVSj9FoJ/2-trello-basics-bla-bla-bla-bla-bla-bla-bla-bla#comment-58a84212885fbf6a47f34484 " title="February
         18, 2017 6:16 PM ">yesterday at 6:16 PM</a>
-                            <span class="js-spinner hide "><span class="spinner spinner--inline mod-left small "></span> Sending…</span><span class="js-hide-on-sending "> - <a class="js-edit-action " href="# ">Edit</a> - <a class="js-confirm-delete-action
+                            <span class="hide "><span class="spinner spinner--inline mod-left small "></span> Sending…</span><span class=" "> - <a class="" href="# ">Edit</a> - <a class="
         " href="# ">Delete</a></span></p>
                     </div>
                     <div class="phenom mod-attachment-type ">
                         <div class="phenom-creator ">
-                            <div class="member js-show-mem-menu " idmember="50095233f62adbe04d935195 "><img class="member-avatar " height="30 " width="30 " src="https://trello-avatars.s3.amazonaws.com/10e3fec8aee92d177b22290b7cff669d/30.png
+                            <div class="member" idmember="50095233f62adbe04d935195 "><img class="member-avatar " height="30 " width="30 " src="https://trello-avatars.s3.amazonaws.com/10e3fec8aee92d177b22290b7cff669d/30.png
         " srcset="https://trello-avatars.s3.amazonaws.com/10e3fec8aee92d177b22290b7cff669d/30.png 1x, https://trello-avatars.s3.amazonaws.com/10e3fec8aee92d177b22290b7cff669d/50.png 2x " alt="Taco (taco) " title="Taco (taco) "><span class="member-gold-badge "
                                     title="This member has Trello Gold. "></span></div>
                         </div>
-                        <div class="phenom-desc "><span class="inline-member js-show-mem-menu " idmember="50095233f62adbe04d935195 "><span class="u-font-weight-bold ">Taco</span></span> attached <a class="js-open-attachment-viewer " href="https://trello-attachments.s3.amazonaws.com/5824e427857eea92ad0a93fc/5824e454dbdf1b2aae8dba60/1673f4e6150441a6874557c4d942f243/this_is_a_trello_board_with_lists_and_cards.png "
+                        <div class="phenom-desc "><span class="inline-member" idmember="50095233f62adbe04d935195 "><span class="u-font-weight-bold ">Taco</span></span> attached <a class="" href="https://trello-attachments.s3.amazonaws.com/5824e427857eea92ad0a93fc/5824e454dbdf1b2aae8dba60/1673f4e6150441a6874557c4d942f243/this_is_a_trello_board_with_lists_and_cards.png "
                                 data-idattachment="589ef5fa4c55710b85a389f2 ">this_is_a_trello_board_with_lists_and_cards.png</a> to this card
-                            <a class="js-open-attachment-viewer js-friendly-links " href="https://trello-attachments.s3.amazonaws.com/5824e427857eea92ad0a93fc/5824e454dbdf1b2aae8dba60/1673f4e6150441a6874557c4d942f243/this_is_a_trello_board_with_lists_and_cards.png
+                            <a class=" " href="https://trello-attachments.s3.amazonaws.com/5824e427857eea92ad0a93fc/5824e454dbdf1b2aae8dba60/1673f4e6150441a6874557c4d942f243/this_is_a_trello_board_with_lists_and_cards.png
         " target="_blank " data-idattachment="589ef5fa4c55710b85a389f2 "><img class="attachment-image-preview " src="https://trello-attachments.s3.amazonaws.com/5824e454dbdf1b2aae8dba60/599x273/dd30250475dbb1fef1ddbab298ac22d6/this_is_a_trello_board_with_lists_and_cards.png "></a>
-                            <div class="hide previews js-previews "></div>
+                            <div class="hide previews"></div>
                         </div>
-                        <p class="phenom-meta quiet "><a class="date js-hide-on-sending js-highlight-link " dt="2016-11-10T21:19:45.333Z " href="/c/cVSj9FoJ/2-trello-basics-bla-bla-bla-bla-bla-bla-bla-bla#action-589ef5fa4c55710b85a38a13 " title="November
+                        <p class="phenom-meta quiet "><a class="date   " dt="2016-11-10T21:19:45.333Z " href="/c/cVSj9FoJ/2-trello-basics-bla-bla-bla-bla-bla-bla-bla-bla#action-589ef5fa4c55710b85a38a13 " title="November
         11, 2016 2:49 AM ">Nov 11, 2016 at 2:49 AM</a>
-                            <span class="js-spinner hide "><span class="spinner spinner--inline mod-left small "></span> Sending…</span><span class="js-hide-on-sending "> - <a class="js-reply-to-action " href="# ">Reply</a></span></p>
+                            <span class="hide "><span class="spinner spinner--inline mod-left small "></span> Sending…</span><span class=" "> - <a class=" " href="# ">Reply</a></span></p>
                     </div>
                     <div class="phenom mod-other-type ">
                         <div class="phenom-creator ">
-                            <div class="member js-show-mem-menu " idmember="50095233f62adbe04d935195 "><img class="member-avatar " height="30 " width="30 " src="https://trello-avatars.s3.amazonaws.com/10e3fec8aee92d177b22290b7cff669d/30.png
+                            <div class="member" idmember="50095233f62adbe04d935195 "><img class="member-avatar " height="30 " width="30 " src="https://trello-avatars.s3.amazonaws.com/10e3fec8aee92d177b22290b7cff669d/30.png
         " srcset="https://trello-avatars.s3.amazonaws.com/10e3fec8aee92d177b22290b7cff669d/30.png 1x, https://trello-avatars.s3.amazonaws.com/10e3fec8aee92d177b22290b7cff669d/50.png 2x " alt="Taco (taco) " title="Taco (taco) "><span class="member-gold-badge "
                                     title="This member has Trello Gold. "></span></div>
                         </div>
-                        <div class="phenom-desc "><span class="inline-member js-show-mem-menu " idmember="50095233f62adbe04d935195 "><span class="u-font-weight-bold ">Taco</span></span> added this card to Stuff To Try (this is a list)</div>
-                        <p class="phenom-meta quiet "><a class="date js-hide-on-sending js-highlight-link " dt="2016-11-10T21:19:16.811Z " href="/c/cVSj9FoJ/2-trello-basics-bla-bla-bla-bla-bla-bla-bla-bla#action-589ef5fa4c55710b85a38a11 " title="November
+                        <div class="phenom-desc "><span class="inline-member" idmember="50095233f62adbe04d935195 "><span class="u-font-weight-bold ">Taco</span></span> added this card to Stuff To Try (this is a list)</div>
+                        <p class="phenom-meta quiet "><a class="date   " dt="2016-11-10T21:19:16.811Z " href="/c/cVSj9FoJ/2-trello-basics-bla-bla-bla-bla-bla-bla-bla-bla#action-589ef5fa4c55710b85a38a11 " title="November
         11, 2016 2:49 AM ">Nov 11, 2016 at 2:49 AM</a>
-                            <span class="js-spinner hide "><span class="spinner spinner--inline mod-left small "></span> Sending…</span><span class="js-hide-on-sending "></span></p>
+                            <span class="hide "><span class="spinner spinner--inline mod-left small "></span> Sending…</span><span class=" "></span></p>
                     </div>
                 </div>
                 <div class="spinner loading js-loading-card-actions " style="display: none; "></div>

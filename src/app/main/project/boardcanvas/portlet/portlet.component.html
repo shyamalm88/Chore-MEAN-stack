@@ -1,4 +1,5 @@
-<div class="col-lg-3" *ngFor="let item of portletDataArray">
+<div class="col-lg-3" *ngFor="let item of portletDataArray; let portletIndex = index">
+
     <div class="portlet">
         <div class="portlet-heading bg-teal">
             <h3 class="portlet-title">
@@ -13,7 +14,7 @@
             <div class="portletAddIns" *ngIf="item.portletCards.length <= 0">
                 Please Add a card
             </div>
-            <div class="portlet-body" (click)="open(content)" *ngFor="let card of item.portletCards" [attr.data-card-id]="card.portletCardId" [attr.data-portlet-id]="item.portletId">
+            <div class="portlet-body" (click)="open(content)" *ngFor="let card of item.portletCards; let cardIndex = index" [attr.data-card-id]="card.portletCardId" [attr.data-portlet-id]="item.portletId">
 
                 <chore-portlet-card-label [card]="card"></chore-portlet-card-label>
                 <div class="js-badges">
@@ -29,7 +30,7 @@
                 <chore-portlet-assined></chore-portlet-assined>
                 <template #content let-c="close" let-d="dismiss">
                     <a class="fa fa-lg ion-close dialog-close-button" href="javascript:void(0)" (click)="d('Cross click')"></a>
-                    <chore-portlet-modal [card]="card" (cardUpdate)="cardUpdate($event)"></chore-portlet-modal>
+                    <chore-portlet-modal [card]="card" [portletIndex]="portletIndex" [cardIndex]="cardIndex" (cardUpdate)="cardUpdate($event)"></chore-portlet-modal>
                 </template>
             </div>
             <form #form="ngForm" (ngSubmit)="addCard(form, item)">

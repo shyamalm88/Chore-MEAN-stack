@@ -44,26 +44,21 @@ export class PortletComponent implements OnInit {
       const movedCardId = value[1].dataset.cardId;
       const movedFromPortletId = value[1].dataset.portletId;
       const movedIntoPortletId = value[1].parentElement.dataset.portletId;
-      console.log('moved cardid' + value[1].dataset.cardId);
-      console.log('moved from portletid' + value[1].dataset.portletId);
-      console.log('moved into portletid' + value[1].parentElement.dataset.portletId);
-      this.httpService.editData(Constant.API_ENDPOINT + 'move/' + movedCardId + '/' + movedFromPortletId + '/' + movedIntoPortletId, movedCardId)
+
+      var url = Constant.API_ENDPOINT + 'move/' + movedCardId + '/' + movedFromPortletId + '/' + movedIntoPortletId
+      this.httpService.editData(url, movedCardId)
         .subscribe(
         (data) => {
-          console.log(data);
           this.portletData = data;
           this.portletDataArray = this.portletData.board.portlet;
         }
         )
-      console.log(Constant.API_ENDPOINT + 'move/' + movedCardId + '/' + movedFromPortletId + '/' + movedIntoPortletId)
       this.onDrop(value.slice(1));
     });
     dragulaService.over.subscribe((value) => {
-      // console.log(value);
       this.onOver(value.slice(1));
     });
     dragulaService.out.subscribe((value) => {
-      //console.log(value[1].dataset.cardId);
       this.onOut(value.slice(1));
     });
 
@@ -93,6 +88,8 @@ export class PortletComponent implements OnInit {
     });
     this.getAllPortlets();
   }
+
+
 
   /**
    * this function is used for updating
