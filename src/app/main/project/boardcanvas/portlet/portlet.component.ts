@@ -88,6 +88,8 @@ export class PortletComponent implements OnInit {
     this.getAllPortlets();
   }
 
+
+
   /**
    * this function is used for updating
    * view from child update
