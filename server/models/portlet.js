@@ -61,6 +61,7 @@ app.route('/portlet/:index')
 
     });
 
+
 app.route('/edit/portlet/:portletId')
     .put(function(req, res) {
         Board.findOne({ 'portlet.portletId': req.params.portletId }, function(err, result) {
@@ -158,6 +159,34 @@ app.route('/edit/cards/:portletId/:editField')
                                     board: result
                                 });
                             });
+                            if (editField === 'portletCardsComments') {
+                                card.portletCardsComments.push(req.body);
+                                card.portletCardUpdatedOn = new Date();
+                                responseCardResult.markModified('portlet');
+                                responseCardResult.save(function(err, result) {
+                                    if (err) {
+                                        console.log(err);
+                                    }
+                                    res.json({
+                                        message: 'Successfully added comments',
+                                        board: result
+                                    });
+                                });
+                            } else {
+                                card[editField] = req.body[editField];
+                                console.log(req.body)
+                                card.portletCardUpdatedOn = new Date();
+                                responseCardResult.markModified('portlet');
+                                responseCardResult.save(function(err, result) {
+                                    if (err) {
+                                        throw err;
+                                    }
+                                    res.json({
+                                        message: 'Successfully added value',
+                                        board: result
+                                    });
+                                });
+                            }
                         }
                     })
                 });
