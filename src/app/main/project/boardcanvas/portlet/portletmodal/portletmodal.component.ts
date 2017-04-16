@@ -43,6 +43,8 @@ export class PortletModalComponent implements OnInit {
   private userName;
   public addCommentForm;
   private name;
+  private editCommentForm;
+  private hideme: any = {};
 
 
   constructor(private modalService: NgbModal,
@@ -124,6 +126,9 @@ export class PortletModalComponent implements OnInit {
       portletCardsCommentsCreatorImage: [this.userImage, Validators.required],
       portletCardsCommentsCreatedAt: [new Date(), Validators.required]
     });
+    this.editCommentForm = this.fb.group({
+      portletCardsComments: ['', Validators.required],
+    });
 
   }
 
@@ -136,7 +141,6 @@ export class PortletModalComponent implements OnInit {
   editLabel() {
     this.viewLabel = false;
     this.editLabelForm = this.fb.group({
-
       portletCardName: [this.card.portletCardName, Validators.required]
     });
   }
@@ -159,6 +163,29 @@ export class PortletModalComponent implements OnInit {
       }
       )
 
+  }
+
+  openCommentEditForm(item) {
+    this.editCommentForm = this.fb.group({
+      portletCardsComments: [item.portletCardsComments, Validators.required],
+    });
+  }
+
+
+  editComment(commentId, portletCardId) {
+    let data = this.editCommentForm.value;
+    console.log(data);
+    this.httpService.editData(Constant.API_ENDPOINT + 'edit/comments/' + commentId + '/' + portletCardId + '/portletCardsComments' + '/edit', data)
+      .subscribe(
+      (response): void => {
+        this.cardResponseBoard = response;
+        this.cardResponseBoard = this.cardResponseBoard.board.portlet;
+        this.cardUpdate.emit(this.cardResponseBoard);
+        this.zone.run(() => { // <== added
+          this.card.portletCardsComments = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardsComments;
+        });
+      }
+      )
   }
 
 
