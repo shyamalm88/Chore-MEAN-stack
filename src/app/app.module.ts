@@ -46,6 +46,9 @@ import { CreateTeamComponent } from './main/project/createteam/createteam.compon
 import { SingleSelectComponent } from './common/component/single_select/singleSelect.component';
 import { SafeHtmlPipe } from './common/pipe';
 import {EmojiModule} from 'angular2-emoji';
+import { TodoStore } from './common/services/store';
+import TodoApp from './main/project/boardcanvas/portlet/portletmodal/portlettodo.component';
+
 
 
 
@@ -88,6 +91,7 @@ const appRoutes: Routes = [
     CreateTeamComponent,
     TeamListComponent,
     SingleSelectComponent,
+    TodoApp,
   ],
   imports: [
     BrowserModule,
@@ -101,9 +105,9 @@ const appRoutes: Routes = [
     FocusModule.forRoot(),
     CKEditorModule,
     SlimLoadingBarModule.forRoot(),
-    EmojiModule
+    EmojiModule,
   ],
-  providers: [HttpService, SharedDataService, AuthService],
+  providers: [HttpService, SharedDataService, AuthService, TodoStore],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

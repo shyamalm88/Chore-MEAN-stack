@@ -113,12 +113,13 @@
                     </div>
                 </div>
             </div>
-            <div class="checklist-list window-module js-checklist-list js-no-higher-edits ui-sortable "></div>
+            <div class="checklist-list window-module js-checklist-list js-no-higher-edits ui-sortable ">
+                <chore-todo-app></chore-todo-app>
+            </div>
             <div class="window-module add-comment-section ">
                 <div class="window-module-title window-module-title-no-divider "><span class="window-module-title-icon fa fa-2x fa-comments-o "></span>
                     <h3>Comments</h3><span class="editing-members js-editing-members hide "></span></div>
                 <div class="phenom mod-other-type" *ngFor="let item of card.portletCardsComments">
-
                     <div class="phenom-desc ">
                         <span class="pull-left m-r-10">
                                     <img alt="{{item.portletCardsCommentsCreator}}" class="member-avatar" height="30 " src="{{item.portletCardsCommentsCreatorImage}}" srcset="{{item.portletCardsCommentsCreatorImage}}" title="" width="30">
