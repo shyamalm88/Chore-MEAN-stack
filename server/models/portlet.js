@@ -80,7 +80,45 @@ app.route('/edit/portlet/:portletId')
                 });
             });
 
+        });
+    });
 
+app.route('/edit/comments/:commentId/:portletCardId/:editField/:action')
+    .put(function(req, res) {
+        Board.findOne({ 'portlet.portletCards.portletCardId': req.params.portletCardId }, function(err, result) {
+            var responseResult = result;
+            responseResult.portlet.forEach(function(element) {
+                if (element.portletCardId === req.params.portletId) {
+                    element.portletCards.forEach(function(card) {
+                        if (card.portletCardId = req.params.portletCardId) {
+                            card.portletCardsComments.forEach(function(comments) {
+                                if (comments.portletCardCommentId === req.params.commentId) {
+                                    if (req.params.action === 'edit') {
+                                        comments.portletCardsComments = req.body.portletCardsComments;
+                                        responseResult.portletCardUpdatedOn = new Date();
+
+                                    } else {
+                                        var index = card.portletCardsComments.indexOf(comments);
+                                        console.log(index);
+                                        card.portletCardsComments.splice(index, 1);
+                                        responseResult.portletCardUpdatedOn = new Date();
+                                    }
+                                }
+                            })
+                        }
+                    })
+                }
+            });
+            responseResult.markModified('portlet');
+            responseResult.save(function(err, result) {
+                if (err) {
+                    throw err;
+                }
+                res.json({
+                    message: 'Successfully added value',
+                    board: result
+                });
+            });
         });
     });
 
@@ -146,49 +184,29 @@ app.route('/edit/cards/:portletId/:editField')
                     var elm = element;
                     elm.portletCards.forEach(function(card) {
                         if (card.portletCardId === req.params.portletId) {
-                            card[editField] = req.body[editField];
-                            console.log(req.body)
-                            card.portletCardUpdatedOn = new Date();
-                            responseCardResult.markModified('portlet');
-                            responseCardResult.save(function(err, result) {
-                                if (err) {
-                                    throw err;
-                                }
-                                res.json({
-                                    message: 'Successfully added card',
-                                    board: result
-                                });
-                            });
                             if (editField === 'portletCardsComments') {
-                                card.portletCardsComments.push(req.body);
+                                var portletCardCommentId = makeId('oxxay-xyxcy-xayx-xycox');
+                                req.body.portletCardCommentId = portletCardCommentId;
+                                card[editField].push(req.body);
                                 card.portletCardUpdatedOn = new Date();
-                                responseCardResult.markModified('portlet');
-                                responseCardResult.save(function(err, result) {
-                                    if (err) {
-                                        console.log(err);
-                                    }
-                                    res.json({
-                                        message: 'Successfully added comments',
-                                        board: result
-                                    });
-                                });
                             } else {
                                 card[editField] = req.body[editField];
                                 console.log(req.body)
                                 card.portletCardUpdatedOn = new Date();
-                                responseCardResult.markModified('portlet');
-                                responseCardResult.save(function(err, result) {
-                                    if (err) {
-                                        throw err;
-                                    }
-                                    res.json({
-                                        message: 'Successfully added value',
-                                        board: result
-                                    });
-                                });
                             }
                         }
                     })
+                });
+                responseCardResult.markModified('portlet');
+                responseCardResult.save(function(err, result) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    console.log(result);
+                    res.json({
+                        message: 'Successfully added comments',
+                        board: result
+                    });
                 });
 
             }
@@ -215,9 +233,13 @@ app.route('/move/:movedCardId/:movedFromPortletId/:movedIntoPortletId')
                 var responseResult = result;
                 responseResult.portlet.forEach(function(element) {
                     if (element.portletId === req.params.movedFromPortletId) {
-                        copiedElem = element.portletCards.splice(index, 1);
-                        var index = result.portlet.indexOf(element);
-                        element.portletCards.splice(index, 1);
+                        element.portletCards.forEach(function(card) {
+                            if (card.portletCardId === cardId) {
+                                copiedElem = card;
+                                var index = element.portletCards.indexOf(card);
+                                element.portletCards.splice(index, 1);
+                            }
+                        })
                     }
                 });
                 responseResult.save(function(err, result) {
@@ -229,7 +251,7 @@ app.route('/move/:movedCardId/:movedFromPortletId/:movedIntoPortletId')
                         result.portlet.forEach(function(portlet) {
                             //console.log(portlet.portletId === movedIntoPortletId)
                             if (portlet.portletId === movedIntoPortletId) {
-                                portlet.portletCards.push(copiedElem[0]);
+                                portlet.portletCards.push(copiedElem);
                             }
                         });
                         result.markModified('portlet');

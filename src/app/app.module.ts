@@ -46,6 +46,7 @@ import { TeamListComponent } from './main/project/createteam/teamlist.component'
 import { CreateTeamComponent } from './main/project/createteam/createteam.component';
 import { SingleSelectComponent } from './common/component/single_select/singleSelect.component';
 import { SafeHtmlPipe } from './common/pipe';
+import {EmojiModule} from 'angular2-emoji';
 
 
 
@@ -63,8 +64,6 @@ const appRoutes: Routes = [
     AppComponent,
     SafeHtmlPipe,
     CharCount,
-    // FileSelectDirective,
-    // FileDropDirective,
     UPLOAD_DIRECTIVES,
     HeaderComponent,
     ChoreDropdownBoard,
@@ -104,6 +103,7 @@ const appRoutes: Routes = [
     FocusModule.forRoot(),
     CKEditorModule,
     SlimLoadingBarModule.forRoot(),
+    EmojiModule
   ],
   providers: [HttpService, SharedDataService, AuthService],
   bootstrap: [AppComponent]

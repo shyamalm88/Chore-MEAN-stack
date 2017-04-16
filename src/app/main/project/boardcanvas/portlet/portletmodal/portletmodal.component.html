@@ -111,9 +111,6 @@
                             </p>
                         </div>
                     </div>
-                    <p class="js-show-fewer-attachments hide "><a class="quiet-button js-view-some-attachments " href="# ">Show fewer attachments.</a></p>
-                    <p class="js-show-more-attachments hide "><a class="quiet-button js-view-all-attachments " href="# ">View all attachments (-3 hidden)</a></p>
-                    <p><a class="quiet-button js-attach " href="# ">Add an attachment…</a></p>
                 </div>
             </div>
             <div class="checklist-list window-module js-checklist-list js-no-higher-edits ui-sortable "></div>
@@ -129,7 +126,23 @@
                         <div class="comments m-b-10" style="overflow:hidden;">
                             <span class="u-font-weight-bold ">
                                         <b>{{item.portletCardsCommentsCreatorName}}</b>
-                                    </span> commented "{{item.portletCardsComments}}"
+                                    </span> commented " {{item.portletCardsComments}} "
+                            <span *ngIf="item.portletCardsCommentsCreator === this.userName">
+                                <button class="btn btn-default btn-xs pull-right" (click)="deleteComment(item.portletCardCommentId, card.portletCardId)"><i class="fa fa-trash-o"></i><span class="sr-only">Delete</span></button>
+                            <button class="btn btn-xs btn-default pull-right" (click)="item.hideme = !item.hideme; openCommentEditForm(item)"><i class="fa fa-pencil-square-o"></i><span class="sr-only">Edit</span></button>
+                            </span>
+                        </div>
+                        <div class="editComment" [hidden]="!item.hideme">
+                            <form [formGroup]="editCommentForm" (ngSubmit)="editComment(item.portletCardCommentId, card.portletCardId)">
+                                <div class="comment-frame">
+                                    <div class="comment-box ">
+                                        <textarea class="comment-box-input" placeholder="Write a comment…" tabindex="1" dir="auto" formControlName="portletCardsComments" style="overflow: hidden; word-wrap: break-word; height: 75px; " (ngModelChange)="bindedVariable"></textarea>
+                                        <emoji-input [onEnter]="onEnterFunction" [popupAnchor]="'bottom'" [(model)]="item.portletCardsComments">
+                                        </emoji-input>
+                                    </div>
+                                </div>
+                                <div class="comment-controls u-clearfix "><button class="btn btn-teal btn-sm" type="submit">Save</button></div>
+                            </form>
                         </div>
                     </div>
                     <p class="phenom-meta quiet "><a class="date" href="javascript:void(0)" title="{{item.portletCardsCommentsCreatedAt}}"><i class="fa fa-clock-o"></i> {{item.portletCardsCommentsCreatedAt | date:'medium'}}</a>
@@ -143,7 +156,9 @@
                         <div class="comment-frame ">
 
                             <div class="comment-box ">
-                                <textarea class="comment-box-input js-new-comment-input" placeholder="Write a comment…" tabindex="1" dir="auto" formControlName="portletCardsComments" style="overflow: hidden; word-wrap: break-word; height: 75px; "></textarea>
+                                <textarea class="comment-box-input js-new-comment-input" placeholder="Write a comment…" tabindex="1" dir="auto" formControlName="portletCardsComments" style="overflow: hidden; word-wrap: break-word; height: 75px; " [(ngModel)]="bindedVariable"></textarea>
+                                <emoji-input [onEnter]="onEnterFunction" [popupAnchor]="'bottom'" [(model)]="bindedVariable">
+                                </emoji-input>
                             </div>
                             <input type="hidden" formControlName="portletCardsCommentsCreator">
                             <input type="hidden" formControlName="portletCardsCommentsCreatorImage">
