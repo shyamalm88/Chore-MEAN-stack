@@ -33,7 +33,6 @@ import { PortletComponent } from './main/project/boardcanvas/portlet/portlet.com
 import { PortletActionsComponent } from './main/project/boardcanvas/portlet/portletactions/portletactions.component';
 import { PortletAssignedComponent } from './main/project/boardcanvas/portlet/portletassigned/portletassigned.component';
 import { PortletCardLabelComponent } from './main/project/boardcanvas/portlet/portletcardlebel/portletcardlabel.component';
-import { PortletCardLabelEditComponent } from './main/project/boardcanvas/portlet/portletcardlebel/portletcardlabeledit.component';
 import { PortletModalComponent } from './main/project/boardcanvas/portlet/portletmodal/portletmodal.component';
 import { CreateEditBoardComponent } from './main/project/createboard/create_edit_board.component';
 import { CreateBoardComponent } from './main/project/createboard/create/create.component';
@@ -79,7 +78,6 @@ const appRoutes: Routes = [
     PortletActionsComponent,
     PortletAssignedComponent,
     PortletCardLabelComponent,
-    PortletCardLabelEditComponent,
     PortletModalComponent,
     CreateEditBoardComponent,
     CreateBoardComponent,
