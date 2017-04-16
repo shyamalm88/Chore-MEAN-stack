@@ -21,7 +21,7 @@ export class TodoStore {
 	todos: Array<Todo>;
 
 	constructor() {
-		let persistedTodos = JSON.parse(localStorage.getItem('angular2-todos') || '[]');
+		let persistedTodos = JSON.parse(localStorage.getItem('chore-card-todos') || '[]');
 		// Normalize back into classes
 		this.todos = persistedTodos.map( (todo: {_title: String, completed: Boolean}) => {
 			let ret = new Todo(todo._title);
@@ -31,7 +31,7 @@ export class TodoStore {
 	}
 
 	private updateStore() {
-		localStorage.setItem('angular2-todos', JSON.stringify(this.todos));
+		localStorage.setItem('chore-card-todos', JSON.stringify(this.todos));
 	}
 
 	private getWithCompleted(completed: Boolean) {
