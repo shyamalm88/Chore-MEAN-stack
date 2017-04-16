@@ -97,6 +97,11 @@ app.route('/edit/comments/:commentId/:portletCardId/:editField/:action')
                                         comments.portletCardsComments = req.body.portletCardsComments;
                                         responseResult.portletCardUpdatedOn = new Date();
 
+                                    } else {
+                                        var index = card.portletCardsComments.indexOf(comments);
+                                        console.log(index);
+                                        card.portletCardsComments.splice(index, 1);
+                                        responseResult.portletCardUpdatedOn = new Date();
                                     }
                                 }
                             })

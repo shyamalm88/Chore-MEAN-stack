@@ -174,8 +174,24 @@ export class PortletModalComponent implements OnInit {
 
   editComment(commentId, portletCardId) {
     let data = this.editCommentForm.value;
-    console.log(data);
-    this.httpService.editData(Constant.API_ENDPOINT + 'edit/comments/' + commentId + '/' + portletCardId + '/portletCardsComments' + '/edit', data)
+    this.httpService.editData(Constant.API_ENDPOINT + 'edit/comments/' + commentId + '/'
+    + portletCardId + '/portletCardsComments' + '/edit', data)
+      .subscribe(
+      (response): void => {
+        this.cardResponseBoard = response;
+        this.cardResponseBoard = this.cardResponseBoard.board.portlet;
+        this.cardUpdate.emit(this.cardResponseBoard);
+        this.zone.run(() => { // <== added
+          this.card.portletCardsComments = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardsComments;
+        });
+      }
+      )
+  }
+
+  deleteComment(commentId, portletCardId){
+  let data = this.editCommentForm.value;
+    this.httpService.editData(Constant.API_ENDPOINT + 'edit/comments/' + commentId + '/'
+    + portletCardId + '/portletCardsComments' + '/delete', data)
       .subscribe(
       (response): void => {
         this.cardResponseBoard = response;
