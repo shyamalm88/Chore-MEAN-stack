@@ -233,9 +233,13 @@ app.route('/move/:movedCardId/:movedFromPortletId/:movedIntoPortletId')
                 var responseResult = result;
                 responseResult.portlet.forEach(function(element) {
                     if (element.portletId === req.params.movedFromPortletId) {
-                        copiedElem = element.portletCards.splice(index, 1);
-                        var index = result.portlet.indexOf(element);
-                        element.portletCards.splice(index, 1);
+                        element.portletCards.forEach(function(card) {
+                            if (card.portletCardId === cardId) {
+                                copiedElem = card;
+                                var index = element.portletCards.indexOf(card);
+                                element.portletCards.splice(index, 1);
+                            }
+                        })
                     }
                 });
                 responseResult.save(function(err, result) {
@@ -247,7 +251,7 @@ app.route('/move/:movedCardId/:movedFromPortletId/:movedIntoPortletId')
                         result.portlet.forEach(function(portlet) {
                             //console.log(portlet.portletId === movedIntoPortletId)
                             if (portlet.portletId === movedIntoPortletId) {
-                                portlet.portletCards.push(copiedElem[0]);
+                                portlet.portletCards.push(copiedElem);
                             }
                         });
                         result.markModified('portlet');
