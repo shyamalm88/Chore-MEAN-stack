@@ -129,7 +129,7 @@
                         <div class="comments m-b-10" style="overflow:hidden;">
                             <span class="u-font-weight-bold ">
                                         <b>{{item.portletCardsCommentsCreatorName}}</b>
-                                    </span> commented "{{item.portletCardsComments}}"
+                                    </span> commented " {{item.portletCardsComments}} "
                         </div>
                     </div>
                     <p class="phenom-meta quiet "><a class="date" href="javascript:void(0)" title="{{item.portletCardsCommentsCreatedAt}}"><i class="fa fa-clock-o"></i> {{item.portletCardsCommentsCreatedAt | date:'medium'}}</a>
@@ -143,7 +143,9 @@
                         <div class="comment-frame ">
 
                             <div class="comment-box ">
-                                <textarea class="comment-box-input js-new-comment-input" placeholder="Write a comment…" tabindex="1" dir="auto" formControlName="portletCardsComments" style="overflow: hidden; word-wrap: break-word; height: 75px; "></textarea>
+                                <textarea class="comment-box-input js-new-comment-input" placeholder="Write a comment…" tabindex="1" dir="auto" formControlName="portletCardsComments" style="overflow: hidden; word-wrap: break-word; height: 75px; " [(ngModel)]="bindedVariable"></textarea>
+                                <emoji-input [onEnter]="onEnterFunction" [popupAnchor]="'bottom'" [(model)]="bindedVariable">
+                                </emoji-input>
                             </div>
                             <input type="hidden" formControlName="portletCardsCommentsCreator">
                             <input type="hidden" formControlName="portletCardsCommentsCreatorImage">
