@@ -3,7 +3,7 @@
         <h3>Todos</h3>
     </div>
     <div class="todoWrapper u-gutter">
-        <input class="new-todo" placeholder="What needs to be done?" autofocus="" [(ngModel)]="newTodoText" (keyup.enter)="addTodo()">
+        <input class="new-todo" placeholder="What needs to be done?" [(ngModel)]="newTodoText" (keyup.enter)="addTodo()">
         <section class="todoContent" *ngIf="todoStore.todos.length > 0">
             <input class="toggle-all" type="checkbox" *ngIf="todoStore.todos.length" #toggleall [checked]="todoStore.allCompleted()" (click)="todoStore.setAllTo(toggleall.checked)">
             <ul class="todo-list">

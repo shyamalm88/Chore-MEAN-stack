@@ -15,10 +15,9 @@
                 Please Add a card
             </div>
             <div class="portlet-body" (click)="open(content)" *ngFor="let card of item.portletCards; let cardIndex = index" [attr.data-card-id]="card.portletCardId" [attr.data-portlet-id]="item.portletId">
-
                 <chore-portlet-card-label [card]="card"></chore-portlet-card-label>
                 <div class="js-badges">
-                    <div class="faicons" title="This card has a description."><span class="badge-icon fa fa-align-left"></span></div>
+                    <div class="faicons" title="This card has a description." *ngIf="card.portletCardsDescription"><span class="badge-icon fa fa-align-left"></span></div>
                     <div class="faicons" title="Attachments"><span class="badge-icon fa fa-paperclip"></span><span class="badge-text"> 1</span></div>
                     <div class="faicons" title="Attachments"><span class="badge-icon fa fa-comment"></span><span class="badge-text"> 1</span></div>
                     <div class="faicons" title="Attachments"><span class="badge-icon fa fa-check-square-o"></span><span class="badge-text"> 1</span></div>

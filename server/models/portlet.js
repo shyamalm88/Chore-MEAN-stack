@@ -181,28 +181,27 @@ app.route('/edit/cards/:portletId/:editField')
             if (result) {
                 var responseCardResult = result;
                 responseCardResult.portlet.forEach(function(element) {
-                    var elm = element;
-                    elm.portletCards.forEach(function(card) {
+                    element.portletCards.forEach(function(card) {
                         if (card.portletCardId === req.params.portletId) {
-                            if (editField === 'portletCardsComments') {
-                                var portletCardCommentId = makeId('oxxay-xyxcy-xayx-xycox');
-                                req.body.portletCardCommentId = portletCardCommentId;
-                                card[editField].push(req.body);
-                                card.portletCardUpdatedOn = new Date();
-                            } else {
-                                card[editField] = req.body[editField];
-                                console.log(req.body)
-                                card.portletCardUpdatedOn = new Date();
+                            if (card.portletCardId === req.params.portletId) {
+                                if (editField === 'portletCardsComments') {
+                                    var portletCardCommentId = makeId('oxxay-xyxcy-xayx-xycox');
+                                    req.body.portletCardCommentId = portletCardCommentId;
+                                    card[editField].push(req.body);
+                                    card.portletCardUpdatedOn = new Date();
+                                } else {
+                                    card[editField] = req.body[editField];
+                                    card.portletCardUpdatedOn = new Date();
+                                }
                             }
                         }
-                    })
+                    });
                 });
                 responseCardResult.markModified('portlet');
                 responseCardResult.save(function(err, result) {
                     if (err) {
                         console.log(err);
                     }
-                    console.log(result);
                     res.json({
                         message: 'Successfully added comments',
                         board: result

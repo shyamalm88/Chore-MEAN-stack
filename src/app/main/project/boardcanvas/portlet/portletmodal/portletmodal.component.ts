@@ -1,5 +1,5 @@
 
-import { Component, ViewEncapsulation, ElementRef, OnInit, Input, ViewChild, Output, EventEmitter, NgZone } from '@angular/core';
+import { Component, ViewEncapsulation, ElementRef, OnInit, Input, ViewChild, Output, EventEmitter, NgZone, Renderer } from '@angular/core';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -19,6 +19,7 @@ export class PortletModalComponent implements OnInit {
   @Input() cardIndex;
   @Input() portletIndex;
   @Output() cardUpdate = new EventEmitter();
+  @ViewChild('commentAreaFocus') commentAreaFocus: ElementRef;
 
 
   private viewLabel: Boolean = true;
@@ -53,7 +54,7 @@ export class PortletModalComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private authService: AuthService,
-    private zone: NgZone
+    private zone: NgZone,
 
   ) {
 
@@ -165,17 +166,32 @@ export class PortletModalComponent implements OnInit {
 
   }
 
-  openCommentEditForm(item) {
-    this.editCommentForm = this.fb.group({
-      portletCardsComments: [item.portletCardsComments, Validators.required],
-    });
+  openCommentEditForm(item, index) {
+      //item.hideme = !item.hideme;
+      this.card.portletCardsComments.forEach(element => {
+        element.hideme = false;
+      });
+
+      item.hideme = true;
+
+    if (item.hideme) {
+      const self = this;
+      setTimeout(function () {
+        self.commentAreaFocus.nativeElement.focus();
+      }, 0);
+
+      this.editCommentForm = this.fb.group({
+        portletCardsComments: [item.portletCardsComments, Validators.required],
+      });
+    }
+
   }
 
 
   editComment(commentId, portletCardId) {
     let data = this.editCommentForm.value;
     this.httpService.editData(Constant.API_ENDPOINT + 'edit/comments/' + commentId + '/'
-    + portletCardId + '/portletCardsComments' + '/edit', data)
+      + portletCardId + '/portletCardsComments' + '/edit', data)
       .subscribe(
       (response): void => {
         this.cardResponseBoard = response;
@@ -188,10 +204,10 @@ export class PortletModalComponent implements OnInit {
       )
   }
 
-  deleteComment(commentId, portletCardId){
-  let data = this.editCommentForm.value;
+  deleteComment(commentId, portletCardId) {
+    let data = this.editCommentForm.value;
     this.httpService.editData(Constant.API_ENDPOINT + 'edit/comments/' + commentId + '/'
-    + portletCardId + '/portletCardsComments' + '/delete', data)
+      + portletCardId + '/portletCardsComments' + '/delete', data)
       .subscribe(
       (response): void => {
         this.cardResponseBoard = response;
@@ -225,7 +241,7 @@ export class PortletModalComponent implements OnInit {
   }
 
   addTagline() {
-    this.editAddTagLineVisible = true;
+    this.editAddTagLineVisible = !this.editAddTagLineVisible;
     this.addTagLineForm = this.fb.group({
       portletCardTagLine: [this.card.portletCardTagLine, Validators.required]
     });

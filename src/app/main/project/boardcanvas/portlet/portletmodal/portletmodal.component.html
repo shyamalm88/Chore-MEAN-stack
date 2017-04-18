@@ -8,7 +8,7 @@
                 <h2 class="card-detail-title-assist" dir="auto" *ngIf="viewLabel" (click)="editLabel()">{{card.portletCardName}}</h2>
                 <form [formGroup]="editLabelForm" *ngIf="!viewLabel">
                     <input type="text" formControlName="portletCardName" [(ngModel)]="card.portletCardName" autofocus class="editModalTextBox v-m" focus="true">
-                    <button type="button" class="btn btn-teal v-m" (click)="editDoneLabel(card.portletCardId)">Save</button>
+                    <button type="button" class="btn btn-teal v-m" [disabled]="!editLabelForm.valid" (click)="editDoneLabel(card.portletCardId)">Save</button>
                 </form>
 
             </div>
@@ -18,7 +18,7 @@
                 <div>
                     <form [formGroup]="addTagLineForm" *ngIf="editAddTagLineVisible">
                         <input type="text" formControlName="portletCardTagLine" [(ngModel)]="card.portletCardTagLine" autofocus class="editModalTextBox textSmall v-m m-t-5" focus="true">
-                        <button type="button" class="btn btn-teal v-m m-t-5" (click)="editDoneTagLine(card.portletCardId)">Save</button>
+                        <button type="button" class="btn btn-teal v-m m-t-5" [disabled]="!addTagLineForm.valid" (click)="editDoneTagLine(card.portletCardId)">Save</button>
                     </form>
                 </div>
             </div>
@@ -95,18 +95,16 @@
                 <div class="u-gutter ">
                     <div class="u-clearfix js-attachment-list ">
                         <div class="attachment-thumbnail ">
-                            <a class="attachment-thumbnail-preview js-open-viewer attachment-thumbnail-preview-is-cover " href="https://trello-attachments.s3.amazonaws.com/5824e427857eea92ad0a93fc/5824e454dbdf1b2aae8dba60/1673f4e6150441a6874557c4d942f243/this_is_a_trello_board_with_lists_and_cards.png "
-                                target="_blank " title="this_is_a_trello_board_with_lists_and_cards.png " style="background-image: url(
-        'https://trello-attachments.s3.amazonaws.com/5824e454dbdf1b2aae8dba60/300x137/c416903db260fb9c6c1bc4d127c0fc5b/this_is_a_trello_board_with_lists_and_cards.png');background-color: #0474c4; "></a>
-                            <p class="attachment-thumbnail-details js-open-viewer "><a class="attachment-thumbnail-details-title js-attachment-thumbnail-details " href="https://trello-attachments.s3.amazonaws.com/5824e427857eea92ad0a93fc/5824e454dbdf1b2aae8dba60/1673f4e6150441a6874557c4d942f243/this_is_a_trello_board_with_lists_and_cards.png "
-                                    title="this_is_a_trello_board_with_lists_and_cards.png " target="_blank ">this_is_a_trello_board_with_lists_and_cards.png<span class="u-block quiet ">Added <span class="date " dt="2016-11-10T21:19:45.059Z
+                            <a class="attachment-thumbnail-preview js-open-viewer attachment-thumbnail-preview-is-cover " href="" target="_blank " title="this_is_a_trello_board_with_lists_and_cards.png " style="background-image:#0474c4"></a>
+                            <p class="attachment-thumbnail-details js-open-viewer "><a class="attachment-thumbnail-details-title js-attachment-thumbnail-details " href="" title="this_is_a_trello_board_with_lists_and_cards.png " target="_blank ">this_is_a_trello_board_with_lists_and_cards.png<span class="u-block quiet ">Added <span class="date " dt="2016-11-10T21:19:45.059Z
         " title="November 11, 2016 2:49 AM ">Nov 11, 2016 at 2:49 AM</span></span></a>
-                                <span class="quiet attachment-thumbnail-details-options "><a class="attachment-thumbnail-details-options-item dark-hover js-download " href="https://trello-attachments.s3.amazonaws.com/5824e427857eea92ad0a93fc/5824e454dbdf1b2aae8dba60/1673f4e6150441a6874557c4d942f243/this_is_a_trello_board_with_lists_and_cards.png
-        " target="_blank " download="download "><span class="fa fa-download "></span> <span class="attachment-thumbnail-details-options-item-text js-direct-link ">Download</span></a>
+                                <span class="quiet attachment-thumbnail-details-options "><a class="attachment-thumbnail-details-options-item dark-hover js-download " href="" target="_blank " download="download ">
+                                <span class="fa fa-download "></span>
+                                <span class="attachment-thumbnail-details-options-item-text ">Download</span></a>
                                 <a class="attachment-thumbnail-details-options-item dark-hover hide js-make-cover " href="# "><span class="fa fa-picture-o "></span> <span class="attachment-thumbnail-details-options-item-text ">Make Cover</span></a>
-                                <a class="attachment-thumbnail-details-options-item dark-hover js-remove-cover " href="# "><span class="fa fa-picture-o "></span> <span class="attachment-thumbnail-details-options-item-text ">Remove Cover</span></a>
-                                <a class="attachment-thumbnail-details-options-item attachment-thumbnail-details-options-item-delete dark-hover js-confirm-delete " href="# "><span class="fa fa-close "></span> <span class="attachment-thumbnail-details-options-item-text ">Delete</span></a>
-                                <a class="attachment-thumbnail-details-options-item js-reply " href="# "><span class="fa fa-comment "></span> <span class="attachment-thumbnail-details-options-item-text ">Comment</span></a>
+                                <a class="attachment-thumbnail-details-options-item dark-hover" href="# "><span class="fa fa-picture-o "></span> <span class="attachment-thumbnail-details-options-item-text ">Remove Cover</span></a>
+                                <a class="attachment-thumbnail-details-options-item attachment-thumbnail-details-options-item-delete dark-hover" href="# "><span class="fa fa-close "></span> <span class="attachment-thumbnail-details-options-item-text ">Delete</span></a>
+
                                 </span>
                             </p>
                         </div>
@@ -119,7 +117,7 @@
             <div class="window-module add-comment-section ">
                 <div class="window-module-title window-module-title-no-divider "><span class="window-module-title-icon fa fa-2x fa-comments-o "></span>
                     <h3>Comments</h3><span class="editing-members js-editing-members hide "></span></div>
-                <div class="phenom mod-other-type" *ngFor="let item of card.portletCardsComments">
+                <div class="phenom mod-other-type" *ngFor="let item of card.portletCardsComments; let cardI = index;">
                     <div class="phenom-desc ">
                         <span class="pull-left m-r-10">
                                     <img alt="{{item.portletCardsCommentsCreator}}" class="member-avatar" height="30 " src="{{item.portletCardsCommentsCreatorImage}}" srcset="{{item.portletCardsCommentsCreatorImage}}" title="" width="30">
@@ -130,19 +128,19 @@
                                     </span> commented " {{item.portletCardsComments}} "
                             <span *ngIf="item.portletCardsCommentsCreator === this.userName">
                                 <button class="btn btn-default btn-xs pull-right" (click)="deleteComment(item.portletCardCommentId, card.portletCardId)"><i class="fa fa-trash-o"></i><span class="sr-only">Delete</span></button>
-                            <button class="btn btn-xs btn-default pull-right" (click)="item.hideme = !item.hideme; openCommentEditForm(item)"><i class="fa fa-pencil-square-o"></i><span class="sr-only">Edit</span></button>
+                            <button class="btn btn-xs btn-default pull-right" (click)="openCommentEditForm(item, cardI)"><i class="fa fa-pencil-square-o"></i><span class="sr-only">Edit</span></button>
                             </span>
                         </div>
                         <div class="editComment" [hidden]="!item.hideme">
                             <form [formGroup]="editCommentForm" (ngSubmit)="editComment(item.portletCardCommentId, card.portletCardId)">
                                 <div class="comment-frame">
                                     <div class="comment-box ">
-                                        <textarea class="comment-box-input" placeholder="Write a comment…" tabindex="1" dir="auto" formControlName="portletCardsComments" style="overflow: hidden; word-wrap: break-word; height: 75px; " (ngModelChange)="bindedVariable"></textarea>
-                                        <emoji-input [onEnter]="onEnterFunction" [popupAnchor]="'bottom'" [(model)]="item.portletCardsComments">
+                                        <textarea class="comment-box-input" #commentAreaFocus placeholder="Write a comment…" formControlName="portletCardsComments" style="overflow: hidden; word-wrap: break-word; height: 75px;" [(ngModel)]="bindedVariable1"></textarea>
+                                        <emoji-input [onEnter]="onEnterFunction" [popupAnchor]="'bottom'" [(model)]="bindedVariable1">
                                         </emoji-input>
                                     </div>
                                 </div>
-                                <div class="comment-controls u-clearfix "><button class="btn btn-teal btn-sm" type="submit">Save</button></div>
+                                <div class="comment-controls u-clearfix "><button class="btn btn-teal btn-sm" type="submit" [disabled]="!editCommentForm.valid">Save</button><button class="btn btn-sm btn-default m-l-10" (click)="item.hideme = !item.hideme"><i class="fa fa-times"></i></button></div>
                             </form>
                         </div>
                     </div>
@@ -166,7 +164,7 @@
                             <input type="hidden" formControlName="portletCardsCommentsCreatorName">
                             <input type="hidden" formControlName="portletCardsCommentsCreatedAt">
                         </div>
-                        <div class="comment-controls u-clearfix "><button class="btn btn-teal btn-sm" type="submit">Save</button></div>
+                        <div class="comment-controls u-clearfix "><button class="btn btn-teal btn-sm" type="submit" [disabled]="!addCommentForm.valid">Save</button></div>
                     </form>
 
 
@@ -181,9 +179,8 @@
                 <div class="js-list-actions ">
                     <div class="phenom mod-other-type ">
                         <div class="phenom-creator ">
-                            <div class="member" idmember="589ef5f94c55710b85a389e0 "><img class="member-avatar " height="30 " width="30 " src="https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/30.png
-        " srcset="https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/30.png 1x, https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/50.png 2x " alt="Arghya Majumder (arghyamajumder) " title="Arghya Majumder (arghyamajumder) ">
-                                <span class="member-gold-badge " title="This member has Trello Gold. "></span>
+                            <div class="member" idmember="589ef5f94c55710b85a389e0 "><img class="member-avatar " height="30 " width="30 " src="" srcset="" alt="" title="">
+
                             </div>
                         </div>
                         <div class="phenom-desc "><span class="inline-member" idmember="589ef5f94c55710b85a389e0 "><span class="u-font-weight-bold ">Arghya Majumder</span></span> added <span class="inline-member
@@ -195,9 +192,8 @@
                     </div>
                     <div class="phenom mod-other-type ">
                         <div class="phenom-creator ">
-                            <div class="member" idmember="589ef5f94c55710b85a389e0 "><img class="member-avatar " height="30 " width="30 " src="https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/30.png
-        " srcset="https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/30.png 1x, https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/50.png 2x " alt="Arghya Majumder (arghyamajumder) " title="Arghya Majumder (arghyamajumder) ">
-                                <span class="member-gold-badge " title="This member has Trello Gold. "></span>
+                            <div class="member" idmember="589ef5f94c55710b85a389e0 "><img class="member-avatar " height="30 " width="30 " src="" srcset="" alt="" title="">
+
                             </div>
                         </div>
                         <div class="phenom-desc "><span class="inline-member" idmember="589ef5f94c55710b85a389e0 "><span class="u-font-weight-bold ">Arghya Majumder</span></span> joined this card</div>
@@ -207,9 +203,8 @@
                     </div>
                     <div class="phenom mod-other-type ">
                         <div class="phenom-creator ">
-                            <div class="member" idmember="589ef5f94c55710b85a389e0 "><img class="member-avatar " height="30 " width="30 " src="https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/30.png
-        " srcset="https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/30.png 1x, https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/50.png 2x " alt="Arghya Majumder (arghyamajumder) " title="Arghya Majumder (arghyamajumder) ">
-                                <span class="member-gold-badge " title="This member has Trello Gold. "></span>
+                            <div class="member" idmember="589ef5f94c55710b85a389e0 "><img class="member-avatar " height="30 " width="30 " src="" srcset="" alt="" title="">
+
                             </div>
                         </div>
                         <div class="phenom-desc "><span class="inline-member" idmember="589ef5f94c55710b85a389e0 "><span class="u-font-weight-bold ">Arghya Majumder</span></span> left this card</div>
@@ -219,9 +214,8 @@
                     </div>
                     <div class="phenom mod-other-type ">
                         <div class="phenom-creator ">
-                            <div class="member" idmember="589ef5f94c55710b85a389e0 "><img class="member-avatar " height="30 " width="30 " src="https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/30.png
-        " srcset="https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/30.png 1x, https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/50.png 2x " alt="Arghya Majumder (arghyamajumder) " title="Arghya Majumder (arghyamajumder) ">
-                                <span class="member-gold-badge " title="This member has Trello Gold. "></span>
+                            <div class="member" idmember="589ef5f94c55710b85a389e0 "><img class="member-avatar " height="30 " width="30 " src="" srcset="" alt="" title="">
+
                             </div>
                         </div>
                         <div class="phenom-desc "><span class="inline-member" idmember="589ef5f94c55710b85a389e0 "><span class="u-font-weight-bold ">Arghya Majumder</span></span> added <span class="inline-member
@@ -233,9 +227,8 @@
                     </div>
                     <div class="phenom mod-other-type ">
                         <div class="phenom-creator ">
-                            <div class="member" idmember="589ef5f94c55710b85a389e0 "><img class="member-avatar " height="30 " width="30 " src="https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/30.png
-        " srcset="https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/30.png 1x, https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/50.png 2x " alt="Arghya Majumder (arghyamajumder) " title="Arghya Majumder (arghyamajumder) ">
-                                <span class="member-gold-badge " title="This member has Trello Gold. "></span>
+                            <div class="member" idmember="589ef5f94c55710b85a389e0 "><img class="member-avatar " height="30 " width="30 " src="" srcset="" alt="" title="">
+
                             </div>
                         </div>
                         <div class="phenom-desc "><span class="inline-member" idmember="589ef5f94c55710b85a389e0 "><span class="u-font-weight-bold ">Arghya Majumder</span></span> joined this card</div>
@@ -245,9 +238,8 @@
                     </div>
                     <div class="phenom mod-comment-type ">
                         <div class="phenom-creator ">
-                            <div class="member" idmember="589ef5f94c55710b85a389e0 "><img class="member-avatar " height="30 " width="30 " src="https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/30.png
-        " srcset="https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/30.png 1x, https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/50.png 2x " alt="Arghya Majumder (arghyamajumder) " title="Arghya Majumder (arghyamajumder) ">
-                                <span class="member-gold-badge " title="This member has Trello Gold. "></span>
+                            <div class="member" idmember="589ef5f94c55710b85a389e0 "><img class="member-avatar " height="30 " width="30 " src="" srcset="" alt="" title="">
+
                             </div>
                         </div>
                         <div class="phenom-desc "><span class="inline-member" idmember="589ef5f94c55710b85a389e0 "><span class="u-font-weight-bold ">Arghya Majumder</span></span>
@@ -273,14 +265,13 @@
                     </div>
                     <div class="phenom mod-attachment-type ">
                         <div class="phenom-creator ">
-                            <div class="member" idmember="50095233f62adbe04d935195 "><img class="member-avatar " height="30 " width="30 " src="https://trello-avatars.s3.amazonaws.com/10e3fec8aee92d177b22290b7cff669d/30.png
-        " srcset="https://trello-avatars.s3.amazonaws.com/10e3fec8aee92d177b22290b7cff669d/30.png 1x, https://trello-avatars.s3.amazonaws.com/10e3fec8aee92d177b22290b7cff669d/50.png 2x " alt="Taco (taco) " title="Taco (taco) "><span class="member-gold-badge "
-                                    title="This member has Trello Gold. "></span></div>
+                            <div class="member" idmember="589ef5f94c55710b85a389e0 "><img class="member-avatar " height="30 " width="30 " src="" srcset="" alt="" title="">
+
+                            </div>
                         </div>
-                        <div class="phenom-desc "><span class="inline-member" idmember="50095233f62adbe04d935195 "><span class="u-font-weight-bold ">Taco</span></span> attached <a class="" href="https://trello-attachments.s3.amazonaws.com/5824e427857eea92ad0a93fc/5824e454dbdf1b2aae8dba60/1673f4e6150441a6874557c4d942f243/this_is_a_trello_board_with_lists_and_cards.png "
-                                data-idattachment="589ef5fa4c55710b85a389f2 ">this_is_a_trello_board_with_lists_and_cards.png</a> to this card
-                            <a class=" " href="https://trello-attachments.s3.amazonaws.com/5824e427857eea92ad0a93fc/5824e454dbdf1b2aae8dba60/1673f4e6150441a6874557c4d942f243/this_is_a_trello_board_with_lists_and_cards.png
-        " target="_blank " data-idattachment="589ef5fa4c55710b85a389f2 "><img class="attachment-image-preview " src="https://trello-attachments.s3.amazonaws.com/5824e454dbdf1b2aae8dba60/599x273/dd30250475dbb1fef1ddbab298ac22d6/this_is_a_trello_board_with_lists_and_cards.png "></a>
+                        <div class="phenom-desc "><span class="inline-member" idmember="50095233f62adbe04d935195 "><span class="u-font-weight-bold ">Taco</span></span> attached <a class="" href="" data-idattachment="589ef5fa4c55710b85a389f2 ">this_is_a_trello_board_with_lists_and_cards.png</a>                            to this card
+                            <a class=" " href="
+        " target="_blank " data-idattachment="589ef5fa4c55710b85a389f2 "><img class="attachment-image-preview " src=""></a>
                             <div class="hide previews"></div>
                         </div>
                         <p class="phenom-meta quiet "><a class="date   " dt="2016-11-10T21:19:45.333Z " href="/c/cVSj9FoJ/2-trello-basics-bla-bla-bla-bla-bla-bla-bla-bla#action-589ef5fa4c55710b85a38a13 " title="November
@@ -289,9 +280,9 @@
                     </div>
                     <div class="phenom mod-other-type ">
                         <div class="phenom-creator ">
-                            <div class="member" idmember="50095233f62adbe04d935195 "><img class="member-avatar " height="30 " width="30 " src="https://trello-avatars.s3.amazonaws.com/10e3fec8aee92d177b22290b7cff669d/30.png
-        " srcset="https://trello-avatars.s3.amazonaws.com/10e3fec8aee92d177b22290b7cff669d/30.png 1x, https://trello-avatars.s3.amazonaws.com/10e3fec8aee92d177b22290b7cff669d/50.png 2x " alt="Taco (taco) " title="Taco (taco) "><span class="member-gold-badge "
-                                    title="This member has Trello Gold. "></span></div>
+                            <div class="member" idmember="589ef5f94c55710b85a389e0 "><img class="member-avatar " height="30 " width="30 " src="" srcset="" alt="" title="">
+
+                            </div>
                         </div>
                         <div class="phenom-desc "><span class="inline-member" idmember="50095233f62adbe04d935195 "><span class="u-font-weight-bold ">Taco</span></span> added this card to Stuff To Try (this is a list)</div>
                         <p class="phenom-meta quiet "><a class="date   " dt="2016-11-10T21:19:16.811Z " href="/c/cVSj9FoJ/2-trello-basics-bla-bla-bla-bla-bla-bla-bla-bla#action-589ef5fa4c55710b85a38a11 " title="November

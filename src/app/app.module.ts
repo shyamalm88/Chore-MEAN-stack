@@ -48,6 +48,7 @@ import { SafeHtmlPipe } from './common/pipe';
 import {EmojiModule} from 'angular2-emoji';
 import { TodoStore } from './common/services/store';
 import TodoApp from './main/project/boardcanvas/portlet/portletmodal/portlettodo.component';
+import { AutofocusDirective } from './common/directive/autofocus.directive';
 
 
 
@@ -66,6 +67,7 @@ const appRoutes: Routes = [
     AppComponent,
     SafeHtmlPipe,
     CharCount,
+    AutofocusDirective,
     UPLOAD_DIRECTIVES,
     HeaderComponent,
     ChoreDropdownBoard,
