@@ -128,7 +128,8 @@
                                     </span> commented " {{item.portletCardsComments}} "
                             <span *ngIf="item.portletCardsCommentsCreator === this.userName">
                                 <button class="btn btn-default btn-xs pull-right" (click)="deleteComment(item.portletCardCommentId, card.portletCardId)"><i class="fa fa-trash-o"></i><span class="sr-only">Delete</span></button>
-                            <button class="btn btn-xs btn-default pull-right" (click)="openCommentEditForm(item, cardI)"><i class="fa fa-pencil-square-o"></i><span class="sr-only">Edit</span></button>
+                            <button class="btn btn-xs btn-default pull-right" [hidden]="item.hideme" (click)="openCommentEditForm(item, cardI)"><i class="fa fa-pencil-square-o"></i><span class="sr-only">Edit</span></button>
+                            <button class="btn btn-xs btn-default pull-right" [hidden]="!item.hideme" (click)="item.hideme = !item.hideme"><i class="fa fa-pencil-square-o"></i><span class="sr-only">Edit</span></button>
                             </span>
                         </div>
                         <div class="editComment" [hidden]="!item.hideme">
@@ -140,7 +141,7 @@
                                         </emoji-input>
                                     </div>
                                 </div>
-                                <div class="comment-controls u-clearfix "><button class="btn btn-teal btn-sm" type="submit" [disabled]="!editCommentForm.valid">Save</button><button class="btn btn-sm btn-default m-l-10" (click)="item.hideme = !item.hideme"><i class="fa fa-times"></i></button></div>
+                                <div class="comment-controls u-clearfix "><button class="btn btn-teal btn-sm" type="submit" [disabled]="!editCommentForm.valid">Save</button></div>
                             </form>
                         </div>
                     </div>
