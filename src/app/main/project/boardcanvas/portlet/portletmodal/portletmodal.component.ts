@@ -171,9 +171,7 @@ export class PortletModalComponent implements OnInit {
       this.card.portletCardsComments.forEach(element => {
         element.hideme = false;
       });
-
       item.hideme = true;
-
     if (item.hideme) {
       const self = this;
       setTimeout(function () {

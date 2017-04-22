@@ -46,6 +46,14 @@ app.route('/portlet/:index')
                     "portletCards": [],
                     "portletCreatedOn": new Date()
                 });
+                result.boardActivity.push({
+                    activity: ['Created New Portlet named "' + req.body.portletname + '"'],
+                    boardUpdatedyName: result.created_byName,
+                    boardUpdatedBy: result.created_by,
+                    boardOperation: 'Create Portlet',
+                    boardId: result.boardId,
+                    boardOperationOn: new Date(),
+                })
                 result.markModified('portlet');
                 result.save(function(err, result) {
                     if (err) throw err;
@@ -66,12 +74,22 @@ app.route('/edit/portlet/:portletId')
     .put(function(req, res) {
         Board.findOne({ 'portlet.portletId': req.params.portletId }, function(err, result) {
             var responseResult = result;
+            var pName = '';
             responseResult.portlet.forEach(function(element) {
                 if (element.portletId === req.params.portletId) {
+                    pName = element.portletName;
                     var index = result.portlet.indexOf(element);
                     responseResult.portlet.splice(index, 1);
                 }
             });
+            responseResult.boardActivity.push({
+                activity: ['Deleted Portlet named "' + pName + '"'],
+                boardUpdatedyName: responseResult.created_byName,
+                boardUpdatedBy: responseResult.created_by,
+                boardOperation: 'Delete Portlet',
+                boardId: responseResult.boardId,
+                boardOperationOn: new Date(),
+            })
             responseResult.save(function(err, result) {
                 if (err) throw err;
                 res.json({
@@ -79,7 +97,6 @@ app.route('/edit/portlet/:portletId')
                     board: result
                 });
             });
-
         });
     });
 
@@ -96,12 +113,27 @@ app.route('/edit/comments/:commentId/:portletCardId/:editField/:action')
                                     if (req.params.action === 'edit') {
                                         comments.portletCardsComments = req.body.portletCardsComments;
                                         responseResult.portletCardUpdatedOn = new Date();
-
+                                        card.portletCardActivity.push({
+                                            "portletCardId": req.params.portletCardId,
+                                            "activity": ['Edited Comment "' + req.body.portletCardsComments + '"'],
+                                            "portletCardCreatedBy": result.created_by,
+                                            "portletCardCreatedByName": result.created_byName,
+                                            "portletCardOperation": 'Edit Comment',
+                                            "portletCardOperationOn": responseResult.portletCardUpdatedOn
+                                        });
                                     } else {
                                         var index = card.portletCardsComments.indexOf(comments);
                                         console.log(index);
                                         card.portletCardsComments.splice(index, 1);
                                         responseResult.portletCardUpdatedOn = new Date();
+                                        card.portletCardActivity.push({
+                                            "portletCardId": req.params.portletCardId,
+                                            "activity": ['Deleted Comment "' + req.body.portletCardsComments + '"'],
+                                            "portletCardCreatedBy": result.created_by,
+                                            "portletCardCreatedByName": result.created_byName,
+                                            "portletCardOperation": 'Delete Comment',
+                                            "portletCardOperationOn": responseResult.portletCardUpdatedOn
+                                        });
                                     }
                                 }
                             })
@@ -149,7 +181,16 @@ app.route('/add/cards/:portletId')
                             "portletCardsTodo": [],
                             "portletCardsDescription": '',
                             "portletCardDueDate": '',
+                            "portletCardActivity": [{
+                                "activity": ['Created New Card Named as "' + req.body.cardlabel + '"'],
+                                "portletCardId": portletCardId,
+                                "portletCardCreatedBy": responseCardResult.created_by,
+                                "portletCardCreatedByName": responseCardResult.created_byName,
+                                "portletCardOperation": 'Create Card',
+                                "portletCardOperationOn": new Date(),
+                            }],
                         });
+
 
                         responseCardResult.markModified('portlet');
                         responseCardResult.save(function(err, result) {
@@ -171,6 +212,15 @@ app.route('/add/cards/:portletId')
 app.route('/edit/cards/:portletId/:editField')
     .put(function(req, res) {
         var editField = req.params.editField;
+        var PortletCardId = req.params.portletId;
+        var editFieldDiff;
+        if (editField === 'portletCardName') {
+            editFieldDiff = 'Name';
+        } else if (editField === 'portletCardTagLine') {
+            editFieldDiff = 'Tagline';
+        } else if (editField === 'portletCardsDescription') {
+            editFieldDiff = 'Description';
+        }
         Board.findOne({ 'portlet.portletCards.portletCardId': req.params.portletId }, function(err, result) {
             if (err) throw err;
             if (!result) {
@@ -189,9 +239,25 @@ app.route('/edit/cards/:portletId/:editField')
                                     req.body.portletCardCommentId = portletCardCommentId;
                                     card[editField].push(req.body);
                                     card.portletCardUpdatedOn = new Date();
+                                    card.portletCardActivity.push({
+                                        "portletCardId": card.portletCardId,
+                                        "activity": ['Added Comment "' + req.body[editField] + '"'],
+                                        "portletCardCreatedBy": result.created_by,
+                                        "portletCardCreatedByName": result.created_byName,
+                                        "portletCardOperation": 'Edit Comment',
+                                        "portletCardOperationOn": new Date()
+                                    });
                                 } else {
                                     card[editField] = req.body[editField];
                                     card.portletCardUpdatedOn = new Date();
+                                    card.portletCardActivity.push({
+                                        "portletCardId": card.portletCardId,
+                                        "activity": ['Edited card\'s ' + editFieldDiff + '"' + req.body[editField] + '"'],
+                                        "portletCardCreatedBy": responseCardResult.created_by,
+                                        "portletCardCreatedByName": responseCardResult.created_byName,
+                                        "portletCardOperation": 'Edit Card',
+                                        "portletCardOperationOn": new Date()
+                                    });
                                 }
                             }
                         }

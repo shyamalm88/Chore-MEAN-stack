@@ -48,8 +48,8 @@
             </label>
          </div>
          <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-             <select class="form-control" formControlName="teamname">
-                <option *ngFor="let item of teamSet" >{{item.name}}</option>
+             <select class="form-control" formControlName="teamname" [(ngModel)]="teamSet[0].name">
+                <option *ngFor="let item of teamSet; let i = index" [attr.value]="item.name" [attr.selected]="i == 0 ? true : null">{{item.name}}</option>
             </select>
             <!--<chore-single-select [teams]="teamSet" (onSelected)="onSelected($event)"></chore-single-select>
             <input type="hidden" formControlName="teamname" [(ngModel)]="selectedValue">-->
@@ -92,6 +92,7 @@
          </div>
          <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
       <input class="form-control input-sm" id="name" formControlName="createdby" type="text" readonly/>
+      <input class="form-control input-sm" id="name" formControlName="createdByName" type="hidden" readonly/>
 
          </div>
          <div class="clearfix"></div>

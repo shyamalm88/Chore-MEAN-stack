@@ -16,13 +16,15 @@ var BoardSchema = new Schema({
     created_at: Date,
     updated_at: Date,
     created_by: String,
+    created_byName: String,
     closed: Boolean,
     archived: Boolean,
     portlet: Array,
     teamname: String,
     boardId: String,
     coverImageUrl: String,
-    coverImageID: String
+    coverImageID: String,
+    boardActivity: Array,
 });
 
 BoardSchema.pre('save', function(next) {
@@ -69,14 +71,25 @@ module.exports.addNewBoard = function(body, callback) {
     var board = new Board({
         name: body.name,
         description: body.description,
-        created_by: body.createdby || "",
+        created_by: body.createdby,
+        created_byName: body.createdByName,
         closed: false,
         cards: [],
-        teamname: body.teamname || "personal board",
+        teamname: body.teamname,
         coverImageUrl: '',
         coverImageID: '',
         boardId: rString,
+
     });
+    board.boardActivity.push({
+        boardCreatedBy: body.createdby,
+        boardId: rString,
+        boardCreatedByName: body.createdByName,
+        boardOperationOn: new Date(),
+        boardOperation: 'Create',
+        activity: ['Created New Board named "' + body.name + '"']
+    });
+
     board.save(function(err, result) {
         if (err) throw err;
         callback({
@@ -94,17 +107,46 @@ module.exports.editBoard = function(body, index, callback) {
                 message: "Board with ID: " + index + " not found.",
             });
         }
-        console.log(body)
+        var editActivity = body;
+        var activity = [];
+
+        if (result.name !== editActivity.name) {
+            activity.push('updated name as "' + editActivity.name + '"');
+        }
+        if (result.description !== editActivity.description) {
+            activity.push('updated description "' + editActivity.description + '"');
+        }
+        if (result.teamname !== editActivity.teamname) {
+            activity.push('updated team as "' + editActivity.teamname + '"');
+        }
+        if (result.coverImageUrl !== editActivity.coverImageUrl) {
+            if (result.coverImageUrl !== '') {
+                activity.push('deleted cover image');
+            } else {
+                activity.push('updated cover image');
+            }
+        }
+        console.log(activity);
         result.name = body.name;
         result.description = body.description;
-        result.created_by = body.createdby;
         result.closed = body.closed || false;
         result.cards = [];
         //console.log(body.teamname);
-        result.teamname = body.teamname || "personal board";
+        result.teamname = body.teamname;
         result.coverImageUrl = body.coverImageUrl;
         result.coverImageID = body.coverImageID;
         result.boardId = body.boardId;
+
+
+
+        result.boardActivity.push({
+            activity,
+            boardUpdatedyName: result.created_byName,
+            boardUpdatedBy: result.created_by,
+            boardOperation: 'Update',
+            boardId: result.boardId,
+            boardOperationOn: new Date(),
+        })
 
         result.save(function(err, result) {
             if (err) throw err;
