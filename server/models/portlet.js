@@ -220,6 +220,8 @@ app.route('/edit/cards/:portletId/:editField')
             editFieldDiff = 'Tagline';
         } else if (editField === 'portletCardsDescription') {
             editFieldDiff = 'Description';
+        } else if (editField === 'portletCardDueDate') {
+            editFieldDiff = 'Due Date';
         }
         Board.findOne({ 'portlet.portletCards.portletCardId': req.params.portletId }, function(err, result) {
             if (err) throw err;
