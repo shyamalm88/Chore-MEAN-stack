@@ -44,7 +44,7 @@ import { ProfileDetailsComponent } from './header/profile/profile.details.compon
 import { TeamListComponent } from './main/project/createteam/teamlist.component';
 import { CreateTeamComponent } from './main/project/createteam/createteam.component';
 import { SingleSelectComponent } from './common/component/single_select/singleSelect.component';
-import { SafeHtmlPipe } from './common/pipe';
+import { SafeHtmlPipe, OrderByPipe } from './common/pipe';
 import {EmojiModule} from 'angular2-emoji';
 import { TodoStore } from './common/services/store';
 import TodoApp from './main/project/boardcanvas/portlet/portletmodal/portlettodo.component';
@@ -66,6 +66,7 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     SafeHtmlPipe,
+    OrderByPipe,
     CharCount,
     AutofocusDirective,
     UPLOAD_DIRECTIVES,

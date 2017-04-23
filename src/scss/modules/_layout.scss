@@ -655,7 +655,8 @@ ul {
     width: 546px;
     z-index: 0;
     img {
-        max-width: 100%;
+        max-width: 100% !important;
+        height: auto !important;
     }
 }
 
@@ -1354,7 +1355,7 @@ textarea.mod-card-back-title {
 .window-title h2 {
     margin-right: 4px;
     margin-top: -4px;
-    font-weight: 600;
+    font-weight: 400;
     font-size: 25px;
 }
 
@@ -4467,7 +4468,7 @@ textarea.form-control.textboxchange {
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
     border-radius: 3px;
     padding: 10px;
-    font-weight: 600;
+    font-weight: 400;
     font-family: Lato, sans-serif;
     &.textSmall {
         font-size: 12px;
@@ -4490,7 +4491,8 @@ textarea.form-control.textboxchange {
     border: 1px solid #e4e3e3;
     padding: 10px;
     img {
-        width: 100%;
+        max-width: 100% !important;
+        height: auto !important;
     }
     table {
         width: 100%;
@@ -4518,6 +4520,9 @@ textarea.form-control.textboxchange {
         padding-left: 40px;
         list-style: disc;
         margin-bottom: 10px;
+    }
+    a {
+        color: #298fca;
     }
 }
 

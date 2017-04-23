@@ -252,9 +252,14 @@ app.route('/edit/cards/:portletId/:editField')
                                 } else {
                                     card[editField] = req.body[editField];
                                     card.portletCardUpdatedOn = new Date();
+                                    if (editFieldDiff === 'Due Date') {
+                                        req.body[editField] = formatDate(new Date(req.body[editField]));
+                                    }
+
+
                                     card.portletCardActivity.push({
                                         "portletCardId": card.portletCardId,
-                                        "activity": ['Edited card\'s ' + editFieldDiff + '"' + req.body[editField] + '"'],
+                                        "activity": ['Edited card\'s ' + editFieldDiff + ' into "' + req.body[editField] + '"'],
                                         "portletCardCreatedBy": responseCardResult.created_by,
                                         "portletCardCreatedByName": responseCardResult.created_byName,
                                         "portletCardOperation": 'Edit Card',
@@ -354,6 +359,21 @@ function makeId(pattern) { // Public Domain/MIT
         d = Math.floor(d / 16);
         return (c === 'y' ? r : (r & 0x3 | 0x8)).toString(16);
     });
+}
+
+function formatDate(date) {
+    var monthNames = [
+        "Jan", "Feb", "Mar",
+        "Apr", "May", "Jun", "Jul",
+        "Aug", "Sep", "Oct",
+        "Nov", "Dec"
+    ];
+
+    var day = date.getDate();
+    var monthIndex = date.getMonth();
+    var year = date.getFullYear();
+
+    return monthNames[monthIndex] + ' ' + day + ', ' + year;
 }
 
 module.exports = app;

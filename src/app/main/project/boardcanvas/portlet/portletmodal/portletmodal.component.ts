@@ -46,6 +46,7 @@ export class PortletModalComponent implements OnInit {
   private name;
   private editCommentForm;
   private hideme: any = {};
+  private cardDetailsHide = true;
 
 
   constructor(private modalService: NgbModal,
@@ -131,6 +132,8 @@ export class PortletModalComponent implements OnInit {
       portletCardsComments: ['', Validators.required],
     });
 
+    //this.Counter = 1;
+
   }
 
 
@@ -143,6 +146,9 @@ export class PortletModalComponent implements OnInit {
     this.viewLabel = false;
     this.editLabelForm = this.fb.group({
       portletCardName: [this.card.portletCardName, Validators.required]
+    });
+    this.zone.run(() => { // <== added
+      this.card.portletCardActivity = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardActivity;
     });
   }
 
@@ -159,6 +165,7 @@ export class PortletModalComponent implements OnInit {
         this.cardUpdate.emit(this.cardResponseBoard);
         this.zone.run(() => { // <== added
           this.card.portletCardsComments = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardsComments;
+          this.card.portletCardActivity = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardActivity;
         });
         this.addCommentForm.controls['portletCardsComments'].reset();
       }
@@ -167,11 +174,11 @@ export class PortletModalComponent implements OnInit {
   }
 
   openCommentEditForm(item, index) {
-      //item.hideme = !item.hideme;
-      this.card.portletCardsComments.forEach(element => {
-        element.hideme = false;
-      });
-      item.hideme = true;
+    //item.hideme = !item.hideme;
+    this.card.portletCardsComments.forEach(element => {
+      element.hideme = false;
+    });
+    item.hideme = true;
     if (item.hideme) {
       const self = this;
       setTimeout(function () {
@@ -197,6 +204,7 @@ export class PortletModalComponent implements OnInit {
         this.cardUpdate.emit(this.cardResponseBoard);
         this.zone.run(() => { // <== added
           this.card.portletCardsComments = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardsComments;
+          this.card.portletCardActivity = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardActivity;
         });
       }
       )
@@ -213,6 +221,7 @@ export class PortletModalComponent implements OnInit {
         this.cardUpdate.emit(this.cardResponseBoard);
         this.zone.run(() => { // <== added
           this.card.portletCardsComments = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardsComments;
+          this.card.portletCardActivity = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardActivity;
         });
       }
       )
@@ -234,6 +243,9 @@ export class PortletModalComponent implements OnInit {
         this.cardResponseBoard = response;
         this.cardResponseBoard = this.cardResponseBoard.board.portlet;
         this.cardUpdate.emit(this.cardResponseBoard);
+        this.zone.run(() => { // <== added
+          this.card.portletCardActivity = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardActivity;
+        });
       }
       )
   }
@@ -256,6 +268,9 @@ export class PortletModalComponent implements OnInit {
         this.cardResponseBoard = this.cardResponseBoard.board.portlet;
         this.cardUpdate.emit(this.cardResponseBoard);
         this.editAddTagLineVisible = false;
+        this.zone.run(() => { // <== added
+          this.card.portletCardActivity = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardActivity;
+        });
       }
       )
   }
@@ -291,6 +306,9 @@ export class PortletModalComponent implements OnInit {
             this.cardResponseBoard = response;
             this.cardResponseBoard = this.cardResponseBoard.board.portlet;
             this.cardUpdate.emit(this.cardResponseBoard);
+            this.zone.run(() => { // <== added
+              this.card.portletCardActivity = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardActivity;
+            });
           }
           )
       }
@@ -317,6 +335,9 @@ export class PortletModalComponent implements OnInit {
           this.cardResponseBoard = this.cardResponseBoard.board.portlet;
           this.cardUpdate.emit(this.cardResponseBoard);
           this.addDescription = false;
+          this.zone.run(() => { // <== added
+            this.card.portletCardActivity = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardActivity;
+          });
         }
         )
 
