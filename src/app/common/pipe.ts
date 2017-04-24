@@ -56,8 +56,8 @@ export class OrderByPipe implements PipeTransform {
 
                 return input.sort(function(a:any,b:any){
                     return !desc
-                        ? OrderBy._orderByComparator(a[property], b[property])
-                        : -OrderBy._orderByComparator(a[property], b[property]);
+                        ? OrderByPipe._orderByComparator(a[property], b[property])
+                        : -OrderByPipe._orderByComparator(a[property], b[property]);
                 });
             }
         }
@@ -71,8 +71,8 @@ export class OrderByPipe implements PipeTransform {
                         : config[i];
 
                     var comparison = !desc
-                        ? OrderBy._orderByComparator(a[property], b[property])
-                        : -OrderBy._orderByComparator(a[property], b[property]);
+                        ? OrderByPipe._orderByComparator(a[property], b[property])
+                        : -OrderByPipe._orderByComparator(a[property], b[property]);
 
                     //Don't return 0 yet in case of needing to sort by next property
                     if(comparison != 0) return comparison;
@@ -83,3 +83,5 @@ export class OrderByPipe implements PipeTransform {
         }
     }
 }
+
+

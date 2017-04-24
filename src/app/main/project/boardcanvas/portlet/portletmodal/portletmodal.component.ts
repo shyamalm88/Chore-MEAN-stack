@@ -9,6 +9,8 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { AuthService } from '../../../../../common/services/auth.service';
 
+const URL = '/api/cardImageUpload';
+
 @Component({
   selector: 'chore-portlet-modal',
   templateUrl: './portletmodal.component.html'
@@ -47,6 +49,21 @@ export class PortletModalComponent implements OnInit {
   private editCommentForm;
   private hideme: any = {};
   private cardDetailsHide = true;
+  private attachmentUrl = 'Please Select a card attachment';
+  private attachmentID;
+  private uploadAttachment;
+  private addCardImageForm;
+  private originalFileName;
+  private showFileUploader: boolean = false;
+  private showLoading: boolean = true;
+
+  uploadFile: any; // uploadFile
+  postId: number; // postId assign for the cover image post
+  cardoptions: Object = {
+    url: '/api/cardImageUpload',  // upload url for temporary usage
+    fieldName: 'portletCardsAttachment', // field name for uploading image.
+    params: { 'post_id': this.postId } // postID
+  };
 
 
   constructor(private modalService: NgbModal,
@@ -134,6 +151,50 @@ export class PortletModalComponent implements OnInit {
 
     //this.Counter = 1;
 
+  }
+
+  showFileUpload() {
+    this.attachmentUrl = 'Please Select a card attachment';
+  }
+  fileChangeEvent(event) {
+    this.showFileUploader = true;
+  }
+  handleAttachmentUpload(data, portletCardId) {
+    let id = portletCardId;
+    if (data && data.response) {
+      data = JSON.parse(data.response);
+      this.uploadAttachment = data;
+      this.attachmentUrl = this.uploadAttachment.secure_url;
+      this.attachmentID = this.uploadAttachment.public_id;
+      var imageData = {
+        cardAttachmentUrl: this.uploadAttachment.secure_url,
+        cardAttachmentId: this.uploadAttachment.public_id,
+        cardAttachmentFormat: this.uploadAttachment.format,
+        cardAttachmentCreated_at: this.uploadAttachment.created_at,
+        cardAttachmentVersion: this.uploadAttachment.version,
+      }
+      var self = this;
+      setTimeout(function () {
+        self.httpService.editData(Constant.API_ENDPOINT + 'edit/cards/' + id + '/portletCardsAttachments', imageData)
+          .subscribe(
+          (response): void => {
+            console.log(response);
+            self.cardResponseBoard = response;
+            self.cardResponseBoard = self.cardResponseBoard.board.portlet;
+            self.cardUpdate.emit(self.cardResponseBoard);
+            self.zone.run(() => { // <== added
+              self.card.portletCardsAttachments = self.cardResponseBoard[self.portletIndex].portletCards[self.cardIndex].portletCardsAttachments;
+              self.card.portletCardActivity = self.cardResponseBoard[self.portletIndex].portletCards[self.cardIndex].portletCardActivity;
+              self.showFileUploader = false;
+            });
+            //self.addCardImageForm.reset();
+          }
+          )
+      }, 100);
+
+
+      //console.log(this.uploadAttachment);
+    }
   }
 
 

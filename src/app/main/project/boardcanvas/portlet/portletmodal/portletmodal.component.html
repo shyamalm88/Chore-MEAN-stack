@@ -13,7 +13,7 @@
             </div>
             <div class="window-header-inline-content quiet js-current-list ">
                 <p class="u-inline-block u-bottom text-capitalize" *ngIf="card.portletCardTagLine">{{card.portletCardTagLine}}</p>
-                <button class="btn btn-xs btn-default" [ngClass]="{'m-l-15':card.portletCardTagLine}" (click)="addTagline()">Add / Edit</button>
+                <button class="btn btn-default btn-teal btn-xs" [ngClass]="{'m-l-15':card.portletCardTagLine}" (click)="addTagline()">Add / Edit</button>
                 <div>
                     <form [formGroup]="addTagLineForm" *ngIf="editAddTagLineVisible">
                         <input type="text" formControlName="portletCardTagLine" [(ngModel)]="card.portletCardTagLine" autofocus class="editModalTextBox textSmall v-m m-t-5" focus="true">
@@ -28,12 +28,9 @@
                 <div class="card-detail-item u-clearfix js-card-detail-members ">
                     <h3 class="card-detail-item-header ">Members</h3>
                     <div class="js-card-detail-members-list ">
-                        <div class="member js-member-on-card-menu " data-idmem="589ef5f94c55710b85a389e0 "><img class="member-avatar " height="30 " width="30 " src="../images/30.png " alt="Arghya Majumder (arghyamajumder) " title="Arghya Majumder (arghyamajumder)
-                     "><span class="member-gold-badge " title="This member has Trello Gold. "></span></div>
-                        <div class="member js-member-on-card-menu " data-idmem="50095233f62adbe04d935195 "><img class="member-avatar " height="30 " width="30 " src="../images/dog.png " alt="Taco (taco) " title="Taco (taco) "><span class="member-gold-badge
-                     " title="This member has Trello Gold. "></span></div>
-                        <div class="member js-member-on-card-menu member-virtual " data-idmem="589ef642a34124f9eee3573e "><span class="member-initials " title="sguha1988.life (sguha1988life) ">S</span><span class="member-gold-badge " title="This member
-                     has Trello Gold. "></span></div>
+                        <div class="member js-member-on-card-menu"><img class="member-avatar " height="30 " width="30 " src="" alt="" title=""></div>
+                        <div class="member js-member-on-card-menu"><img class="member-avatar " height="30 " width="30 " src="" alt="" title=""></div>
+                        <div class="member js-member-on-card-menu"><img class="member-avatar " height="30 " width="30 " src="" alt="" title=""></div>
                         <a class="card-detail-item-add-button dark-hover js-details-edit-members "><span class="fa fa-lg ion-android-add "></span></a> <span class="clearfix"></span>
                     </div>
                 </div>
@@ -67,7 +64,7 @@
                 </div>
                 <div class="card-detail-item card-detail-item-block u-clearfix editable " attr="desc ">
                     <h3 class="card-detail-item-header js-show-with-desc "><i class="fa fa-file-text-o" aria-hidden="true"></i> Description</h3>
-                    <a href="javascript:void" class="btn btn-default btn-xs" (click)="showCKEditor()">Add/Edit</a>
+                    <a href="javascript:void" class="btn btn-default btn-teal btn-xs" (click)="showCKEditor()">Add/Edit</a>
                     <div class="description-content js-desc-content ">
                         <div class="current markeddown hide-on-edit" dir="auto">
                             <div class="description m-t-10 m-b-10" [innerHTML]="card.portletCardsDescription | safeHtml" *ngIf="card.portletCardsDescription && !addDescription">
@@ -84,20 +81,52 @@
             <div class="window-module js-attachments-section u-clearfix ">
                 <div class="window-module-title window-module-title-no-divider ">
                     <span class="window-module-title-icon fa fa-paperclip fa-2x "></span>
-                    <h3 class="u-inline-block ">Attachments</h3>
+                    <h3 class="u-inline-block ">
+                        Attachments
+                        <a class="btn btn-default btn-teal btn-xs" (click)="showFileUploader = !showFileUploader; showFileUpload()"><span class="fa fa-lg ion-android-add "></span></a>
+                    </h3>
+
                 </div>
                 <div class="u-gutter ">
                     <div class="u-clearfix js-attachment-list ">
-                        <div class="attachment-thumbnail ">
-                            <a class="attachment-thumbnail-preview js-open-viewer attachment-thumbnail-preview-is-cover " href="" target="_blank " title="this_is_a_trello_board_with_lists_and_cards.png " style="background-image:#0474c4"></a>
-                            <p class="attachment-thumbnail-details js-open-viewer "><a class="attachment-thumbnail-details-title js-attachment-thumbnail-details " href="" title="this_is_a_trello_board_with_lists_and_cards.png " target="_blank ">this_is_a_trello_board_with_lists_and_cards.png<span class="u-block quiet ">Added <span class="date " dt="2016-11-10T21:19:45.059Z
-                     " title="November 11, 2016 2:49 AM ">Nov 11, 2016 at 2:49 AM</span></span></a>
-                                <span class="quiet attachment-thumbnail-details-options "><a class="attachment-thumbnail-details-options-item dark-hover js-download " href="" target="_blank " download="download ">
-                     <span class="fa fa-download "></span>
-                                <span class="attachment-thumbnail-details-options-item-text ">Download</span></a>
-                                <a class="attachment-thumbnail-details-options-item dark-hover hide js-make-cover " href="# "><span class="fa fa-picture-o "></span> <span class="attachment-thumbnail-details-options-item-text ">Make Cover</span></a>
-                                <a class="attachment-thumbnail-details-options-item dark-hover" href="# "><span class="fa fa-picture-o "></span> <span class="attachment-thumbnail-details-options-item-text ">Remove Cover</span></a>
-                                <a class="attachment-thumbnail-details-options-item attachment-thumbnail-details-options-item-delete dark-hover" href="# "><span class="fa fa-close "></span> <span class="attachment-thumbnail-details-options-item-text ">Delete</span></a>
+                        <div class="form-group" [hidden]="!showFileUploader">
+                            <div class="Lloader" [hidden]="showLoading">Loading...</div>
+                            <input type="file" [ng-file-select]="cardoptions" class="inputfile" (onUpload)="handleAttachmentUpload($event, card.portletCardId)" placeholder="upload cover image" accept="application/pdf, image/*" (change)="fileChangeEvent($event)">
+                            <label for="">
+                                    <span>{{attachmentUrl}}</span> <strong><i class="fa fa-upload"></i> Choose a file </strong>
+                                </label>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="attachment-thumbnail" *ngFor="let item of card.portletCardsAttachments">
+                            <a class="attachment-thumbnail-preview js-open-viewer attachment-thumbnail-preview-is-cover " href="{{item.cardAttachmentUrl}}" target="_blank" [style.background]="'url(//res.cloudinary.com/shyamal/image/upload/v'+item.cardAttachmentVersion+'/'+item.cardAttachmentId+'.jpg)'"></a>
+                            <p class="attachment-thumbnail-details js-open-viewer ">
+                                <a class="attachment-thumbnail-details-title js-attachment-thumbnail-details " href="{{item.cardAttachmentUrl}}" target="_blank">
+                                    <span class="u-block name">
+
+                                    </span>
+                                    <span class="u-block quiet ">Added On
+
+                                        <span class="date">{{item.cardAttachmentCreated_at | date: 'medium'}}</span>
+                                    </span>
+                                </a>
+                                <span class="quiet attachment-thumbnail-details-options ">
+                                    <a class="attachment-thumbnail-details-options-item dark-hover js-download " href="{{item.cardAttachmentUrl}}" target="_blank " download="download">
+                                            <span class="fa fa-download "></span>
+                                <span class="attachment-thumbnail-details-options-item-text ">Download</span>
+                                </a>
+                                <a class="attachment-thumbnail-details-options-item dark-hover hide" href="# ">
+                                    <span class="fa fa-picture-o "></span>
+                                    <span class="attachment-thumbnail-details-options-item-text ">Make Cover</span>
+                                </a>
+                                <a class="attachment-thumbnail-details-options-item dark-hover" href="# ">
+                                    <span class="fa fa-picture-o "></span>
+                                    <span class="attachment-thumbnail-details-options-item-text ">Remove Cover</span>
+                                </a>
+                                <a class="attachment-thumbnail-details-options-item attachment-thumbnail-details-options-item-delete dark-hover" href="# ">
+                                    <span class="fa fa-close "></span>
+                                    <span class="attachment-thumbnail-details-options-item-text ">Delete</span>
+                                </a>
                                 </span>
                             </p>
                         </div>

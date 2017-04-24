@@ -10,6 +10,7 @@ var Board = mongoose.model('Board');
 
 
 
+
 cloudinary.config({
     cloud_name: 'shyamal',
     api_key: '517683456484993',
@@ -17,10 +18,43 @@ cloudinary.config({
 });
 
 
+
 var app = express();
 
 
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 
+var path = null;
+app.route("/cardImageUpload")
+    .post(multer({ dest: "./uploads/" }).single("portletCardsAttachment"), function(req, res) {
+        //console.log(req);
+        path = req.file.path;
+        console.log(path);
+        if (path) {
+            //cloudinary image upload code
+            console.log(cloudinary.url(path, { crop: "fill" }));
+            cloudinary.uploader.upload(path, function(result) {
+                //delete temp files from uploads
+                if (path) {
+                    //if path exist then delete
+                    fs.unlink(path, function(err) {
+                        if (err) throw err;
+                        //console.log('successfully deleted ' + path);
+                    });
+                }
+                // editData.coverImageUrl = secureCoverImageUrl;
+                // editData.coverImageID = secureCoverImageId;
+                res.send(result);
+
+
+            });
+        }
+
+    });
 
 
 app.route('/portlet/:index')
@@ -174,7 +208,6 @@ app.route('/add/cards/:portletId')
                             "portletCardTagLine": "",
                             "portletCardCreatedOn": new Date(),
                             "portletCardUpdatedOn": new Date(),
-                            "portletCardsImages": [],
                             "portletCardsAttachments": [],
                             "portletCardsComments": [],
                             "portletCardsMembers": [],
@@ -249,11 +282,17 @@ app.route('/edit/cards/:portletId/:editField')
                                         "portletCardOperation": 'Edit Comment',
                                         "portletCardOperationOn": new Date()
                                     });
+                                } else if (editField === 'portletCardsAttachments') {
+                                    var portletCardImageId = makeId('oxxay-xyxcy-xayx-xycox');
+                                    req.body.portletCardImageId = portletCardImageId;
+                                    card[editField].push(req.body);
+                                    card.portletCardUpdatedOn = new Date();
                                 } else {
                                     card[editField] = req.body[editField];
                                     card.portletCardUpdatedOn = new Date();
                                     if (editFieldDiff === 'Due Date') {
                                         req.body[editField] = formatDate(new Date(req.body[editField]));
+
                                     }
 
 

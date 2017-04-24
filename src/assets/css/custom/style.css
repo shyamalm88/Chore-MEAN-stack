@@ -750,7 +750,9 @@ hr {
   text-align: center;
   text-decoration: none;
   z-index: 0;
-  width: 81pt;
+  width: 100px;
+  background-size: cover !important;
+  background-repeat: no-repeat;
 }
 
 .attachment-thumbnail-preview-power-up-logo {
@@ -3840,7 +3842,7 @@ main.viewEditBoard .portlet.haveCover .panel-collapse .portlet-body .list-card-o
 
 .inputfile {
   width: 100%;
-  height: 100%;
+  height: 41px;
   opacity: 0;
   overflow: hidden;
   position: absolute;
@@ -4427,6 +4429,74 @@ html .clear-completed:active {
   line-height: 20px;
   text-decoration: none;
   cursor: pointer;
+}
+
+.f-n {
+  float: none;
+}
+
+.Lloader,
+.Lloader:before,
+.Lloader:after {
+  border-radius: 50%;
+  width: 2.5em;
+  height: 2.5em;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  -webkit-animation: load7 1.8s infinite ease-in-out;
+  animation: load7 1.8s infinite ease-in-out;
+}
+
+.Lloader {
+  color: #009688;
+  font-size: 6px;
+  margin: 0px auto;
+  position: relative;
+  text-indent: -9999em;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-animation-delay: -.16s;
+  animation-delay: -.16s;
+  top: 13px;
+}
+
+.Lloader:before,
+.Lloader:after {
+  content: '';
+  position: absolute;
+  top: 0;
+}
+
+.Lloader:before {
+  left: -3.5em;
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
+}
+
+.Lloader:after {
+  left: 3.5em;
+}
+
+@-webkit-keyframes load7 {
+  0%,
+    80%,
+    100% {
+    box-shadow: 0 2.5em 0 -1.3em;
+  }
+  40% {
+    box-shadow: 0 2.5em 0 0;
+  }
+}
+@keyframes load7 {
+  0%,
+    80%,
+    100% {
+    box-shadow: 0 2.5em 0 -1.3em;
+  }
+  40% {
+    box-shadow: 0 2.5em 0 0;
+  }
 }
 
 /*# sourceMappingURL=style.css.map */
