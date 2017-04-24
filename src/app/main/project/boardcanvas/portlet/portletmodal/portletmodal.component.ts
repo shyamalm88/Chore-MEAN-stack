@@ -1,5 +1,5 @@
 
-import { Component, ViewEncapsulation, ElementRef, OnInit, Input, ViewChild, Output, EventEmitter, NgZone } from '@angular/core';
+import { Component, ViewEncapsulation, ElementRef, OnInit, Input, ViewChild, Output, EventEmitter, NgZone, Renderer } from '@angular/core';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -8,6 +8,8 @@ import { Constant } from '../../../../../common/constant/constant';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { AuthService } from '../../../../../common/services/auth.service';
+
+const URL = '/api/cardImageUpload';
 
 @Component({
   selector: 'chore-portlet-modal',
@@ -19,6 +21,7 @@ export class PortletModalComponent implements OnInit {
   @Input() cardIndex;
   @Input() portletIndex;
   @Output() cardUpdate = new EventEmitter();
+  @ViewChild('commentAreaFocus') commentAreaFocus: ElementRef;
 
 
   private viewLabel: Boolean = true;
@@ -45,6 +48,22 @@ export class PortletModalComponent implements OnInit {
   private name;
   private editCommentForm;
   private hideme: any = {};
+  private cardDetailsHide = true;
+  private attachmentUrl = 'Please Select a card attachment';
+  private attachmentID;
+  private uploadAttachment;
+  private addCardImageForm;
+  private originalFileName;
+  private showFileUploader: boolean = false;
+  private showLoading: boolean = true;
+
+  uploadFile: any; // uploadFile
+  postId: number; // postId assign for the cover image post
+  cardoptions: Object = {
+    url: '/api/cardImageUpload',  // upload url for temporary usage
+    fieldName: 'portletCardsAttachment', // field name for uploading image.
+    params: { 'post_id': this.postId } // postID
+  };
 
 
   constructor(private modalService: NgbModal,
@@ -53,7 +72,7 @@ export class PortletModalComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private authService: AuthService,
-    private zone: NgZone
+    private zone: NgZone,
 
   ) {
 
@@ -130,6 +149,137 @@ export class PortletModalComponent implements OnInit {
       portletCardsComments: ['', Validators.required],
     });
 
+    //this.Counter = 1;
+
+  }
+
+  /**
+   * this function will be called when add attachment button will be clicked
+   */
+  showFileUpload() {
+    this.attachmentUrl = 'Please Select a card attachment';
+  }
+  /**
+   * increment for adding date into data base not in loading time but after choosing it
+   */
+  increment() {
+    this.Counter = 1;
+  }
+
+
+  /**
+   *
+   *  * this function is for adding cover image
+   * as well as removing cover image by passing '' in cardAttachmentVersion and cardAttachmentId
+   * @param portletCardId
+   * @param portletCardImageId
+   * @param cardAttachmentVersion
+   * @param cardAttachmentId
+   */
+  addCardCover(portletCardId, portletCardImageId, cardAttachmentVersion, cardAttachmentId) {
+    let data;
+    if (cardAttachmentVersion && cardAttachmentId) {
+      data = {
+        cardAttachmentUrl: 'https://res.cloudinary.com/shyamal/image/upload/v' + cardAttachmentVersion + '/' + cardAttachmentId + '.jpg',
+      };
+    }else {
+      data = {
+        cardAttachmentUrl: ''
+      }
+    }
+
+    this.httpService.editData(Constant.API_ENDPOINT + 'edit/cardcover/' + portletCardId + '/' + portletCardImageId, data)
+      .subscribe(
+      (response): void => {
+        console.log(response);
+        this.cardResponseBoard = response;
+        this.cardResponseBoard = this.cardResponseBoard.board.portlet;
+        this.cardUpdate.emit(this.cardResponseBoard);
+        this.zone.run(() => { // <== added
+          this.card.portletCardCover = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardCover;
+          this.card.portletCardActivity = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardActivity;
+        });
+        //this.addCardImageForm.reset();
+      }
+      )
+  }
+
+
+  /**
+    * this function is for deleting attachment image
+   * as well as if attachment image is set as cover image it will make blank;
+   * @param portletCardId
+   * @param portletCardImageId
+   * @param cardAttachmentId
+   * @param cardAttachmentFormat
+   * @param cardCoverUrl
+   */
+  deleteAttachment(portletCardId, portletCardImageId, cardAttachmentId, cardAttachmentFormat, cardCoverUrl) {
+    let data = {
+      cardAttachmentId: cardAttachmentId,
+      cardAttachmentFormat: cardAttachmentFormat,
+      cardCoverUrl: cardCoverUrl
+    };
+    this.httpService.editData(Constant.API_ENDPOINT + 'delete/attachments/' + portletCardId + '/' + portletCardImageId, data)
+      .subscribe(
+      (response): void => {
+        console.log(response);
+        this.cardResponseBoard = response;
+        this.cardResponseBoard = this.cardResponseBoard.board.portlet;
+        this.cardUpdate.emit(this.cardResponseBoard);
+        this.zone.run(() => { // <== added
+          this.card.portletCardsAttachments = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardsAttachments;
+          this.card.portletCardCover = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardCover;
+          this.card.portletCardActivity = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardActivity;
+          this.showFileUploader = false;
+        });
+        //this.addCardImageForm.reset();
+      }
+      )
+
+  }
+
+  /**
+   * this function will be called when attachments will be uploaded via file input
+   * @param data
+   * @param portletCardId
+   */
+  handleAttachmentUpload(data, portletCardId) {
+    let id = portletCardId;
+    if (data && data.response) {
+      data = JSON.parse(data.response);
+      this.uploadAttachment = data;
+      this.attachmentUrl = this.uploadAttachment.secure_url;
+      this.attachmentID = this.uploadAttachment.public_id;
+      var imageData = {
+        cardAttachmentUrl: this.uploadAttachment.secure_url,
+        cardAttachmentId: this.uploadAttachment.public_id,
+        cardAttachmentFormat: this.uploadAttachment.format,
+        cardAttachmentCreated_at: this.uploadAttachment.created_at,
+        cardAttachmentVersion: this.uploadAttachment.version,
+      }
+      var self = this;
+      setTimeout(function () {
+        self.httpService.editData(Constant.API_ENDPOINT + 'edit/cards/' + id + '/portletCardsAttachments', imageData)
+          .subscribe(
+          (response): void => {
+            console.log(response);
+            self.cardResponseBoard = response;
+            self.cardResponseBoard = self.cardResponseBoard.board.portlet;
+            self.cardUpdate.emit(self.cardResponseBoard);
+            self.zone.run(() => { // <== added
+              self.card.portletCardsAttachments = self.cardResponseBoard[self.portletIndex].portletCards[self.cardIndex].portletCardsAttachments;
+              self.card.portletCardActivity = self.cardResponseBoard[self.portletIndex].portletCards[self.cardIndex].portletCardActivity;
+              self.showFileUploader = false;
+            });
+            //self.addCardImageForm.reset();
+          }
+          )
+      }, 100);
+
+
+      //console.log(this.uploadAttachment);
+    }
   }
 
 
@@ -142,6 +292,9 @@ export class PortletModalComponent implements OnInit {
     this.viewLabel = false;
     this.editLabelForm = this.fb.group({
       portletCardName: [this.card.portletCardName, Validators.required]
+    });
+    this.zone.run(() => { // <== added
+      this.card.portletCardActivity = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardActivity;
     });
   }
 
@@ -158,6 +311,7 @@ export class PortletModalComponent implements OnInit {
         this.cardUpdate.emit(this.cardResponseBoard);
         this.zone.run(() => { // <== added
           this.card.portletCardsComments = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardsComments;
+          this.card.portletCardActivity = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardActivity;
         });
         this.addCommentForm.controls['portletCardsComments'].reset();
       }
@@ -165,17 +319,30 @@ export class PortletModalComponent implements OnInit {
 
   }
 
-  openCommentEditForm(item) {
-    this.editCommentForm = this.fb.group({
-      portletCardsComments: [item.portletCardsComments, Validators.required],
+  openCommentEditForm(item, index) {
+    //item.hideme = !item.hideme;
+    this.card.portletCardsComments.forEach(element => {
+      element.hideme = false;
     });
+    item.hideme = true;
+    if (item.hideme) {
+      const self = this;
+      setTimeout(function () {
+        self.commentAreaFocus.nativeElement.focus();
+      }, 0);
+
+      this.editCommentForm = this.fb.group({
+        portletCardsComments: [item.portletCardsComments, Validators.required],
+      });
+    }
+
   }
 
 
   editComment(commentId, portletCardId) {
     let data = this.editCommentForm.value;
     this.httpService.editData(Constant.API_ENDPOINT + 'edit/comments/' + commentId + '/'
-    + portletCardId + '/portletCardsComments' + '/edit', data)
+      + portletCardId + '/portletCardsComments' + '/edit', data)
       .subscribe(
       (response): void => {
         this.cardResponseBoard = response;
@@ -183,15 +350,16 @@ export class PortletModalComponent implements OnInit {
         this.cardUpdate.emit(this.cardResponseBoard);
         this.zone.run(() => { // <== added
           this.card.portletCardsComments = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardsComments;
+          this.card.portletCardActivity = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardActivity;
         });
       }
       )
   }
 
-  deleteComment(commentId, portletCardId){
-  let data = this.editCommentForm.value;
+  deleteComment(commentId, portletCardId) {
+    let data = this.editCommentForm.value;
     this.httpService.editData(Constant.API_ENDPOINT + 'edit/comments/' + commentId + '/'
-    + portletCardId + '/portletCardsComments' + '/delete', data)
+      + portletCardId + '/portletCardsComments' + '/delete', data)
       .subscribe(
       (response): void => {
         this.cardResponseBoard = response;
@@ -199,6 +367,7 @@ export class PortletModalComponent implements OnInit {
         this.cardUpdate.emit(this.cardResponseBoard);
         this.zone.run(() => { // <== added
           this.card.portletCardsComments = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardsComments;
+          this.card.portletCardActivity = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardActivity;
         });
       }
       )
@@ -220,12 +389,15 @@ export class PortletModalComponent implements OnInit {
         this.cardResponseBoard = response;
         this.cardResponseBoard = this.cardResponseBoard.board.portlet;
         this.cardUpdate.emit(this.cardResponseBoard);
+        this.zone.run(() => { // <== added
+          this.card.portletCardActivity = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardActivity;
+        });
       }
       )
   }
 
   addTagline() {
-    this.editAddTagLineVisible = true;
+    this.editAddTagLineVisible = !this.editAddTagLineVisible;
     this.addTagLineForm = this.fb.group({
       portletCardTagLine: [this.card.portletCardTagLine, Validators.required]
     });
@@ -242,6 +414,9 @@ export class PortletModalComponent implements OnInit {
         this.cardResponseBoard = this.cardResponseBoard.board.portlet;
         this.cardUpdate.emit(this.cardResponseBoard);
         this.editAddTagLineVisible = false;
+        this.zone.run(() => { // <== added
+          this.card.portletCardActivity = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardActivity;
+        });
       }
       )
   }
@@ -277,6 +452,9 @@ export class PortletModalComponent implements OnInit {
             this.cardResponseBoard = response;
             this.cardResponseBoard = this.cardResponseBoard.board.portlet;
             this.cardUpdate.emit(this.cardResponseBoard);
+            this.zone.run(() => { // <== added
+              this.card.portletCardActivity = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardActivity;
+            });
           }
           )
       }
@@ -303,6 +481,9 @@ export class PortletModalComponent implements OnInit {
           this.cardResponseBoard = this.cardResponseBoard.board.portlet;
           this.cardUpdate.emit(this.cardResponseBoard);
           this.addDescription = false;
+          this.zone.run(() => { // <== added
+            this.card.portletCardActivity = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardActivity;
+          });
         }
         )
 

@@ -33,7 +33,6 @@ import { PortletComponent } from './main/project/boardcanvas/portlet/portlet.com
 import { PortletActionsComponent } from './main/project/boardcanvas/portlet/portletactions/portletactions.component';
 import { PortletAssignedComponent } from './main/project/boardcanvas/portlet/portletassigned/portletassigned.component';
 import { PortletCardLabelComponent } from './main/project/boardcanvas/portlet/portletcardlebel/portletcardlabel.component';
-import { PortletCardLabelEditComponent } from './main/project/boardcanvas/portlet/portletcardlebel/portletcardlabeledit.component';
 import { PortletModalComponent } from './main/project/boardcanvas/portlet/portletmodal/portletmodal.component';
 import { CreateEditBoardComponent } from './main/project/createboard/create_edit_board.component';
 import { CreateBoardComponent } from './main/project/createboard/create/create.component';
@@ -45,8 +44,12 @@ import { ProfileDetailsComponent } from './header/profile/profile.details.compon
 import { TeamListComponent } from './main/project/createteam/teamlist.component';
 import { CreateTeamComponent } from './main/project/createteam/createteam.component';
 import { SingleSelectComponent } from './common/component/single_select/singleSelect.component';
-import { SafeHtmlPipe } from './common/pipe';
+import { SafeHtmlPipe, OrderByPipe } from './common/pipe';
 import {EmojiModule} from 'angular2-emoji';
+import { TodoStore } from './common/services/store';
+import TodoApp from './main/project/boardcanvas/portlet/portletmodal/portlettodo.component';
+import { AutofocusDirective } from './common/directive/autofocus.directive';
+
 
 
 
@@ -63,7 +66,9 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     SafeHtmlPipe,
+    OrderByPipe,
     CharCount,
+    AutofocusDirective,
     UPLOAD_DIRECTIVES,
     HeaderComponent,
     ChoreDropdownBoard,
@@ -79,7 +84,6 @@ const appRoutes: Routes = [
     PortletActionsComponent,
     PortletAssignedComponent,
     PortletCardLabelComponent,
-    PortletCardLabelEditComponent,
     PortletModalComponent,
     CreateEditBoardComponent,
     CreateBoardComponent,
@@ -90,6 +94,7 @@ const appRoutes: Routes = [
     CreateTeamComponent,
     TeamListComponent,
     SingleSelectComponent,
+    TodoApp,
   ],
   imports: [
     BrowserModule,
@@ -103,9 +108,9 @@ const appRoutes: Routes = [
     FocusModule.forRoot(),
     CKEditorModule,
     SlimLoadingBarModule.forRoot(),
-    EmojiModule
+    EmojiModule,
   ],
-  providers: [HttpService, SharedDataService, AuthService],
+  providers: [HttpService, SharedDataService, AuthService, TodoStore],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

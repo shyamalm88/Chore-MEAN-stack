@@ -1,24 +1,23 @@
 <!--<template #content let-c="close" let-d="dismiss">-->
 <div class="window-wrapper js-tab-parent">
     <div class=" card-detail-window u-clearfix ">
-        <!--<div class="templateImage " style="background-image: url( '../images/bg.png') "></div>-->
-
-        <div class="window-header "><span class="window-header-icon fa fa-2x fa-file-text-o"></span>
+        <div class="templateImage" *ngIf="card.portletCardCover" [style.background]="'url('+card.portletCardCover+')'"></div>
+        <div class="window-header ">
+            <span class="window-header-icon fa fa-2x fa-file-text-o"></span>
             <div class="window-title">
                 <h2 class="card-detail-title-assist" dir="auto" *ngIf="viewLabel" (click)="editLabel()">{{card.portletCardName}}</h2>
                 <form [formGroup]="editLabelForm" *ngIf="!viewLabel">
                     <input type="text" formControlName="portletCardName" [(ngModel)]="card.portletCardName" autofocus class="editModalTextBox v-m" focus="true">
-                    <button type="button" class="btn btn-teal v-m" (click)="editDoneLabel(card.portletCardId)">Save</button>
+                    <button type="button" class="btn btn-teal v-m" [disabled]="!editLabelForm.valid" (click)="editDoneLabel(card.portletCardId)">Save</button>
                 </form>
-
             </div>
             <div class="window-header-inline-content quiet js-current-list ">
                 <p class="u-inline-block u-bottom text-capitalize" *ngIf="card.portletCardTagLine">{{card.portletCardTagLine}}</p>
-                <button class="btn btn-xs btn-default" [ngClass]="{'m-l-15':card.portletCardTagLine}" (click)="addTagline()">Add / Edit</button>
+                <button class="btn btn-default btn-teal btn-xs" [ngClass]="{'m-l-15':card.portletCardTagLine}" (click)="addTagline()">Add / Edit</button>
                 <div>
                     <form [formGroup]="addTagLineForm" *ngIf="editAddTagLineVisible">
                         <input type="text" formControlName="portletCardTagLine" [(ngModel)]="card.portletCardTagLine" autofocus class="editModalTextBox textSmall v-m m-t-5" focus="true">
-                        <button type="button" class="btn btn-teal v-m m-t-5" (click)="editDoneTagLine(card.portletCardId)">Save</button>
+                        <button type="button" class="btn btn-teal v-m m-t-5" [disabled]="!addTagLineForm.valid" (click)="editDoneTagLine(card.portletCardId)">Save</button>
                     </form>
                 </div>
             </div>
@@ -29,31 +28,26 @@
                 <div class="card-detail-item u-clearfix js-card-detail-members ">
                     <h3 class="card-detail-item-header ">Members</h3>
                     <div class="js-card-detail-members-list ">
-                        <div class="member js-member-on-card-menu " data-idmem="589ef5f94c55710b85a389e0 "><img class="member-avatar " height="30 " width="30 " src="../images/30.png " alt="Arghya Majumder (arghyamajumder) " title="Arghya Majumder (arghyamajumder)
-        "><span class="member-gold-badge " title="This member has Trello Gold. "></span></div>
-                        <div class="member js-member-on-card-menu " data-idmem="50095233f62adbe04d935195 "><img class="member-avatar " height="30 " width="30 " src="../images/dog.png " alt="Taco (taco) " title="Taco (taco) "><span class="member-gold-badge
-        " title="This member has Trello Gold. "></span></div>
-                        <div class="member js-member-on-card-menu member-virtual " data-idmem="589ef642a34124f9eee3573e "><span class="member-initials " title="sguha1988.life (sguha1988life) ">S</span><span class="member-gold-badge " title="This member
-        has Trello Gold. "></span></div>
+                        <div class="member js-member-on-card-menu"><img class="member-avatar " height="30 " width="30 " src="" alt="" title=""></div>
+                        <div class="member js-member-on-card-menu"><img class="member-avatar " height="30 " width="30 " src="" alt="" title=""></div>
+                        <div class="member js-member-on-card-menu"><img class="member-avatar " height="30 " width="30 " src="" alt="" title=""></div>
                         <a class="card-detail-item-add-button dark-hover js-details-edit-members "><span class="fa fa-lg ion-android-add "></span></a> <span class="clearfix"></span>
                     </div>
                 </div>
                 <div class="card-detail-item card-detail-item-labels u-clearfix js-card-detail-labels ">
                     <h3 class="card-detail-item-header "><i class="fa fa-bookmark"></i> Labels</h3>
-
                 </div>
                 <div class="card-detail-item card-due-date js-card-detail-due-date" style="position:relative">
                     <h3 class="card-detail-item-header"> <i class="fa fa-calendar-check-o"></i> Due Date</h3>
                     <span class="clearfix"></span>
                     <span class="btn btn-default" [ngClass]="{'btn-success': diffDays >= 0, 'btn-danger' : diffDays < 0}">
-                        <span *ngIf="card.portletCardDueDate" (click)="d.toggle()"><i class="fa fa-calendar-check-o"></i> {{date | date}}</span>
-                    <span *ngIf="!card.portletCardDueDate" (click)="d.toggle()"><i class="fa fa-calendar-plus-o"></i> Choose a Date</span>
+               <span *ngIf="card.portletCardDueDate" (click)="d.toggle()"><i class="fa fa-calendar-check-o"></i> {{date | date}}</span>
+                    <span *ngIf="!card.portletCardDueDate" (click)="d.toggle(); increment()"><i class="fa fa-calendar-plus-o"></i> Choose a Date</span>
                     <form [formGroup]="addDueDateForm">
                         <input class="form-control" placeholder="yyyy-mm-dd" formControlName="portletCardDueDate" [(ngModel)]="card.portletCardDueDate" ngbDatepicker #d="ngbDatepicker" type="hidden" (ngModelChange)="onChange(card.portletCardId)">
                     </form>
                     </span>
                 </div>
-
                 <div class="card-detail-item">
                     <h3 class="card-detail-item-header "> <i class="fa fa-thumbs-o-up"></i> Votes</h3>
                     <a class="card-detail-badge is-clickable js-card-detail-votes-badge" href="# "></a>
@@ -63,98 +57,128 @@
                     <div class="card-detail-badge date mod-last-updated js-card-detail-age-badge ">
                         <span class="time">{{card.portletCardUpdatedOn | date: 'fullDate'}}</span>
                         <span class="time">{{card.portletCardUpdatedOn | date: 'shortTime'}}</span>
-
                     </div>
                 </div>
                 <div class="js-plugin-badges ">
                     <div></div>
                 </div>
                 <div class="card-detail-item card-detail-item-block u-clearfix editable " attr="desc ">
-
                     <h3 class="card-detail-item-header js-show-with-desc "><i class="fa fa-file-text-o" aria-hidden="true"></i> Description</h3>
-                    <a href="javascript:void" class="btn btn-default btn-xs" (click)="showCKEditor()">Add/Edit</a>
-
+                    <a href="javascript:void" class="btn btn-default btn-teal btn-xs" (click)="showCKEditor()">Add/Edit</a>
                     <div class="description-content js-desc-content ">
                         <div class="current markeddown hide-on-edit" dir="auto">
-                            <div class="description m-t-10 m-b-10" [innerHTML]="card.portletCardsDescription | safeHtml" *ngIf="card.portletCardsDescription && !addDescription"></div>
+                            <div class="description m-t-10 m-b-10" [innerHTML]="card.portletCardsDescription | safeHtml" *ngIf="card.portletCardsDescription && !addDescription">
+                            </div>
                             <div class="clearfix m-b-10"></div>
                             <form [formGroup]="addDescriptionForm" *ngIf="addDescription">
                                 <ckeditor *ngIf="addDescription" formControlName="portletCardsDescription" [(ngModel)]="card.portletCardsDescription" [config]="config" debounce="0" focus="true"></ckeditor>
                                 <button (click)="addEditDescriptionValue(card.portletCardId)" *ngIf="addDescription" class="btn btn-teal m-t-10">Add</button>
                             </form>
-
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="js-plugin-sections "></div>
             <div class="window-module js-attachments-section u-clearfix ">
-                <div class="window-module-title window-module-title-no-divider "><span class="window-module-title-icon fa fa-paperclip fa-2x "></span>
-                    <h3 class="u-inline-block ">Attachments</h3>
+                <div class="window-module-title window-module-title-no-divider ">
+                    <span class="window-module-title-icon fa fa-paperclip fa-2x "></span>
+                    <h3 class="u-inline-block ">
+                        Attachments
+                        <a class="btn btn-default btn-teal btn-xs" (click)="showFileUploader = !showFileUploader; showFileUpload()"><span class="fa fa-lg ion-android-add "></span></a>
+                    </h3>
+
                 </div>
                 <div class="u-gutter ">
                     <div class="u-clearfix js-attachment-list ">
-                        <div class="attachment-thumbnail ">
-                            <a class="attachment-thumbnail-preview js-open-viewer attachment-thumbnail-preview-is-cover " href="https://trello-attachments.s3.amazonaws.com/5824e427857eea92ad0a93fc/5824e454dbdf1b2aae8dba60/1673f4e6150441a6874557c4d942f243/this_is_a_trello_board_with_lists_and_cards.png "
-                                target="_blank " title="this_is_a_trello_board_with_lists_and_cards.png " style="background-image: url(
-        'https://trello-attachments.s3.amazonaws.com/5824e454dbdf1b2aae8dba60/300x137/c416903db260fb9c6c1bc4d127c0fc5b/this_is_a_trello_board_with_lists_and_cards.png');background-color: #0474c4; "></a>
-                            <p class="attachment-thumbnail-details js-open-viewer "><a class="attachment-thumbnail-details-title js-attachment-thumbnail-details " href="https://trello-attachments.s3.amazonaws.com/5824e427857eea92ad0a93fc/5824e454dbdf1b2aae8dba60/1673f4e6150441a6874557c4d942f243/this_is_a_trello_board_with_lists_and_cards.png "
-                                    title="this_is_a_trello_board_with_lists_and_cards.png " target="_blank ">this_is_a_trello_board_with_lists_and_cards.png<span class="u-block quiet ">Added <span class="date " dt="2016-11-10T21:19:45.059Z
-        " title="November 11, 2016 2:49 AM ">Nov 11, 2016 at 2:49 AM</span></span></a>
-                                <span class="quiet attachment-thumbnail-details-options "><a class="attachment-thumbnail-details-options-item dark-hover js-download " href="https://trello-attachments.s3.amazonaws.com/5824e427857eea92ad0a93fc/5824e454dbdf1b2aae8dba60/1673f4e6150441a6874557c4d942f243/this_is_a_trello_board_with_lists_and_cards.png
-        " target="_blank " download="download "><span class="fa fa-download "></span> <span class="attachment-thumbnail-details-options-item-text js-direct-link ">Download</span></a>
-                                <a class="attachment-thumbnail-details-options-item dark-hover hide js-make-cover " href="# "><span class="fa fa-picture-o "></span> <span class="attachment-thumbnail-details-options-item-text ">Make Cover</span></a>
-                                <a class="attachment-thumbnail-details-options-item dark-hover js-remove-cover " href="# "><span class="fa fa-picture-o "></span> <span class="attachment-thumbnail-details-options-item-text ">Remove Cover</span></a>
-                                <a class="attachment-thumbnail-details-options-item attachment-thumbnail-details-options-item-delete dark-hover js-confirm-delete " href="# "><span class="fa fa-close "></span> <span class="attachment-thumbnail-details-options-item-text ">Delete</span></a>
-                                <a class="attachment-thumbnail-details-options-item js-reply " href="# "><span class="fa fa-comment "></span> <span class="attachment-thumbnail-details-options-item-text ">Comment</span></a>
+                        <div class="form-group" [hidden]="!showFileUploader">
+                            <!--<div class="Lloader" [hidden]="showLoading">Loading...</div>-->
+                            <input type="file" [ng-file-select]="cardoptions" class="inputfile" (onUpload)="handleAttachmentUpload($event, card.portletCardId)" placeholder="upload cover image" accept="application/pdf, image/*">
+                            <label for="">
+                                    <span>{{attachmentUrl}}</span> <strong><i class="fa fa-upload"></i> Choose a file </strong>
+                                </label>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="attachment-thumbnail" *ngFor="let item of card.portletCardsAttachments | orderBy : '-'">
+                            <a class="attachment-thumbnail-preview js-open-viewer attachment-thumbnail-preview-is-cover " href="{{item.cardAttachmentUrl}}" target="_blank" [style.background]="'url(//res.cloudinary.com/shyamal/image/upload/v'+item.cardAttachmentVersion+'/'+item.cardAttachmentId+'.jpg)'"></a>
+                            <p class="attachment-thumbnail-details js-open-viewer ">
+                                <a class="attachment-thumbnail-details-title js-attachment-thumbnail-details " href="{{item.cardAttachmentUrl}}" target="_blank">
+                                    <span class="u-block name">
+
+                                    </span>
+                                    <span class="u-block quiet ">Added On
+
+                                        <span class="date">{{item.cardAttachmentCreated_at | date: 'medium'}}</span>
+                                    </span>
+                                </a>
+                                <span class="quiet attachment-thumbnail-details-options ">
+                                    <a class="attachment-thumbnail-details-options-item dark-hover js-download " href="{{item.cardAttachmentUrl}}" target="_blank " download="download">
+                                            <span class="fa fa-download "></span>
+                                <span class="attachment-thumbnail-details-options-item-text ">Download</span>
+                                </a>
+                                <a class="attachment-thumbnail-details-options-item dark-hover" href="javascript:void(0)" [hidden]="card.portletCardCover === item.cardAttachmentUrl" (click)="addCardCover(card.portletCardId, item.portletCardImageId, item.cardAttachmentVersion, item.cardAttachmentId)">
+                                    <span class="fa fa-picture-o"></span>
+                                    <span class="attachment-thumbnail-details-options-item-text ">Make Cover</span>
+                                </a>
+                                <a class="attachment-thumbnail-details-options-item dark-hover" href="javascript:void(0)" [hidden]="card.portletCardCover !== item.cardAttachmentUrl" (click)="addCardCover(card.portletCardId, item.portletCardImageId, '')">
+                                    <span class="fa fa-picture-o "></span>
+                                    <span class="attachment-thumbnail-details-options-item-text ">Remove Cover</span>
+                                </a>
+                                <a class="attachment-thumbnail-details-options-item attachment-thumbnail-details-options-item-delete dark-hover" href="javascript:void(0);" (click)="deleteAttachment(card.portletCardId, item.portletCardImageId, item.cardAttachmentId, item.cardAttachmentFormat, item.cardAttachmentUrl)">
+                                    <span class="fa fa-close "></span>
+                                    <span class="attachment-thumbnail-details-options-item-text ">Delete</span>
+                                </a>
                                 </span>
                             </p>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="checklist-list window-module js-checklist-list js-no-higher-edits ui-sortable "></div>
+            <div class="checklist-list window-module js-checklist-list js-no-higher-edits ui-sortable ">
+                <chore-todo-app></chore-todo-app>
+            </div>
             <div class="window-module add-comment-section ">
-                <div class="window-module-title window-module-title-no-divider "><span class="window-module-title-icon fa fa-2x fa-comments-o "></span>
-                    <h3>Comments</h3><span class="editing-members js-editing-members hide "></span></div>
-                <div class="phenom mod-other-type" *ngFor="let item of card.portletCardsComments">
-
+                <div class="window-module-title window-module-title-no-divider ">
+                    <span class="window-module-title-icon fa fa-2x fa-comments-o "></span>
+                    <h3>Comments</h3>
+                    <span class="editing-members js-editing-members hide "></span>
+                </div>
+                <div class="phenom mod-other-type" *ngFor="let item of card.portletCardsComments; let cardI = index;">
                     <div class="phenom-desc ">
                         <span class="pull-left m-r-10">
-                                    <img alt="{{item.portletCardsCommentsCreator}}" class="member-avatar" height="30 " src="{{item.portletCardsCommentsCreatorImage}}" srcset="{{item.portletCardsCommentsCreatorImage}}" title="" width="30">
-                                </span>
+               <img alt="{{item.portletCardsCommentsCreator}}" class="member-avatar" height="30 " src="{{item.portletCardsCommentsCreatorImage}}" srcset="{{item.portletCardsCommentsCreatorImage}}" title="" width="30">
+               </span>
                         <div class="comments m-b-10" style="overflow:hidden;">
                             <span class="u-font-weight-bold ">
-                                        <b>{{item.portletCardsCommentsCreatorName}}</b>
-                                    </span> commented " {{item.portletCardsComments}} "
+                  <b>{{item.portletCardsCommentsCreatorName}}</b>
+                  </span> commented " {{item.portletCardsComments}} "
                             <span *ngIf="item.portletCardsCommentsCreator === this.userName">
-                                <button class="btn btn-default btn-xs pull-right" (click)="deleteComment(item.portletCardCommentId, card.portletCardId)"><i class="fa fa-trash-o"></i><span class="sr-only">Delete</span></button>
-                            <button class="btn btn-xs btn-default pull-right" (click)="item.hideme = !item.hideme; openCommentEditForm(item)"><i class="fa fa-pencil-square-o"></i><span class="sr-only">Edit</span></button>
+                  <button class="btn btn-default btn-xs pull-right" (click)="deleteComment(item.portletCardCommentId, card.portletCardId)"><i class="fa fa-trash-o"></i><span class="sr-only">Delete</span></button>
+                            <button class="btn btn-xs btn-default pull-right" [hidden]="item.hideme" (click)="openCommentEditForm(item, cardI)"><i class="fa fa-pencil-square-o"></i><span class="sr-only">Edit</span></button>
+                            <button class="btn btn-xs btn-default pull-right" [hidden]="!item.hideme" (click)="item.hideme = !item.hideme"><i class="fa fa-pencil-square-o"></i><span class="sr-only">Edit</span></button>
                             </span>
                         </div>
                         <div class="editComment" [hidden]="!item.hideme">
                             <form [formGroup]="editCommentForm" (ngSubmit)="editComment(item.portletCardCommentId, card.portletCardId)">
                                 <div class="comment-frame">
                                     <div class="comment-box ">
-                                        <textarea class="comment-box-input" placeholder="Write a comment…" tabindex="1" dir="auto" formControlName="portletCardsComments" style="overflow: hidden; word-wrap: break-word; height: 75px; " (ngModelChange)="bindedVariable"></textarea>
-                                        <emoji-input [onEnter]="onEnterFunction" [popupAnchor]="'bottom'" [(model)]="item.portletCardsComments">
+                                        <textarea class="comment-box-input" #commentAreaFocus placeholder="Write a comment…" formControlName="portletCardsComments" style="overflow: hidden; word-wrap: break-word; height: 75px;" [(ngModel)]="bindedVariable1"></textarea>
+                                        <emoji-input [onEnter]="onEnterFunction" [popupAnchor]="'bottom'" [(model)]="bindedVariable1">
                                         </emoji-input>
                                     </div>
                                 </div>
-                                <div class="comment-controls u-clearfix "><button class="btn btn-teal btn-sm" type="submit">Save</button></div>
+                                <div class="comment-controls u-clearfix "><button class="btn btn-teal btn-sm" type="submit" [disabled]="!editCommentForm.valid">Save</button></div>
                             </form>
                         </div>
                     </div>
                     <p class="phenom-meta quiet "><a class="date" href="javascript:void(0)" title="{{item.portletCardsCommentsCreatedAt}}"><i class="fa fa-clock-o"></i> {{item.portletCardsCommentsCreatedAt | date:'medium'}}</a>
                     </p>
                 </div>
-                <div class="new-comment js-new-comment ">
-                    <div class="member member-no-menu ">
+                <div class="new-comment">
+                    <div class="member member-no-menu">
                         <img class="member-avatar " height="30" width="30" src="{{userImage}}" srcset="{{userImage}}" alt="{{userName}}" title="{{userName}}">
                     </div>
                     <form [formGroup]="addCommentForm" (ngSubmit)="addComment(card.portletCardId)">
                         <div class="comment-frame ">
-
                             <div class="comment-box ">
                                 <textarea class="comment-box-input js-new-comment-input" placeholder="Write a comment…" tabindex="1" dir="auto" formControlName="portletCardsComments" style="overflow: hidden; word-wrap: break-word; height: 75px; " [(ngModel)]="bindedVariable"></textarea>
                                 <emoji-input [onEnter]="onEnterFunction" [popupAnchor]="'bottom'" [(model)]="bindedVariable">
@@ -165,141 +189,40 @@
                             <input type="hidden" formControlName="portletCardsCommentsCreatorName">
                             <input type="hidden" formControlName="portletCardsCommentsCreatedAt">
                         </div>
-                        <div class="comment-controls u-clearfix "><button class="btn btn-teal btn-sm" type="submit">Save</button></div>
+                        <div class="comment-controls u-clearfix "><button class="btn btn-teal btn-sm" type="submit" [disabled]="!addCommentForm.valid">Save</button></div>
                     </form>
-
-
-
                 </div>
             </div>
-            <div class="window-module ">
-                <div class="window-module-title window-module-title-no-divider "><span class="window-module-title-icon fa fa-2x ion-podium "></span>
+            <div class="window-module">
+                <div class="window-module-title window-module-title-no-divider ">
+                    <span class="window-module-title-icon fa fa-2x ion-podium "></span>
                     <h3>Activity</h3>
-                    <div class="window-module-title-options "><a class="quiet hide" href="# ">Show Details</a><a class="quiet" href="# ">Hide Details</a></div>
-                </div>
-                <div class="js-list-actions ">
-                    <div class="phenom mod-other-type ">
-                        <div class="phenom-creator ">
-                            <div class="member" idmember="589ef5f94c55710b85a389e0 "><img class="member-avatar " height="30 " width="30 " src="https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/30.png
-        " srcset="https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/30.png 1x, https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/50.png 2x " alt="Arghya Majumder (arghyamajumder) " title="Arghya Majumder (arghyamajumder) ">
-                                <span class="member-gold-badge " title="This member has Trello Gold. "></span>
-                            </div>
-                        </div>
-                        <div class="phenom-desc "><span class="inline-member" idmember="589ef5f94c55710b85a389e0 "><span class="u-font-weight-bold ">Arghya Majumder</span></span> added <span class="inline-member
-        " idmember="589ef642a34124f9eee3573e "><span class="u-font-weight-bold ">sguha1988.life</span></span>
-                            to this card</div>
-                        <p class="phenom-meta quiet "><a class="date   " dt="2017-02-18T12:54:01.238Z " href="/c/cVSj9FoJ/2-trello-basics-bla-bla-bla-bla-bla-bla-bla-bla#action-58a843e985d80160e7ade441 " title="February
-        18, 2017 6:24 PM ">yesterday at 6:24 PM</a>
-                            <span class="hide "><span class="spinner spinner--inline mod-left small "></span> Sending…</span><span class=" "></span></p>
-                    </div>
-                    <div class="phenom mod-other-type ">
-                        <div class="phenom-creator ">
-                            <div class="member" idmember="589ef5f94c55710b85a389e0 "><img class="member-avatar " height="30 " width="30 " src="https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/30.png
-        " srcset="https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/30.png 1x, https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/50.png 2x " alt="Arghya Majumder (arghyamajumder) " title="Arghya Majumder (arghyamajumder) ">
-                                <span class="member-gold-badge " title="This member has Trello Gold. "></span>
-                            </div>
-                        </div>
-                        <div class="phenom-desc "><span class="inline-member" idmember="589ef5f94c55710b85a389e0 "><span class="u-font-weight-bold ">Arghya Majumder</span></span> joined this card</div>
-                        <p class="phenom-meta quiet "><a class="date   " dt="2017-02-18T12:53:59.657Z " href="/c/cVSj9FoJ/2-trello-basics-bla-bla-bla-bla-bla-bla-bla-bla#action-58a843e7c17a18712220bb7f " title="February
-        18, 2017 6:24 PM ">yesterday at 6:24 PM</a>
-                            <span class="hide "><span class="spinner spinner--inline mod-left small "></span> Sending…</span><span class=" "></span></p>
-                    </div>
-                    <div class="phenom mod-other-type ">
-                        <div class="phenom-creator ">
-                            <div class="member" idmember="589ef5f94c55710b85a389e0 "><img class="member-avatar " height="30 " width="30 " src="https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/30.png
-        " srcset="https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/30.png 1x, https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/50.png 2x " alt="Arghya Majumder (arghyamajumder) " title="Arghya Majumder (arghyamajumder) ">
-                                <span class="member-gold-badge " title="This member has Trello Gold. "></span>
-                            </div>
-                        </div>
-                        <div class="phenom-desc "><span class="inline-member" idmember="589ef5f94c55710b85a389e0 "><span class="u-font-weight-bold ">Arghya Majumder</span></span> left this card</div>
-                        <p class="phenom-meta quiet "><a class="date   " dt="2017-02-18T12:53:58.998Z " href="/c/cVSj9FoJ/2-trello-basics-bla-bla-bla-bla-bla-bla-bla-bla#action-58a843e6782fddd98b9b8252 " title="February
-        18, 2017 6:23 PM ">yesterday at 6:23 PM</a>
-                            <span class="hide "><span class="spinner spinner--inline mod-left small "></span> Sending…</span><span class=" "></span></p>
-                    </div>
-                    <div class="phenom mod-other-type ">
-                        <div class="phenom-creator ">
-                            <div class="member" idmember="589ef5f94c55710b85a389e0 "><img class="member-avatar " height="30 " width="30 " src="https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/30.png
-        " srcset="https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/30.png 1x, https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/50.png 2x " alt="Arghya Majumder (arghyamajumder) " title="Arghya Majumder (arghyamajumder) ">
-                                <span class="member-gold-badge " title="This member has Trello Gold. "></span>
-                            </div>
-                        </div>
-                        <div class="phenom-desc "><span class="inline-member" idmember="589ef5f94c55710b85a389e0 "><span class="u-font-weight-bold ">Arghya Majumder</span></span> added <span class="inline-member
-        " idmember="50095233f62adbe04d935195 "><span class="u-font-weight-bold ">Taco</span></span>
-                            to this card</div>
-                        <p class="phenom-meta quiet "><a class="date   " dt="2017-02-18T12:51:08.447Z " href="/c/cVSj9FoJ/2-trello-basics-bla-bla-bla-bla-bla-bla-bla-bla#action-58a8433cb0c6fe3912c5a06d " title="February
-        18, 2017 6:21 PM ">yesterday at 6:21 PM</a>
-                            <span class="hide "><span class="spinner spinner--inline mod-left small "></span> Sending…</span><span class=" "></span></p>
-                    </div>
-                    <div class="phenom mod-other-type ">
-                        <div class="phenom-creator ">
-                            <div class="member" idmember="589ef5f94c55710b85a389e0 "><img class="member-avatar " height="30 " width="30 " src="https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/30.png
-        " srcset="https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/30.png 1x, https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/50.png 2x " alt="Arghya Majumder (arghyamajumder) " title="Arghya Majumder (arghyamajumder) ">
-                                <span class="member-gold-badge " title="This member has Trello Gold. "></span>
-                            </div>
-                        </div>
-                        <div class="phenom-desc "><span class="inline-member" idmember="589ef5f94c55710b85a389e0 "><span class="u-font-weight-bold ">Arghya Majumder</span></span> joined this card</div>
-                        <p class="phenom-meta quiet "><a class="date   " dt="2017-02-18T12:51:04.020Z " href="/c/cVSj9FoJ/2-trello-basics-bla-bla-bla-bla-bla-bla-bla-bla#action-58a843387a51433047a33e89 " title="February
-        18, 2017 6:21 PM ">yesterday at 6:21 PM</a>
-                            <span class="hide "><span class="spinner spinner--inline mod-left small "></span> Sending…</span><span class=" "></span></p>
-                    </div>
-                    <div class="phenom mod-comment-type ">
-                        <div class="phenom-creator ">
-                            <div class="member" idmember="589ef5f94c55710b85a389e0 "><img class="member-avatar " height="30 " width="30 " src="https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/30.png
-        " srcset="https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/30.png 1x, https://trello-avatars.s3.amazonaws.com/0463229730953d1b6b3f7a9fccc7a294/50.png 2x " alt="Arghya Majumder (arghyamajumder) " title="Arghya Majumder (arghyamajumder) ">
-                                <span class="member-gold-badge " title="This member has Trello Gold. "></span>
-                            </div>
-                        </div>
-                        <div class="phenom-desc "><span class="inline-member" idmember="589ef5f94c55710b85a389e0 "><span class="u-font-weight-bold ">Arghya Majumder</span></span>
-                            <div class="comment-container ">
-                                <div class="action-comment markeddown" dir="auto ">
-                                    <div class="current-comment">
-                                        <p>jgfjfjhfjfj</p>
-                                    </div>
-                                    <div class="comment-box ">
-                                        <div class="comment-box-options "><a class="comment-box-options-item " href="# " title="Add an attachment… "><span class="icon-sm icon-attachment "></span></a><a class="comment-box-options-item
-        " href="# " title="Mention a member… "><span class="icon-sm icon-mention "></span></a><a class="comment-box-options-item " href="# " title="Add emoji… "><span class="icon-sm icon-emoji "></span></a>
-                                            <a class="comment-box-options-item " href="# " title="Add card… "><span class="icon-sm icon-card "></span></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="hide embedly js-embedly "></div>
-                        </div>
-                        <p class="phenom-meta quiet "><a class="date   " dt="2017-02-18T12:46:10.211Z " href="/c/cVSj9FoJ/2-trello-basics-bla-bla-bla-bla-bla-bla-bla-bla#comment-58a84212885fbf6a47f34484 " title="February
-        18, 2017 6:16 PM ">yesterday at 6:16 PM</a>
-                            <span class="hide "><span class="spinner spinner--inline mod-left small "></span> Sending…</span><span class=" "> - <a class="" href="# ">Edit</a> - <a class="
-        " href="# ">Delete</a></span></p>
-                    </div>
-                    <div class="phenom mod-attachment-type ">
-                        <div class="phenom-creator ">
-                            <div class="member" idmember="50095233f62adbe04d935195 "><img class="member-avatar " height="30 " width="30 " src="https://trello-avatars.s3.amazonaws.com/10e3fec8aee92d177b22290b7cff669d/30.png
-        " srcset="https://trello-avatars.s3.amazonaws.com/10e3fec8aee92d177b22290b7cff669d/30.png 1x, https://trello-avatars.s3.amazonaws.com/10e3fec8aee92d177b22290b7cff669d/50.png 2x " alt="Taco (taco) " title="Taco (taco) "><span class="member-gold-badge "
-                                    title="This member has Trello Gold. "></span></div>
-                        </div>
-                        <div class="phenom-desc "><span class="inline-member" idmember="50095233f62adbe04d935195 "><span class="u-font-weight-bold ">Taco</span></span> attached <a class="" href="https://trello-attachments.s3.amazonaws.com/5824e427857eea92ad0a93fc/5824e454dbdf1b2aae8dba60/1673f4e6150441a6874557c4d942f243/this_is_a_trello_board_with_lists_and_cards.png "
-                                data-idattachment="589ef5fa4c55710b85a389f2 ">this_is_a_trello_board_with_lists_and_cards.png</a> to this card
-                            <a class=" " href="https://trello-attachments.s3.amazonaws.com/5824e427857eea92ad0a93fc/5824e454dbdf1b2aae8dba60/1673f4e6150441a6874557c4d942f243/this_is_a_trello_board_with_lists_and_cards.png
-        " target="_blank " data-idattachment="589ef5fa4c55710b85a389f2 "><img class="attachment-image-preview " src="https://trello-attachments.s3.amazonaws.com/5824e454dbdf1b2aae8dba60/599x273/dd30250475dbb1fef1ddbab298ac22d6/this_is_a_trello_board_with_lists_and_cards.png "></a>
-                            <div class="hide previews"></div>
-                        </div>
-                        <p class="phenom-meta quiet "><a class="date   " dt="2016-11-10T21:19:45.333Z " href="/c/cVSj9FoJ/2-trello-basics-bla-bla-bla-bla-bla-bla-bla-bla#action-589ef5fa4c55710b85a38a13 " title="November
-        11, 2016 2:49 AM ">Nov 11, 2016 at 2:49 AM</a>
-                            <span class="hide "><span class="spinner spinner--inline mod-left small "></span> Sending…</span><span class=" "> - <a class=" " href="# ">Reply</a></span></p>
-                    </div>
-                    <div class="phenom mod-other-type ">
-                        <div class="phenom-creator ">
-                            <div class="member" idmember="50095233f62adbe04d935195 "><img class="member-avatar " height="30 " width="30 " src="https://trello-avatars.s3.amazonaws.com/10e3fec8aee92d177b22290b7cff669d/30.png
-        " srcset="https://trello-avatars.s3.amazonaws.com/10e3fec8aee92d177b22290b7cff669d/30.png 1x, https://trello-avatars.s3.amazonaws.com/10e3fec8aee92d177b22290b7cff669d/50.png 2x " alt="Taco (taco) " title="Taco (taco) "><span class="member-gold-badge "
-                                    title="This member has Trello Gold. "></span></div>
-                        </div>
-                        <div class="phenom-desc "><span class="inline-member" idmember="50095233f62adbe04d935195 "><span class="u-font-weight-bold ">Taco</span></span> added this card to Stuff To Try (this is a list)</div>
-                        <p class="phenom-meta quiet "><a class="date   " dt="2016-11-10T21:19:16.811Z " href="/c/cVSj9FoJ/2-trello-basics-bla-bla-bla-bla-bla-bla-bla-bla#action-589ef5fa4c55710b85a38a11 " title="November
-        11, 2016 2:49 AM ">Nov 11, 2016 at 2:49 AM</a>
-                            <span class="hide "><span class="spinner spinner--inline mod-left small "></span> Sending…</span><span class=" "></span></p>
+                    <div class="window-module-title-options ">
+                        <a class="quiet" href="javascript:void(0)" *ngIf="cardDetailsHide" (click)="cardDetailsHide = false">Show Details</a><a class="quiet" href="javascript:void(0)" *ngIf="!cardDetailsHide" (click)="cardDetailsHide = true">Hide Details</a>
                     </div>
                 </div>
-                <div class="spinner loading js-loading-card-actions " style="display: none; "></div>
-                <p class="u-bottom "><a class="show-more hide js-show-all-actions " href="# ">Show all actions…</a></p>
+                <div *ngIf="!cardDetailsHide">
+                    <div class="js-list-actions" *ngFor="let item of card.portletCardActivity | orderBy : '-'">
+                        <div class=" phenom mod-other-type ">
+                            <div class="phenom-creator ">
+                                <!--<div class="member">
+                                    <img class="member-avatar " height="30 " width="30 " src=" " srcset=" " alt=" " title=" ">
+                                </div>-->
+                            </div>
+                            <div class="phenom-desc ">
+                                <span class="inline-member ">
+                    <span class="u-font-weight-bold ">{{item.portletCardCreatedByName}}</span>
+                                </span>
+                                <span *ngFor="let activity of item.activity ">
+                                    <span [innerHTML]="activity | safeHtml"></span>
+                                </span>
+                            </div>
+                            <p class="phenom-meta quiet ">
+                                <span class="date ">{{item.portletCardOperationOn  | date: 'medium'}}</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="window-sidebar ">
@@ -312,19 +235,15 @@
                     <a class="button-link js-attach " href="# "><span class="icon-sm icon-attachment "></span>&nbsp;Attachment</a>
                 </div>
             </div>
-            <div class="js-plugin-buttons ">
-                <div class="window-module u-clearfix hide ">
-                    <h3>Power-Ups</h3>
-                    <div class="u-clearfix js-button-list "></div>
-                </div>
-            </div>
             <div class="window-module other-actions u-clearfix ">
                 <h3>Actions</h3>
-                <div class="u-clearfix "><a class="button-link js-move-card " href="# "><span class="icon-sm icon-move "></span>&nbsp;Move</a><a class="button-link js-copy-card " href="# "><span class="icon-sm icon-card "></span>&nbsp;Copy</a>
+                <div class="u-clearfix ">
+                    <a class="button-link js-move-card " href="# "><span class="icon-sm icon-move "></span>&nbsp;Move</a><a class="button-link js-copy-card " href="# "><span class="icon-sm icon-card "></span>&nbsp;Copy</a>
                     <div class="js-subscribe-sidebar-button "><a class="button-link is-on js-unsubscribe " title="Subscribe to the card to get notifications when something changes. "><span class="icon-sm icon-subscribe
-        "></span>&nbsp;Subscribe<span class="on "><span class="icon-sm icon-check light "></span></span></a></div>
+                    "></span>&nbsp;Subscribe<span class="on "><span class="icon-sm icon-check light "></span></span></a></div>
                     <div class="js-vote-sidebar-button "></div>
-                    <hr><a class="button-link js-archive-card " href="# "><span class="icon-sm icon-archive "></span>&nbsp;Archive</a><a class="button-link js-unarchive-card hide " href="# "><span class="icon-sm icon-refresh "></span>&nbsp;Send to board</a>
+                    <hr>
+                    <a class="button-link js-archive-card " href="# "><span class="icon-sm icon-archive "></span>&nbsp;Archive</a><a class="button-link js-unarchive-card hide " href="# "><span class="icon-sm icon-refresh "></span>&nbsp;Send to board</a>
                     <a class="button-link negate hide js-delete-card " href="# "><span class="icon-sm icon-remove "></span>&nbsp;Delete</a>
                 </div>
             </div>
@@ -332,8 +251,6 @@
                 <p class="quiet u-bottom "><a class="quiet-button js-more-menu " href="# ">Share and more…</a></p>
             </div>
         </div>
-        <p class="dropzone ">Drop files to upload.</p>
     </div>
-</div>
-<div class="clearfix "></div>
-<!--</template>-->
+    <div class="clearfix "></div>
+    <!--</template>-->

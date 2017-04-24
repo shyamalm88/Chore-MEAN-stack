@@ -35,6 +35,7 @@ export class CreateBoardComponent implements OnInit {
   public createBoardForm: FormGroup;
   private selectedValue;
   private fileName = 'Please Select a cover image';
+  private loggedInUserName;
 
 
   uploadFile: any; // uploadFile
@@ -90,6 +91,7 @@ export class CreateBoardComponent implements OnInit {
 
   createBoard(event, modal) {
     const data = this.createBoardForm.value;  // accessing form data.
+    console.log(data);
     if (this.createBoardForm.value.name) { // if name entered in the form
       this.httpService.postData(Constant.API_ENDPOINT + 'board', data)
         .subscribe(
@@ -163,10 +165,13 @@ export class CreateBoardComponent implements OnInit {
         this.isLoggedIn = true;
         if (this.loggedInUserData.facebook) {
           this.loggedInUserEmail = this.loggedInUserData.facebook.email;
+          this.loggedInUserName = this.loggedInUserData.facebook.name;
         } else if (this.loggedInUserData.google) {
           this.loggedInUserEmail = this.loggedInUserData.google.email;
+          this.loggedInUserName = this.loggedInUserData.google.name;
         } else {
           this.loggedInUserEmail = this.loggedInUserData.local.email;
+          this.loggedInUserName = this.loggedInUserData.local.name;
         }
 
         // create the form group new instance
@@ -175,9 +180,10 @@ export class CreateBoardComponent implements OnInit {
           name: ['', Validators.required],
           description: ['', Validators.required],
           createdby: [this.loggedInUserEmail, Validators.required],
+          createdByName: [this.loggedInUserName, Validators.required],
           isclosed: [''],
           isarchived: [''],
-          teamname: [''],
+          teamname: ['', Validators.required],
           boardimage: ['']
         });
       }
