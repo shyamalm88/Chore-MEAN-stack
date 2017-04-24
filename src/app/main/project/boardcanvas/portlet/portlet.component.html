@@ -18,10 +18,9 @@
                 <chore-portlet-card-label [card]="card"></chore-portlet-card-label>
                 <div class="js-badges">
                     <div class="faicons" title="This card has a description." *ngIf="card.portletCardsDescription"><span class="badge-icon fa fa-align-left"></span></div>
-                    <div class="faicons" title="Attachments"><span class="badge-icon fa fa-paperclip"></span><span class="badge-text"> 1</span></div>
-                    <div class="faicons" title="Attachments"><span class="badge-icon fa fa-comment"></span><span class="badge-text"> 1</span></div>
-                    <div class="faicons" title="Attachments"><span class="badge-icon fa fa-check-square-o"></span><span class="badge-text"> 1</span></div>
-                    <div class="faicons" title="Attachments"><span class="badge-icon fa fa-picture-o"></span></div>
+                    <div class="faicons" title="Attachments" *ngIf="card.portletCardsAttachments.length > 0"><span class="badge-icon fa fa-paperclip"></span><span class="badge-text"> {{card.portletCardsAttachments.length}}</span></div>
+                    <div class="faicons" title="comments" *ngIf="card.portletCardsComments.length > 0"><span class="badge-icon fa fa-comment"></span><span class="badge-text"> {{card.portletCardsComments.length}}</span></div>
+                    <div class="faicons" title="checklist"><span class="badge-icon fa fa-check-square-o"></span><span class="badge-text"> 1</span></div>
                 </div>
                 <div class="colorLable">
                     <span class="bg-green-light"></span>

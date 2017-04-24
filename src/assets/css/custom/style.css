@@ -752,7 +752,8 @@ hr {
   z-index: 0;
   width: 100px;
   background-size: cover !important;
-  background-repeat: no-repeat;
+  background-repeat: no-repeat !important;
+  background-position: 50% 50% !important;
 }
 
 .attachment-thumbnail-preview-power-up-logo {
@@ -1191,10 +1192,13 @@ chore-project {
 }
 
 .templateImage {
-  background-size: contain;
+  background-size: cover !important;
   height: 160px;
-  background-repeat: no-repeat;
-  background-position-x: 50%;
+  background-repeat: no-repeat !important;
+  background-position: 50% 50% !important;
+}
+.templateImage.inlineCardCover {
+  height: 100px;
 }
 
 .app.app-fh {

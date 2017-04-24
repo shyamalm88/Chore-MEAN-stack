@@ -1,7 +1,7 @@
 <!--<template #content let-c="close" let-d="dismiss">-->
 <div class="window-wrapper js-tab-parent">
     <div class=" card-detail-window u-clearfix ">
-        <!--<div class="templateImage " style="background-image: url( '../images/bg.png') "></div>-->
+        <div class="templateImage" *ngIf="card.portletCardCover" [style.background]="'url('+card.portletCardCover+')'"></div>
         <div class="window-header ">
             <span class="window-header-icon fa fa-2x fa-file-text-o"></span>
             <div class="window-title">
@@ -42,7 +42,7 @@
                     <span class="clearfix"></span>
                     <span class="btn btn-default" [ngClass]="{'btn-success': diffDays >= 0, 'btn-danger' : diffDays < 0}">
                <span *ngIf="card.portletCardDueDate" (click)="d.toggle()"><i class="fa fa-calendar-check-o"></i> {{date | date}}</span>
-                    <span *ngIf="!card.portletCardDueDate" (click)="d.toggle()"><i class="fa fa-calendar-plus-o"></i> Choose a Date</span>
+                    <span *ngIf="!card.portletCardDueDate" (click)="d.toggle(); increment()"><i class="fa fa-calendar-plus-o"></i> Choose a Date</span>
                     <form [formGroup]="addDueDateForm">
                         <input class="form-control" placeholder="yyyy-mm-dd" formControlName="portletCardDueDate" [(ngModel)]="card.portletCardDueDate" ngbDatepicker #d="ngbDatepicker" type="hidden" (ngModelChange)="onChange(card.portletCardId)">
                     </form>
@@ -90,15 +90,15 @@
                 <div class="u-gutter ">
                     <div class="u-clearfix js-attachment-list ">
                         <div class="form-group" [hidden]="!showFileUploader">
-                            <div class="Lloader" [hidden]="showLoading">Loading...</div>
-                            <input type="file" [ng-file-select]="cardoptions" class="inputfile" (onUpload)="handleAttachmentUpload($event, card.portletCardId)" placeholder="upload cover image" accept="application/pdf, image/*" (change)="fileChangeEvent($event)">
+                            <!--<div class="Lloader" [hidden]="showLoading">Loading...</div>-->
+                            <input type="file" [ng-file-select]="cardoptions" class="inputfile" (onUpload)="handleAttachmentUpload($event, card.portletCardId)" placeholder="upload cover image" accept="application/pdf, image/*">
                             <label for="">
                                     <span>{{attachmentUrl}}</span> <strong><i class="fa fa-upload"></i> Choose a file </strong>
                                 </label>
                             <div class="clearfix"></div>
                         </div>
                         <div class="clearfix"></div>
-                        <div class="attachment-thumbnail" *ngFor="let item of card.portletCardsAttachments">
+                        <div class="attachment-thumbnail" *ngFor="let item of card.portletCardsAttachments | orderBy : '-'">
                             <a class="attachment-thumbnail-preview js-open-viewer attachment-thumbnail-preview-is-cover " href="{{item.cardAttachmentUrl}}" target="_blank" [style.background]="'url(//res.cloudinary.com/shyamal/image/upload/v'+item.cardAttachmentVersion+'/'+item.cardAttachmentId+'.jpg)'"></a>
                             <p class="attachment-thumbnail-details js-open-viewer ">
                                 <a class="attachment-thumbnail-details-title js-attachment-thumbnail-details " href="{{item.cardAttachmentUrl}}" target="_blank">
@@ -115,15 +115,15 @@
                                             <span class="fa fa-download "></span>
                                 <span class="attachment-thumbnail-details-options-item-text ">Download</span>
                                 </a>
-                                <a class="attachment-thumbnail-details-options-item dark-hover hide" href="# ">
-                                    <span class="fa fa-picture-o "></span>
+                                <a class="attachment-thumbnail-details-options-item dark-hover" href="javascript:void(0)" [hidden]="card.portletCardCover === item.cardAttachmentUrl" (click)="addCardCover(card.portletCardId, item.portletCardImageId, item.cardAttachmentVersion, item.cardAttachmentId)">
+                                    <span class="fa fa-picture-o"></span>
                                     <span class="attachment-thumbnail-details-options-item-text ">Make Cover</span>
                                 </a>
-                                <a class="attachment-thumbnail-details-options-item dark-hover" href="# ">
+                                <a class="attachment-thumbnail-details-options-item dark-hover" href="javascript:void(0)" [hidden]="card.portletCardCover !== item.cardAttachmentUrl" (click)="addCardCover(card.portletCardId, item.portletCardImageId, '')">
                                     <span class="fa fa-picture-o "></span>
                                     <span class="attachment-thumbnail-details-options-item-text ">Remove Cover</span>
                                 </a>
-                                <a class="attachment-thumbnail-details-options-item attachment-thumbnail-details-options-item-delete dark-hover" href="# ">
+                                <a class="attachment-thumbnail-details-options-item attachment-thumbnail-details-options-item-delete dark-hover" href="javascript:void(0);" (click)="deleteAttachment(card.portletCardId, item.portletCardImageId, item.cardAttachmentId, item.cardAttachmentFormat, item.cardAttachmentUrl)">
                                     <span class="fa fa-close "></span>
                                     <span class="attachment-thumbnail-details-options-item-text ">Delete</span>
                                 </a>
@@ -205,9 +205,9 @@
                     <div class="js-list-actions" *ngFor="let item of card.portletCardActivity | orderBy : '-'">
                         <div class=" phenom mod-other-type ">
                             <div class="phenom-creator ">
-                                <div class="member">
+                                <!--<div class="member">
                                     <img class="member-avatar " height="30 " width="30 " src=" " srcset=" " alt=" " title=" ">
-                                </div>
+                                </div>-->
                             </div>
                             <div class="phenom-desc ">
                                 <span class="inline-member ">

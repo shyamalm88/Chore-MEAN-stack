@@ -153,12 +153,97 @@ export class PortletModalComponent implements OnInit {
 
   }
 
+  /**
+   * this function will be called when add attachment button will be clicked
+   */
   showFileUpload() {
     this.attachmentUrl = 'Please Select a card attachment';
   }
-  fileChangeEvent(event) {
-    this.showFileUploader = true;
+  /**
+   * increment for adding date into data base not in loading time but after choosing it
+   */
+  increment() {
+    this.Counter = 1;
   }
+
+
+  /**
+   *
+   *  * this function is for adding cover image
+   * as well as removing cover image by passing '' in cardAttachmentVersion and cardAttachmentId
+   * @param portletCardId
+   * @param portletCardImageId
+   * @param cardAttachmentVersion
+   * @param cardAttachmentId
+   */
+  addCardCover(portletCardId, portletCardImageId, cardAttachmentVersion, cardAttachmentId) {
+    let data;
+    if (cardAttachmentVersion && cardAttachmentId) {
+      data = {
+        cardAttachmentUrl: 'https://res.cloudinary.com/shyamal/image/upload/v' + cardAttachmentVersion + '/' + cardAttachmentId + '.jpg',
+      };
+    }else {
+      data = {
+        cardAttachmentUrl: ''
+      }
+    }
+
+    this.httpService.editData(Constant.API_ENDPOINT + 'edit/cardcover/' + portletCardId + '/' + portletCardImageId, data)
+      .subscribe(
+      (response): void => {
+        console.log(response);
+        this.cardResponseBoard = response;
+        this.cardResponseBoard = this.cardResponseBoard.board.portlet;
+        this.cardUpdate.emit(this.cardResponseBoard);
+        this.zone.run(() => { // <== added
+          this.card.portletCardCover = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardCover;
+          this.card.portletCardActivity = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardActivity;
+        });
+        //this.addCardImageForm.reset();
+      }
+      )
+  }
+
+
+  /**
+    * this function is for deleting attachment image
+   * as well as if attachment image is set as cover image it will make blank;
+   * @param portletCardId
+   * @param portletCardImageId
+   * @param cardAttachmentId
+   * @param cardAttachmentFormat
+   * @param cardCoverUrl
+   */
+  deleteAttachment(portletCardId, portletCardImageId, cardAttachmentId, cardAttachmentFormat, cardCoverUrl) {
+    let data = {
+      cardAttachmentId: cardAttachmentId,
+      cardAttachmentFormat: cardAttachmentFormat,
+      cardCoverUrl: cardCoverUrl
+    };
+    this.httpService.editData(Constant.API_ENDPOINT + 'delete/attachments/' + portletCardId + '/' + portletCardImageId, data)
+      .subscribe(
+      (response): void => {
+        console.log(response);
+        this.cardResponseBoard = response;
+        this.cardResponseBoard = this.cardResponseBoard.board.portlet;
+        this.cardUpdate.emit(this.cardResponseBoard);
+        this.zone.run(() => { // <== added
+          this.card.portletCardsAttachments = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardsAttachments;
+          this.card.portletCardCover = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardCover;
+          this.card.portletCardActivity = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardActivity;
+          this.showFileUploader = false;
+        });
+        //this.addCardImageForm.reset();
+      }
+      )
+
+  }
+
+  /**
+   * this function will be called when attachments will be uploaded via file input
+   * @param data
+   * @param portletCardId
+   */
   handleAttachmentUpload(data, portletCardId) {
     let id = portletCardId;
     if (data && data.response) {
