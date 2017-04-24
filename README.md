@@ -1,6 +1,6 @@
 # Chore
 
-This project is a simple [KANBAN](https://en.wikipedia.org/wiki/Kanban) implementation of day to day work, small scale projects. The main features of the project is to manage daily task into a Board and card based scenario. this effective tool can be used to support running a production system as a whole, and an excellent way to promote improvement.
+This project is a simple [KANBAN](https://en.wikipedia.org/wiki/Kanban) implementation for day to day work management, mostly for small scale projects. The main features of the project is to manage daily task into a Board and card based scenario. this effective tool can be used to support running a production system as a whole, and an excellent way to promote improvement.
 
 This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.30.
 
