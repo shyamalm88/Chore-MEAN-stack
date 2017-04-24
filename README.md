@@ -6,7 +6,7 @@ This project was generated with [angular-cli](https://github.com/angular/angular
 
 
 ## Prerequisite
-To Rum this project, you can download this or clone into your desktop. Please make sure you have installed node server as well as Mongodb. This project runs on `Angular2, express, node, mongodb`
+To Run this project, you can download this or clone into your desktop. Please make sure you have installed node server as well as Mongodb. This project runs on `Angular2, express, node, mongodb`
 [Download](https://github.com/shyamalm88/Chore.git)
 
 
