@@ -6,6 +6,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpService } from '../../../../../common/services/http.service';
 import { Constant } from '../../../../../common/constant/constant';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import {ColorPickerService} from 'angular2-color-picker';
 
 import { AuthService } from '../../../../../common/services/auth.service';
 
@@ -56,6 +57,7 @@ export class PortletModalComponent implements OnInit {
   private originalFileName;
   private showFileUploader: boolean = false;
   private showLoading: boolean = true;
+  private color: string = "#127bdc";
 
   uploadFile: any; // uploadFile
   postId: number; // postId assign for the cover image post
@@ -73,6 +75,7 @@ export class PortletModalComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private authService: AuthService,
     private zone: NgZone,
+    private cpService: ColorPickerService
 
   ) {
 
@@ -148,15 +151,12 @@ export class PortletModalComponent implements OnInit {
     this.editCommentForm = this.fb.group({
       portletCardsComments: ['', Validators.required],
     });
-
-    //this.Counter = 1;
-
   }
 
   /**
    * this function will be called when add attachment button will be clicked
    */
-  showFileUpload() {
+  showFileUpload(event) {
     this.attachmentUrl = 'Please Select a card attachment';
   }
   /**
@@ -176,11 +176,11 @@ export class PortletModalComponent implements OnInit {
    * @param cardAttachmentVersion
    * @param cardAttachmentId
    */
-  addCardCover(portletCardId, portletCardImageId, cardAttachmentVersion, cardAttachmentId) {
+  addCardCover(portletCardId, portletCardImageId, cardAttachmentUrl) {
     let data;
-    if (cardAttachmentVersion && cardAttachmentId) {
+    if (cardAttachmentUrl) {
       data = {
-        cardAttachmentUrl: 'https://res.cloudinary.com/shyamal/image/upload/v' + cardAttachmentVersion + '/' + cardAttachmentId + '.jpg',
+        cardAttachmentUrl: cardAttachmentUrl
       };
     }else {
       data = {
@@ -214,11 +214,11 @@ export class PortletModalComponent implements OnInit {
    * @param cardAttachmentFormat
    * @param cardCoverUrl
    */
-  deleteAttachment(portletCardId, portletCardImageId, cardAttachmentId, cardAttachmentFormat, cardCoverUrl) {
+  deleteAttachment(portletCardId, portletCardImageId, cardAttachmentId, cardCoverUrl, cardAttachmentMimetype) {
     let data = {
       cardAttachmentId: cardAttachmentId,
-      cardAttachmentFormat: cardAttachmentFormat,
-      cardCoverUrl: cardCoverUrl
+      cardCoverUrl: cardCoverUrl,
+      cardAttachmentMimetype: cardAttachmentMimetype
     };
     this.httpService.editData(Constant.API_ENDPOINT + 'delete/attachments/' + portletCardId + '/' + portletCardImageId, data)
       .subscribe(
@@ -254,9 +254,11 @@ export class PortletModalComponent implements OnInit {
       var imageData = {
         cardAttachmentUrl: this.uploadAttachment.secure_url,
         cardAttachmentId: this.uploadAttachment.public_id,
-        cardAttachmentFormat: this.uploadAttachment.format,
         cardAttachmentCreated_at: this.uploadAttachment.created_at,
-        cardAttachmentVersion: this.uploadAttachment.version,
+        cardAttachmentOriginalName: '',
+        cardAttachmentMimetype: '',
+        cardAttachmentSize: this.uploadAttachment.bytes,
+        cardAttachmentThumbnail: ''
       }
       var self = this;
       setTimeout(function () {

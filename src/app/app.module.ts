@@ -11,6 +11,8 @@ import { FocusModule } from 'angular2-focus';
 import { DragulaModule } from 'ng2-dragula/ng2-dragula';
 import { SelectModule } from 'ng2-select';
 import * as _ from 'underscore';
+import {ColorPickerModule} from 'angular2-color-picker';
+
 //import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-upload/ng2-file-upload';
 import { UPLOAD_DIRECTIVES } from 'ng2-file-uploader/ng2-file-uploader';
 
@@ -49,6 +51,7 @@ import {EmojiModule} from 'angular2-emoji';
 import { TodoStore } from './common/services/store';
 import TodoApp from './main/project/boardcanvas/portlet/portletmodal/portlettodo.component';
 import { AutofocusDirective } from './common/directive/autofocus.directive';
+
 
 
 
@@ -109,6 +112,8 @@ const appRoutes: Routes = [
     CKEditorModule,
     SlimLoadingBarModule.forRoot(),
     EmojiModule,
+    ColorPickerModule,
+
   ],
   providers: [HttpService, SharedDataService, AuthService, TodoStore],
   bootstrap: [AppComponent]

@@ -29,15 +29,22 @@ app.use(function(req, res, next) {
 });
 
 var path = null;
+var mimetype = '';
+var originalname = '';
+var imageurl = '';
+var cardMimetype = '';
 app.route("/cardImageUpload")
     .post(multer({ dest: "./uploads/" }).single("portletCardsAttachment"), function(req, res) {
-        //console.log(req);
+        // console.log("++++++++++++++++++++++++")
+        // console.log(req.file);
         path = req.file.path;
-        //console.log(path);
+        originalname = req.file.originalname;
+        mimetype = req.file.mimetype
         if (path) {
             //cloudinary image upload code
             //console.log(cloudinary.url(path, { crop: "fill" }));
             cloudinary.uploader.upload(path, function(result) {
+
                 //delete temp files from uploads
                 if (path) {
                     //if path exist then delete
@@ -48,10 +55,14 @@ app.route("/cardImageUpload")
                 }
                 // editData.coverImageUrl = secureCoverImageUrl;
                 // editData.coverImageID = secureCoverImageId;
+                // console.log("*************************")
+                // console.log(result);
+                imageurl = result.secure_url;
+                cardMimetype = result.resource_type;
                 res.send(result);
 
 
-            });
+            }, { public_id: makeId('xyyxyy-xyxyy-xxyx-xyxyx') + "/" + req.file.originalname, resource_type: "auto" });
         }
 
     });
@@ -157,7 +168,6 @@ app.route('/edit/comments/:commentId/:portletCardId/:editField/:action')
                                         });
                                     } else {
                                         var index = card.portletCardsComments.indexOf(comments);
-                                        console.log(index);
                                         card.portletCardsComments.splice(index, 1);
                                         responseResult.portletCardUpdatedOn = new Date();
                                         card.portletCardActivity.push({
@@ -239,11 +249,13 @@ app.route('/delete/attachments/:portletCardId/:portletCardImageId')
                         if (card.portletCardId === req.params.portletCardId) {
                             card.portletCardsAttachments.forEach(function(attachments) {
                                 if (attachments.portletCardImageId === req.params.portletCardImageId) {
+                                    console.log(req.body.cardAttachmentId);
                                     cloudinary.uploader.destroy(req.body.cardAttachmentId, function(imageResult) {
+                                        console.log(imageResult);
                                         if (imageResult.result === 'ok') {
                                             console.log('done');
                                         }
-                                    });
+                                    }, { resource_type: req.body.cardAttachmentMimetype, invalidate: true });
                                     var index = card.portletCardsAttachments.indexOf(attachments);
                                     if (card.portletCardCover === req.body.cardCoverUrl) {
                                         card.portletCardCover = '';
@@ -252,7 +264,7 @@ app.route('/delete/attachments/:portletCardId/:portletCardImageId')
                                     responseResult.portletCardUpdatedOn = new Date();
                                     card.portletCardActivity.push({
                                         "portletCardId": req.params.portletCardId,
-                                        "activity": ['Deleted Attachment "' + req.body.cardAttachmentId + '.' + req.body.cardAttachmentFormat + '"'],
+                                        "activity": ['Deleted Attachment "' + req.body.cardAttachmentId + '"'],
                                         "portletCardCreatedBy": result.created_by,
                                         "portletCardCreatedByName": result.created_byName,
                                         "portletCardOperation": 'Delete Comment',
@@ -375,12 +387,32 @@ app.route('/edit/cards/:portletId/:editField')
                             } else if (editField === 'portletCardsAttachments') {
                                 var portletCardImageId = makeId('oxxay-xyxcy-xayx-xycox');
                                 req.body.portletCardImageId = portletCardImageId;
+                                req.body.cardAttachmentMimetype = cardMimetype;
+                                req.body.cardAttachmentOriginalName = originalname;
+
+                                if (mimetype === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' || mimetype === 'application/msword') {
+                                    req.body.cardAttachmentThumbnail = 'http://res.cloudinary.com/shyamal/image/upload/v1493410549/icons/doc.svg';
+                                } else if (mimetype === 'application/pdf') {
+                                    req.body.cardAttachmentThumbnail = 'http://res.cloudinary.com/shyamal/image/upload/v1493410549/icons/pdf.svg';
+                                } else if (mimetype === 'text/plain') {
+                                    req.body.cardAttachmentThumbnail = 'http://res.cloudinary.com/shyamal/image/upload/v1493410549/icons/txt.svg';
+                                } else if (mimetype === 'application/vnd.ms-powerpoint' || mimetype === 'application/vnd.openxmlformats-officedocument.presentationml.presentation') {
+                                    req.body.cardAttachmentThumbnail = 'http://res.cloudinary.com/shyamal/image/upload/v1493410549/icons/ppt.svg';
+                                } else if (mimetype === 'application/vnd.ms-excel' || mimetype === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
+                                    req.body.cardAttachmentThumbnail = 'http://res.cloudinary.com/shyamal/image/upload/v1493410549/icons/xls.svg';
+                                } else if (mimetype === 'application/zip' || mimetype === 'application/octet-stream') {
+                                    req.body.cardAttachmentThumbnail = 'http://res.cloudinary.com/shyamal/image/upload/v1493410549/icons/zip.svg';
+                                } else if (mimetype === 'image/svg+xml') {
+                                    req.body.cardAttachmentThumbnail = 'http://res.cloudinary.com/shyamal/image/upload/v1493410549/icons/svg.svg';
+                                } else {
+                                    req.body.cardAttachmentThumbnail = imageurl;
+                                }
+
                                 card[editField].push(req.body);
                                 card.portletCardUpdatedOn = new Date();
-                                console.log(req.body);
                                 card.portletCardActivity.push({
                                     "portletCardId": card.portletCardId,
-                                    "activity": ['Added New Attachment "<a target="_blank" href="' + req.body.cardAttachmentUrl + '">' + req.body.cardAttachmentId + '.' + req.body.cardAttachmentFormat + '</a>"'],
+                                    "activity": ['Added New Attachment "<a target="_blank" href="' + req.body.cardAttachmentUrl + '">' + req.body.cardAttachmentId + '</a>"'],
                                     "portletCardCreatedBy": result.created_by,
                                     "portletCardCreatedByName": result.created_byName,
                                     "portletCardOperation": 'Added Attachment',

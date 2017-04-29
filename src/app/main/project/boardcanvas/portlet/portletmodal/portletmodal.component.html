@@ -36,7 +36,28 @@
                 </div>
                 <div class="card-detail-item card-detail-item-labels u-clearfix js-card-detail-labels ">
                     <h3 class="card-detail-item-header "><i class="fa fa-bookmark"></i> Labels</h3>
+
                 </div>
+                <div class="col-md-5">
+                    <span [(colorPicker)]="color" [style.background]="color" [cpPresetColors]="['#fff', '#000', '#2889e9', '#e920e9', '#fff500', 'rgb(236,64,64)']" [cpAlphaChannel]="'disabled'" [cpPosition]="'right'" [cpOutputFormat]="'rgba'" [cpPositionOffset]="'100%'"
+                        [cpPositionRelativeToArrow]="true" [cpSaveClickOutside]="false" [cpOKButton]="true" [cpOKButtonClass]="'btn btn-xs btn-teal'" [cpOKButtonText]="'OK'" [cpCancelButton]="true" [cpCancelButtonClass]="'btn btn-xs btn-default'" [cpCancelButtonText]="'Cancel'"
+                        [cpFallbackColor]="'#fff'" [cpPresetLabel]="'Preset colors'" class="form-control"></span>
+                    <span [(colorPicker)]="color1" [style.background]="color1" [cpPresetColors]="['#fff', '#000', '#2889e9', '#e920e9', '#fff500', 'rgb(236,64,64)']" [cpAlphaChannel]="'disabled'" [cpPosition]="'right'" [cpOutputFormat]="'rgba'" [cpPositionOffset]="'100%'"
+                        [cpPositionRelativeToArrow]="true" [cpSaveClickOutside]="false" [cpOKButton]="true" [cpOKButtonClass]="'btn btn-xs btn-teal'" [cpOKButtonText]="'OK'" [cpCancelButton]="true" [cpCancelButtonClass]="'btn btn-xs btn-default'" [cpCancelButtonText]="'Cancel'"
+                        [cpFallbackColor]="'#fff'" [cpPresetLabel]="'Preset colors'" class="form-control"> </span>
+                    <div class="clearfix"></div>
+
+                </div>
+                <div class="clearfix"></div>
+
+
+
+
+                <!--<div [style.background]="arrayColors['color']" (click)="selectedColor='color'"></div>
+
+                <div [style.background]="arrayColors['color2']" (click)="selectedColor='color2'"></div>-->
+
+
                 <div class="card-detail-item card-due-date js-card-detail-due-date" style="position:relative">
                     <h3 class="card-detail-item-header"> <i class="fa fa-calendar-check-o"></i> Due Date</h3>
                     <span class="clearfix"></span>
@@ -83,7 +104,7 @@
                     <span class="window-module-title-icon fa fa-paperclip fa-2x "></span>
                     <h3 class="u-inline-block ">
                         Attachments
-                        <a class="btn btn-default btn-teal btn-xs" (click)="showFileUploader = !showFileUploader; showFileUpload()"><span class="fa fa-lg ion-android-add "></span></a>
+                        <a class="btn btn-default btn-teal btn-xs" (click)="showFileUploader = !showFileUploader; showFileUpload($event)" href="javascript:void(0);"><span class="fa fa-lg ion-android-add "></span></a>
                     </h3>
 
                 </div>
@@ -91,7 +112,7 @@
                     <div class="u-clearfix js-attachment-list ">
                         <div class="form-group" [hidden]="!showFileUploader">
                             <!--<div class="Lloader" [hidden]="showLoading">Loading...</div>-->
-                            <input type="file" [ng-file-select]="cardoptions" class="inputfile" (onUpload)="handleAttachmentUpload($event, card.portletCardId)" placeholder="upload cover image" accept="application/pdf, image/*">
+                            <input type="file" [ng-file-select]="cardoptions" class="inputfile" (onUpload)="handleAttachmentUpload($event, card.portletCardId)" placeholder="upload cover image" accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf, .json, .zip, .rar">
                             <label for="">
                                     <span>{{attachmentUrl}}</span> <strong><i class="fa fa-upload"></i> Choose a file </strong>
                                 </label>
@@ -99,12 +120,10 @@
                         </div>
                         <div class="clearfix"></div>
                         <div class="attachment-thumbnail" *ngFor="let item of card.portletCardsAttachments | orderBy : '-'">
-                            <a class="attachment-thumbnail-preview js-open-viewer attachment-thumbnail-preview-is-cover " href="{{item.cardAttachmentUrl}}" target="_blank" [style.background]="'url(//res.cloudinary.com/shyamal/image/upload/v'+item.cardAttachmentVersion+'/'+item.cardAttachmentId+'.jpg)'"></a>
+                            <a class="attachment-thumbnail-preview js-open-viewer attachment-thumbnail-preview-is-cover " href="{{item.cardAttachmentUrl}}" target="_blank" [style.background]="'url('+item.cardAttachmentThumbnail+')'"></a>
                             <p class="attachment-thumbnail-details js-open-viewer ">
+                                {{item.cardAttachmentOriginalName}}
                                 <a class="attachment-thumbnail-details-title js-attachment-thumbnail-details " href="{{item.cardAttachmentUrl}}" target="_blank">
-                                    <span class="u-block name">
-
-                                    </span>
                                     <span class="u-block quiet ">Added On
 
                                         <span class="date">{{item.cardAttachmentCreated_at | date: 'medium'}}</span>
@@ -115,15 +134,15 @@
                                             <span class="fa fa-download "></span>
                                 <span class="attachment-thumbnail-details-options-item-text ">Download</span>
                                 </a>
-                                <a class="attachment-thumbnail-details-options-item dark-hover" href="javascript:void(0)" [hidden]="card.portletCardCover === item.cardAttachmentUrl" (click)="addCardCover(card.portletCardId, item.portletCardImageId, item.cardAttachmentVersion, item.cardAttachmentId)">
+                                <a class="attachment-thumbnail-details-options-item dark-hover" href="javascript:void(0)" [hidden]="card.portletCardCover === item.cardAttachmentUrl" (click)="addCardCover(card.portletCardId, item.portletCardImageId, item.cardAttachmentUrl)" *ngIf="item.cardAttachmentMimetype === 'image'">
                                     <span class="fa fa-picture-o"></span>
                                     <span class="attachment-thumbnail-details-options-item-text ">Make Cover</span>
                                 </a>
-                                <a class="attachment-thumbnail-details-options-item dark-hover" href="javascript:void(0)" [hidden]="card.portletCardCover !== item.cardAttachmentUrl" (click)="addCardCover(card.portletCardId, item.portletCardImageId, '')">
+                                <a class="attachment-thumbnail-details-options-item dark-hover" href="javascript:void(0)" [hidden]="card.portletCardCover !== item.cardAttachmentUrl" (click)="addCardCover(card.portletCardId, item.portletCardImageId, '')" *ngIf="item.cardAttachmentMimetype === 'image'">
                                     <span class="fa fa-picture-o "></span>
                                     <span class="attachment-thumbnail-details-options-item-text ">Remove Cover</span>
                                 </a>
-                                <a class="attachment-thumbnail-details-options-item attachment-thumbnail-details-options-item-delete dark-hover" href="javascript:void(0);" (click)="deleteAttachment(card.portletCardId, item.portletCardImageId, item.cardAttachmentId, item.cardAttachmentFormat, item.cardAttachmentUrl)">
+                                <a class="attachment-thumbnail-details-options-item attachment-thumbnail-details-options-item-delete dark-hover" href="javascript:void(0);" (click)="deleteAttachment(card.portletCardId, item.portletCardImageId, item.cardAttachmentId, item.cardAttachmentUrl, item.cardAttachmentMimetype)">
                                     <span class="fa fa-close "></span>
                                     <span class="attachment-thumbnail-details-options-item-text ">Delete</span>
                                 </a>
