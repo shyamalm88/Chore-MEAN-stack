@@ -23,6 +23,7 @@
     "@ng-bootstrap/ng-bootstrap": "^1.0.0-alpha.20",
     "@types/node": "^6.0.65",
     "@types/underscore": "^1.8.0",
+    "angular2-color-picker": "^1.3.1",
     "angular2-emoji": "^0.1.6",
     "angular2-focus": "^1.1.0",
     "bcrypt-nodejs": "0.0.3",
