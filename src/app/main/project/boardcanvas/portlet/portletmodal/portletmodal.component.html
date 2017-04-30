@@ -39,13 +39,13 @@
 
                 </div>
                 <div class="col-md-5">
-                    <span [(colorPicker)]="color" [style.background]="color" [cpPresetColors]="['#fff', '#000', '#2889e9', '#e920e9', '#fff500', 'rgb(236,64,64)']" [cpAlphaChannel]="'disabled'" [cpPosition]="'right'" [cpOutputFormat]="'rgba'" [cpPositionOffset]="'100%'"
+                    <!--<span [(colorPicker)]="color" [style.background]="color" [cpPresetColors]="['#fff', '#000', '#2889e9', '#e920e9', '#fff500', 'rgb(236,64,64)']" [cpAlphaChannel]="'disabled'" [cpPosition]="'right'" [cpOutputFormat]="'rgba'" [cpPositionOffset]="'100%'"
                         [cpPositionRelativeToArrow]="true" [cpSaveClickOutside]="false" [cpOKButton]="true" [cpOKButtonClass]="'btn btn-xs btn-teal'" [cpOKButtonText]="'OK'" [cpCancelButton]="true" [cpCancelButtonClass]="'btn btn-xs btn-default'" [cpCancelButtonText]="'Cancel'"
                         [cpFallbackColor]="'#fff'" [cpPresetLabel]="'Preset colors'" class="form-control"></span>
                     <span [(colorPicker)]="color1" [style.background]="color1" [cpPresetColors]="['#fff', '#000', '#2889e9', '#e920e9', '#fff500', 'rgb(236,64,64)']" [cpAlphaChannel]="'disabled'" [cpPosition]="'right'" [cpOutputFormat]="'rgba'" [cpPositionOffset]="'100%'"
                         [cpPositionRelativeToArrow]="true" [cpSaveClickOutside]="false" [cpOKButton]="true" [cpOKButtonClass]="'btn btn-xs btn-teal'" [cpOKButtonText]="'OK'" [cpCancelButton]="true" [cpCancelButtonClass]="'btn btn-xs btn-default'" [cpCancelButtonText]="'Cancel'"
                         [cpFallbackColor]="'#fff'" [cpPresetLabel]="'Preset colors'" class="form-control"> </span>
-                    <div class="clearfix"></div>
+                    <div class="clearfix"></div>-->
 
                 </div>
                 <div class="clearfix"></div>
@@ -112,7 +112,7 @@
                     <div class="u-clearfix js-attachment-list ">
                         <div class="form-group" [hidden]="!showFileUploader">
                             <!--<div class="Lloader" [hidden]="showLoading">Loading...</div>-->
-                            <input type="file" [ng-file-select]="cardoptions" class="inputfile" (onUpload)="handleAttachmentUpload($event, card.portletCardId)" placeholder="upload cover image" accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf, .json, .zip, .rar">
+                            <input type="file" [ng-file-select]="cardoptions" class="inputfile" (onUpload)="handleAttachmentUpload($event, card.portletCardId)" placeholder="upload cover image" accept="application/pdf, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/msword,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-powerpoint,	application/vnd.openxmlformats-officedocument.presentationml.presentation ,image/*, text/plain, application/zip, application/json, application/x-rar-compressed">
                             <label for="">
                                     <span>{{attachmentUrl}}</span> <strong><i class="fa fa-upload"></i> Choose a file </strong>
                                 </label>

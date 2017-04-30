@@ -18,7 +18,7 @@ export class SafeHtmlPipe implements PipeTransform  {
 
 
 
-@Pipe({name: 'orderBy', pure: false})
+@Pipe({name: 'orderBy', pure: true})
 export class OrderByPipe implements PipeTransform {
 
     static _orderByComparator(a:any, b:any):number{

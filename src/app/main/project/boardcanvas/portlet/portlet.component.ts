@@ -164,7 +164,7 @@ export class PortletComponent implements OnInit {
   }
 
   //modal open
-  open(content) {
+  openModal(content) {
     this.modalService.open(content)
   }
 

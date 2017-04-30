@@ -6,7 +6,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpService } from '../../../../../common/services/http.service';
 import { Constant } from '../../../../../common/constant/constant';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import {ColorPickerService} from 'angular2-color-picker';
+import { ColorPickerService } from 'angular2-color-picker';
 
 import { AuthService } from '../../../../../common/services/auth.service';
 
@@ -49,13 +49,13 @@ export class PortletModalComponent implements OnInit {
   private name;
   private editCommentForm;
   private hideme: any = {};
-  private cardDetailsHide = true;
+  private cardDetailsHide: Boolean = true;
   private attachmentUrl = 'Please Select a card attachment';
   private attachmentID;
   private uploadAttachment;
   private addCardImageForm;
   private originalFileName;
-  private showFileUploader: boolean = false;
+  private showFileUploader: Boolean;
   private showLoading: boolean = true;
   private color: string = "#127bdc";
 
@@ -114,8 +114,6 @@ export class PortletModalComponent implements OnInit {
 
   }
 
-
-
   ngOnInit() {
     this.authService.userData.subscribe((userData) => {
       this.loggedInUserData = userData;
@@ -151,6 +149,7 @@ export class PortletModalComponent implements OnInit {
     this.editCommentForm = this.fb.group({
       portletCardsComments: ['', Validators.required],
     });
+
   }
 
   /**
@@ -182,7 +181,7 @@ export class PortletModalComponent implements OnInit {
       data = {
         cardAttachmentUrl: cardAttachmentUrl
       };
-    }else {
+    } else {
       data = {
         cardAttachmentUrl: ''
       }
