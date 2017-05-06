@@ -57,7 +57,7 @@
             <form [formGroup]="updatePortletForm" (ngSubmit)="addPortlet(boardIndex)">
                 <div class="form-group m-b-0">
                     <label class="control-label sr-only" for="Name">Add a Portlet</label>
-                    <input id="Name" name="Name" type="text" placeholder="Add a Portlet" class="form-control input-md textboxchange" formControlName="portletname" focus="true">
+                    <input id="Name" name="Name" type="text" placeholder="Add a Portlet" class="form-control input-md textboxchange" formControlName="portletname" focus="true" autocomplete="off">
                     <button class="btn btn-teal m-t-10 v-m i-b" type="submit">Add</button>
                     <a href="#" class="icon-sm ion-close m-l-10 v-m i-b m-t-10" (click)="$event.stopPropagation(); $event.preventDefault(); portletAddDrop.close();"></a>
                 </div>

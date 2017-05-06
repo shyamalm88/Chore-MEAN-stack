@@ -2,7 +2,7 @@ var express = require('express');
 var mongoose = require('mongoose');
 var passport = require('passport');
 var favicon = require('serve-favicon');
-var logger = require('morgan');
+//var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
@@ -19,18 +19,20 @@ var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 io.on('connection', function(client) {
+    console.log('connected');
     client.on('updateCard', function(data) {
         console.log(data);
-        client.broadcast.emit('card', 'card');
+        client.broadcast.emit('getCardDetails', 'card');
     });
     client.on('disconnect', function() {
         console.log('disconnect');
+        client.broadcast.emit('getCardDetails', 'card');
     });
 });
 
 
 // app usage codes
-app.use(logger('dev'));
+//app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());

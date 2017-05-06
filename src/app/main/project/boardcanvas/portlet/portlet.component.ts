@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit, Input, ViewChild, NgZone } from '@angular/core';
 import { DragulaService } from 'ng2-dragula/ng2-dragula';
 import { NgbModal, ModalDismissReasons, NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
 import { Constant } from '../../../../common/constant/constant';
@@ -35,6 +35,7 @@ export class PortletComponent implements OnInit {
     private httpService: HttpService,
     private activatedRoute: ActivatedRoute,
     public fb: FormBuilder,
+    private zone: NgZone,
 
   ) {
 
@@ -90,8 +91,13 @@ export class PortletComponent implements OnInit {
       this.boardIndex = params['boardid'];
     });
     this.getAllPortlets();
+    var self = this;
     this.socket.on('connect', function () {
       console.log('connect');
+    });
+    this.socket.on('getCardDetails', function (data) {
+      console.log(data);
+      self.getAllPortlets();
     });
 
   }
@@ -106,18 +112,9 @@ export class PortletComponent implements OnInit {
    */
   portletUpdate(responseFromChild) {
     this.portletDataArray = responseFromChild;
-    /**
-     * emitting updateCard message to node js
-     * via socket.io for getting new updated data
-     */
     this.socket.emit('updateCard', 'message');
     let self = this;
-    /**
-     * node sending a message 'card' depending on that
-     * the getAllPortlets() gets called to the respective tab and different browser instances
-     *
-     */
-    this.socket.on('card', function (data) {
+    this.socket.on('getCardDetails', function (data) {
       console.log(data);
       self.getAllPortlets();
     });
@@ -125,18 +122,9 @@ export class PortletComponent implements OnInit {
 
   cardUpdate(responsefromCardChild) {
     this.portletDataArray = responsefromCardChild;
-    /**
-     * emitting updateCard message to node js
-     * via socket.io for getting new updated data
-     */
     this.socket.emit('updateCard', 'message');
     let self = this;
-    /**
-     * node sending a message 'card' depending on that
-     * the getAllPortlets() gets called to the respective tab and different browser instances
-     *
-     */
-    this.socket.on('card', function (data) {
+    this.socket.on('getCardDetails', function (data) {
       console.log(data);
       self.getAllPortlets();
     });
@@ -171,18 +159,9 @@ export class PortletComponent implements OnInit {
           console.log(this.portletDataArray);
           this.updatePortletForm.reset();
           this.dropdown.close();
-          /**
-           * emitting updateCard message to node js
-           * via socket.io for getting new updated data
-           */
           this.socket.emit('updateCard', 'message');
           let self = this;
-          /**
-           * node sending a message 'card' depending on that
-           * the getAllPortlets() gets called to the respective tab and different browser instances
-           *
-           */
-          this.socket.on('card', function (data) {
+          this.socket.on('getCardDetails', function (data) {
             console.log(data);
             self.getAllPortlets();
           });
@@ -204,18 +183,9 @@ export class PortletComponent implements OnInit {
           this.portletDataArray = this.portletData.board.portlet;
           formValue.reset();
           this.hideme(item);
-          /**
-           * emitting updateCard message to node js
-           * via socket.io for getting new updated data
-           */
           this.socket.emit('updateCard', 'message');
           let self = this;
-          /**
-           * node sending a message 'card' depending on that
-           * the getAllPortlets() gets called to the respective tab and different browser instances
-           *
-           */
-          this.socket.on('card', function (data) {
+          this.socket.on('getCardDetails', function (data) {
             console.log(data);
             self.getAllPortlets();
           });

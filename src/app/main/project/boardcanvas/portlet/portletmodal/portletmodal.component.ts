@@ -1,14 +1,16 @@
 
 import { Component, ViewEncapsulation, ElementRef, OnInit, Input, ViewChild, Output, EventEmitter, NgZone, Renderer } from '@angular/core';
 
+
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+
 import { HttpService } from '../../../../../common/services/http.service';
 import { Constant } from '../../../../../common/constant/constant';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ColorPickerService } from 'angular2-color-picker';
-
 import { AuthService } from '../../../../../common/services/auth.service';
+//import * as io from 'socket.io-client';
 
 const URL = '/api/cardImageUpload';
 
@@ -24,7 +26,7 @@ export class PortletModalComponent implements OnInit {
   @Output() cardUpdate = new EventEmitter();
   @ViewChild('commentAreaFocus') commentAreaFocus: ElementRef;
 
-
+  //public socket = io('http://localhost:8080/');
   private viewLabel: Boolean = true;
   private addDescription: Boolean = false;
   private editLabelForm;
@@ -297,6 +299,13 @@ export class PortletModalComponent implements OnInit {
     this.zone.run(() => { // <== added
       this.card.portletCardActivity = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardActivity;
     });
+    var self = this;
+    // this.socket.on('card', function (data) {
+    //   console.log(data);
+    //   self.zone.run(() => { // <== added
+    //     this.card.portletCardActivity = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardActivity;
+    //   });
+    // });
   }
 
 
