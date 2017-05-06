@@ -16,7 +16,17 @@ var router = express.Router();
 
 
 var app = express();
-
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
+io.on('connection', function(client) {
+    client.on('updateCard', function(data) {
+        console.log(data);
+        client.broadcast.emit('card', 'card');
+    });
+    client.on('disconnect', function() {
+        console.log('disconnect');
+    });
+});
 
 
 // app usage codes
@@ -116,6 +126,9 @@ mongoose.connect(configDB.url);
 
 
 var port = process.env.PORT || 8080;
-app.listen(port, function() {
+// app.listen(port, function() {
+//     console.log('Server up: http://localhost:' + port);
+// });
+server.listen(port, function() {
     console.log('Server up: http://localhost:' + port);
 });
