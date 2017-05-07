@@ -91,12 +91,11 @@ export class PortletComponent implements OnInit {
       this.boardIndex = params['boardid'];
     });
     this.getAllPortlets();
-    var self = this;
+    let self = this;
     this.socket.on('connect', function () {
-      console.log('connect');
+      //console.log('connect');
     });
     this.socket.on('getCardDetails', function (data) {
-      console.log(data);
       self.getAllPortlets();
     });
 
