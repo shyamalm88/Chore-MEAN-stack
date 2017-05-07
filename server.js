@@ -19,13 +19,14 @@ var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 io.on('connection', function(client) {
-    console.log('connected');
     client.on('updateCard', function(data) {
-        console.log(data);
         client.broadcast.emit('getCardDetails', 'card');
     });
+    client.on('updateCardModal', function(data) {
+        client.broadcast.emit('updateCardModal', data);
+    });
+
     client.on('disconnect', function() {
-        console.log('disconnect');
         client.broadcast.emit('getCardDetails', 'card');
     });
 });

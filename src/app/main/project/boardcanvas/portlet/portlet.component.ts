@@ -113,21 +113,11 @@ export class PortletComponent implements OnInit {
   portletUpdate(responseFromChild) {
     this.portletDataArray = responseFromChild;
     this.socket.emit('updateCard', 'message');
-    let self = this;
-    this.socket.on('getCardDetails', function (data) {
-      console.log(data);
-      self.getAllPortlets();
-    });
   }
 
   cardUpdate(responsefromCardChild) {
     this.portletDataArray = responsefromCardChild;
     this.socket.emit('updateCard', 'message');
-    let self = this;
-    this.socket.on('getCardDetails', function (data) {
-      console.log(data);
-      self.getAllPortlets();
-    });
   }
 
   /**
@@ -160,11 +150,6 @@ export class PortletComponent implements OnInit {
           this.updatePortletForm.reset();
           this.dropdown.close();
           this.socket.emit('updateCard', 'message');
-          let self = this;
-          this.socket.on('getCardDetails', function (data) {
-            console.log(data);
-            self.getAllPortlets();
-          });
         }
         );
     }
@@ -184,11 +169,6 @@ export class PortletComponent implements OnInit {
           formValue.reset();
           this.hideme(item);
           this.socket.emit('updateCard', 'message');
-          let self = this;
-          this.socket.on('getCardDetails', function (data) {
-            console.log(data);
-            self.getAllPortlets();
-          });
         }
         );
     }

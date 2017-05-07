@@ -10,7 +10,7 @@ import { Constant } from '../../../../../common/constant/constant';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ColorPickerService } from 'angular2-color-picker';
 import { AuthService } from '../../../../../common/services/auth.service';
-//import * as io from 'socket.io-client';
+import * as io from 'socket.io-client';
 
 const URL = '/api/cardImageUpload';
 
@@ -26,7 +26,7 @@ export class PortletModalComponent implements OnInit {
   @Output() cardUpdate = new EventEmitter();
   @ViewChild('commentAreaFocus') commentAreaFocus: ElementRef;
 
-  //public socket = io('http://localhost:8080/');
+  public socket = io('http://localhost:8080/');
   private viewLabel: Boolean = true;
   private addDescription: Boolean = false;
   private editLabelForm;
@@ -116,6 +116,8 @@ export class PortletModalComponent implements OnInit {
 
   }
 
+
+
   ngOnInit() {
     this.authService.userData.subscribe((userData) => {
       this.loggedInUserData = userData;
@@ -150,6 +152,16 @@ export class PortletModalComponent implements OnInit {
     });
     this.editCommentForm = this.fb.group({
       portletCardsComments: ['', Validators.required],
+    });
+
+
+    let self = this;
+    this.socket.on('updateCardModal', function (response) {
+      self.cardResponseBoard = response;
+      self.cardResponseBoard = self.cardResponseBoard.board.portlet;
+      self.zone.run(() => { // <== added
+        self.card = self.cardResponseBoard[self.portletIndex].portletCards[self.cardIndex];
+      });
     });
 
   }
@@ -201,6 +213,7 @@ export class PortletModalComponent implements OnInit {
           this.card.portletCardActivity = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardActivity;
         });
         //this.addCardImageForm.reset();
+        this.socket.emit('updateCardModal', response);
       }
       )
   }
@@ -235,6 +248,7 @@ export class PortletModalComponent implements OnInit {
           this.showFileUploader = false;
         });
         //this.addCardImageForm.reset();
+        this.socket.emit('updateCardModal', response);
       }
       )
 
@@ -266,7 +280,6 @@ export class PortletModalComponent implements OnInit {
         self.httpService.editData(Constant.API_ENDPOINT + 'edit/cards/' + id + '/portletCardsAttachments', imageData)
           .subscribe(
           (response): void => {
-            console.log(response);
             self.cardResponseBoard = response;
             self.cardResponseBoard = self.cardResponseBoard.board.portlet;
             self.cardUpdate.emit(self.cardResponseBoard);
@@ -276,6 +289,7 @@ export class PortletModalComponent implements OnInit {
               self.showFileUploader = false;
             });
             //self.addCardImageForm.reset();
+            self.socket.emit('updateCardModal', response);
           }
           )
       }, 100);
@@ -299,13 +313,6 @@ export class PortletModalComponent implements OnInit {
     this.zone.run(() => { // <== added
       this.card.portletCardActivity = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardActivity;
     });
-    var self = this;
-    // this.socket.on('card', function (data) {
-    //   console.log(data);
-    //   self.zone.run(() => { // <== added
-    //     this.card.portletCardActivity = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardActivity;
-    //   });
-    // });
   }
 
 
@@ -324,6 +331,7 @@ export class PortletModalComponent implements OnInit {
           this.card.portletCardActivity = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardActivity;
         });
         this.addCommentForm.controls['portletCardsComments'].reset();
+        this.socket.emit('updateCardModal', response);
       }
       )
 
@@ -362,6 +370,7 @@ export class PortletModalComponent implements OnInit {
           this.card.portletCardsComments = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardsComments;
           this.card.portletCardActivity = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardActivity;
         });
+        this.socket.emit('updateCardModal', response);
       }
       )
   }
@@ -379,6 +388,7 @@ export class PortletModalComponent implements OnInit {
           this.card.portletCardsComments = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardsComments;
           this.card.portletCardActivity = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardActivity;
         });
+        this.socket.emit('updateCardModal', response);
       }
       )
   }
@@ -391,19 +401,18 @@ export class PortletModalComponent implements OnInit {
     this.viewLabel = true;
     let data = this.editLabelForm.value;
     let id = portletCardId;
-    console.log(id);
     this.httpService.editData(Constant.API_ENDPOINT + 'edit/cards/' + id + '/portletCardName', data)
       .subscribe(
       (response): void => {
-        console.log(response);
         this.cardResponseBoard = response;
         this.cardResponseBoard = this.cardResponseBoard.board.portlet;
         this.cardUpdate.emit(this.cardResponseBoard);
         this.zone.run(() => { // <== added
           this.card.portletCardActivity = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardActivity;
         });
+        this.socket.emit('updateCardModal', response);
       }
-      )
+      );
   }
 
   addTagline() {
@@ -419,7 +428,6 @@ export class PortletModalComponent implements OnInit {
     this.httpService.editData(Constant.API_ENDPOINT + 'edit/cards/' + id + '/portletCardTagLine', data)
       .subscribe(
       (response): void => {
-        console.log(response);
         this.cardResponseBoard = response;
         this.cardResponseBoard = this.cardResponseBoard.board.portlet;
         this.cardUpdate.emit(this.cardResponseBoard);
@@ -427,6 +435,7 @@ export class PortletModalComponent implements OnInit {
         this.zone.run(() => { // <== added
           this.card.portletCardActivity = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardActivity;
         });
+        this.socket.emit('updateCardModal', response);
       }
       )
   }
@@ -435,7 +444,6 @@ export class PortletModalComponent implements OnInit {
     let id = portletCardId;
     let year; let month; let day;
     if (this.card.portletCardDueDate) {
-      console.log(this.card.portletCardDueDate);
       if (typeof (this.card.portletCardDueDate) === 'object' && this.card.portletCardDueDate !== null) {
         year = parseInt(this.card.portletCardDueDate.year, 10);
         month = parseInt(this.card.portletCardDueDate.month, 10) - 1;
@@ -443,10 +451,6 @@ export class PortletModalComponent implements OnInit {
         this.date = new Date(year, month, day);
       } else {
         const date = this.card.portletCardDueDate;
-        // console.log(date);
-        // year = date.getFullYear();
-        // month = date.getMonth();
-        // day = date.getDay();
         this.date = date;
       }
 
@@ -465,6 +469,7 @@ export class PortletModalComponent implements OnInit {
             this.zone.run(() => { // <== added
               this.card.portletCardActivity = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardActivity;
             });
+            this.socket.emit('updateCardModal', response);
           }
           )
       }
@@ -486,7 +491,6 @@ export class PortletModalComponent implements OnInit {
       this.httpService.editData(Constant.API_ENDPOINT + 'edit/cards/' + id + '/portletCardsDescription', data)
         .subscribe(
         (response): void => {
-          console.log(response);
           this.cardResponseBoard = response;
           this.cardResponseBoard = this.cardResponseBoard.board.portlet;
           this.cardUpdate.emit(this.cardResponseBoard);
@@ -494,6 +498,7 @@ export class PortletModalComponent implements OnInit {
           this.zone.run(() => { // <== added
             this.card.portletCardActivity = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardActivity;
           });
+          this.socket.emit('updateCardModal', response);
         }
         )
 
