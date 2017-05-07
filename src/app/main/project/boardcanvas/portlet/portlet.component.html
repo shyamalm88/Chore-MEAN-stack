@@ -20,13 +20,13 @@
                     <div class="faicons" title="This card has a description." *ngIf="card.portletCardsDescription"><span class="badge-icon fa fa-align-left"></span></div>
                     <div class="faicons" title="Attachments" *ngIf="card.portletCardsAttachments.length > 0"><span class="badge-icon fa fa-paperclip"></span><span class="badge-text"> {{card.portletCardsAttachments.length}}</span></div>
                     <div class="faicons" title="comments" *ngIf="card.portletCardsComments.length > 0"><span class="badge-icon fa fa-comment"></span><span class="badge-text"> {{card.portletCardsComments.length}}</span></div>
-                    <div class="faicons" title="checklist"><span class="badge-icon fa fa-check-square-o"></span><span class="badge-text"> 1</span></div>
+                    <div class="faicons" *ngIf="card.portletCardsTodo.length > 0" title="checklist"><span class="badge-icon fa fa-check-square-o"></span><span class="badge-text"> {{card.portletCardsTodo.length}}</span></div>
+                    <div class="faicons" title="checklist"><span class="badge-text">&nbsp;</span></div>
                 </div>
                 <div class="colorLable">
                     <span class="bg-green-light"></span>
                 </div>
                 <chore-portlet-assined></chore-portlet-assined>
-                <!--{{card | json}}-->
                 <template #content let-c="close" let-d="dismiss">
                     <a class="fa fa-lg ion-close dialog-close-button" href="javascript:void(0)" (click)="d('Cross click')"></a>
                     <chore-portlet-modal [card]="card" [portletIndex]="portletIndex" [cardIndex]="cardIndex" (cardUpdate)="cardUpdate($event)"></chore-portlet-modal>
