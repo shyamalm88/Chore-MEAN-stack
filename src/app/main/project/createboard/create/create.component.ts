@@ -74,18 +74,11 @@ export class CreateBoardComponent implements OnInit {
     this.getAllTeams();
     this.dataSet = this.boardData;
     this.socket.on('connect', function () {
-      //console.log('connect');
-    });
-    // let self = this;
-    // this.socket.on('getBoard', function (data) {
-    //   self.getAllData();
-    // });
 
-    //console.log(this.dataSet);
+    });
   }
 
   onSelected(value: boolean) {
-    //console.log(value);
     this.selectedValue = value; // value
   }
 
@@ -95,7 +88,6 @@ export class CreateBoardComponent implements OnInit {
       data = JSON.parse(data.response);
       this.uploadFile = data;
       this.fileName = this.uploadFile.originalname;
-      //console.log(this.uploadFile);
     }
 
   }
@@ -112,12 +104,10 @@ export class CreateBoardComponent implements OnInit {
           this.getAllData();  // for getting all board data;
           this.dismissModal(modal); // dismissing modal
           this.showSuccessMessage(); // creating success message
-          //console.log(this.boardData);
           this.socket.emit('updateBoard', 'board');
         },
         (err): void => {            //error catching method
           this.showErrorMessage(); //show error message
-          //console.log(err);
         },
       );
     } else {
@@ -140,7 +130,6 @@ export class CreateBoardComponent implements OnInit {
       };
     }).value();
 
-    //console.log(this.grouped);
   }
 
 
@@ -161,7 +150,6 @@ export class CreateBoardComponent implements OnInit {
       .subscribe(
       (data): void => {
         this.teamSet = data;
-        //console.log(this.teamSet);
       }
       );
   }
