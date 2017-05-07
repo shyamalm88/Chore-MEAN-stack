@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit, Input, ViewChild, NgZone } from '@angular/core';
 import { DragulaService } from 'ng2-dragula/ng2-dragula';
 import { NgbModal, ModalDismissReasons, NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
 import { Constant } from '../../../../common/constant/constant';
@@ -6,6 +6,7 @@ import { HttpService } from '../../../../common/services/http.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Response } from '@angular/http';
+import * as io from 'socket.io-client';
 
 
 @Component({
@@ -19,6 +20,7 @@ export class PortletComponent implements OnInit {
   @ViewChild(NgbDropdown)
   private dropdown: NgbDropdown;
 
+  public socket = io('http://localhost:8080/');
 
   private portletData;
   private boardIndex;
@@ -33,6 +35,7 @@ export class PortletComponent implements OnInit {
     private httpService: HttpService,
     private activatedRoute: ActivatedRoute,
     public fb: FormBuilder,
+    private zone: NgZone,
 
   ) {
 
@@ -88,7 +91,17 @@ export class PortletComponent implements OnInit {
       this.boardIndex = params['boardid'];
     });
     this.getAllPortlets();
+    var self = this;
+    this.socket.on('connect', function () {
+      console.log('connect');
+    });
+    this.socket.on('getCardDetails', function (data) {
+      console.log(data);
+      self.getAllPortlets();
+    });
+
   }
+
 
 
 
@@ -99,10 +112,12 @@ export class PortletComponent implements OnInit {
    */
   portletUpdate(responseFromChild) {
     this.portletDataArray = responseFromChild;
+    this.socket.emit('updateCard', 'message');
   }
 
   cardUpdate(responsefromCardChild) {
     this.portletDataArray = responsefromCardChild;
+    this.socket.emit('updateCard', 'message');
   }
 
   /**
@@ -134,6 +149,7 @@ export class PortletComponent implements OnInit {
           console.log(this.portletDataArray);
           this.updatePortletForm.reset();
           this.dropdown.close();
+          this.socket.emit('updateCard', 'message');
         }
         );
     }
@@ -152,6 +168,7 @@ export class PortletComponent implements OnInit {
           this.portletDataArray = this.portletData.board.portlet;
           formValue.reset();
           this.hideme(item);
+          this.socket.emit('updateCard', 'message');
         }
         );
     }
@@ -164,7 +181,7 @@ export class PortletComponent implements OnInit {
   }
 
   //modal open
-  open(content) {
+  openModal(content) {
     this.modalService.open(content)
   }
 

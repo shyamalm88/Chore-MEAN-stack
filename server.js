@@ -2,7 +2,7 @@ var express = require('express');
 var mongoose = require('mongoose');
 var passport = require('passport');
 var favicon = require('serve-favicon');
-var logger = require('morgan');
+//var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
@@ -16,11 +16,24 @@ var router = express.Router();
 
 
 var app = express();
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
+io.on('connection', function(client) {
+    client.on('updateCard', function(data) {
+        client.broadcast.emit('getCardDetails', 'card');
+    });
+    client.on('updateCardModal', function(data) {
+        client.broadcast.emit('updateCardModal', data);
+    });
 
+    client.on('disconnect', function() {
+        client.broadcast.emit('getCardDetails', 'card');
+    });
+});
 
 
 // app usage codes
-app.use(logger('dev'));
+//app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
@@ -116,6 +129,9 @@ mongoose.connect(configDB.url);
 
 
 var port = process.env.PORT || 8080;
-app.listen(port, function() {
+// app.listen(port, function() {
+//     console.log('Server up: http://localhost:' + port);
+// });
+server.listen(port, function() {
     console.log('Server up: http://localhost:' + port);
 });

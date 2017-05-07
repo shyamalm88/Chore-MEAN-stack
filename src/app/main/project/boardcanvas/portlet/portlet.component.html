@@ -14,7 +14,7 @@
             <div class="portletAddIns" *ngIf="item.portletCards.length <= 0">
                 Please Add a card
             </div>
-            <div class="portlet-body" (click)="open(content)" *ngFor="let card of item.portletCards; let cardIndex = index" [attr.data-card-id]="card.portletCardId" [attr.data-portlet-id]="item.portletId">
+            <div class="portlet-body" (click)="openModal(content)" *ngFor="let card of item.portletCards; let cardIndex = index" [attr.data-card-id]="card.portletCardId" [attr.data-portlet-id]="item.portletId">
                 <chore-portlet-card-label [card]="card"></chore-portlet-card-label>
                 <div class="js-badges">
                     <div class="faicons" title="This card has a description." *ngIf="card.portletCardsDescription"><span class="badge-icon fa fa-align-left"></span></div>
@@ -26,6 +26,7 @@
                     <span class="bg-green-light"></span>
                 </div>
                 <chore-portlet-assined></chore-portlet-assined>
+                <!--{{card | json}}-->
                 <template #content let-c="close" let-d="dismiss">
                     <a class="fa fa-lg ion-close dialog-close-button" href="javascript:void(0)" (click)="d('Cross click')"></a>
                     <chore-portlet-modal [card]="card" [portletIndex]="portletIndex" [cardIndex]="cardIndex" (cardUpdate)="cardUpdate($event)"></chore-portlet-modal>
@@ -57,7 +58,7 @@
             <form [formGroup]="updatePortletForm" (ngSubmit)="addPortlet(boardIndex)">
                 <div class="form-group m-b-0">
                     <label class="control-label sr-only" for="Name">Add a Portlet</label>
-                    <input id="Name" name="Name" type="text" placeholder="Add a Portlet" class="form-control input-md textboxchange" formControlName="portletname" focus="true">
+                    <input id="Name" name="Name" type="text" placeholder="Add a Portlet" class="form-control input-md textboxchange" formControlName="portletname" focus="true" autocomplete="off">
                     <button class="btn btn-teal m-t-10 v-m i-b" type="submit">Add</button>
                     <a href="#" class="icon-sm ion-close m-l-10 v-m i-b m-t-10" (click)="$event.stopPropagation(); $event.preventDefault(); portletAddDrop.close();"></a>
                 </div>

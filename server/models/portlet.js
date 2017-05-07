@@ -1,6 +1,7 @@
 var express = require('express');
 var mongoose = require('mongoose');
 var router = express.Router();
+var logger = require('morgan');
 var cloudinary = require('cloudinary');
 var multer = require('multer');
 var fs = require('fs');
@@ -20,6 +21,10 @@ cloudinary.config({
 
 
 var app = express();
+
+
+
+
 
 
 app.use(function(req, res, next) {

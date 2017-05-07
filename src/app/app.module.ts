@@ -11,6 +11,7 @@ import { FocusModule } from 'angular2-focus';
 import { DragulaModule } from 'ng2-dragula/ng2-dragula';
 import { SelectModule } from 'ng2-select';
 import * as _ from 'underscore';
+// import * as io from 'socket.io-client';
 import {ColorPickerModule} from 'angular2-color-picker';
 
 //import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-upload/ng2-file-upload';
