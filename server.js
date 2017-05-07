@@ -25,6 +25,9 @@ io.on('connection', function(client) {
     client.on('updateCardModal', function(data) {
         client.broadcast.emit('updateCardModal', data);
     });
+    client.on('updateBoard', function(data) {
+        client.broadcast.emit('getBoard', data);
+    });
 
     client.on('disconnect', function() {
         client.broadcast.emit('getCardDetails', 'card');

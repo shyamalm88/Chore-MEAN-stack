@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs/Rx';
 import { HttpService } from '../../../common/services/http.service';
 import { Constant } from '../../../common/constant/constant';
 import { AuthService } from '../../../common/services/auth.service';
-
+import * as io from 'socket.io-client';
 
 @Component({
     selector: 'create-edit-board',
@@ -13,6 +13,8 @@ import { AuthService } from '../../../common/services/auth.service';
     encapsulation: ViewEncapsulation.None
 })
 export class CreateEditBoardComponent implements OnInit {
+
+    public socket = io('http://localhost:8080/');
     private currentUserData;
     private boardData;
     private grouped = [];
@@ -29,6 +31,10 @@ export class CreateEditBoardComponent implements OnInit {
 
         });
         this.getAllData();
+        let self = this;
+        this.socket.on('getBoard', function (data) {
+            self.getAllData();
+        });
     }
 
     getAllData() {
