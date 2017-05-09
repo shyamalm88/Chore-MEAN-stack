@@ -2,9 +2,14 @@
 
     <div class="portlet">
         <div class="portlet-heading bg-teal">
-            <h3 class="portlet-title">
+            <h3 class="portlet-title" (click)="showNameForm(item.portletName)" *ngIf="!viewName">
                 {{item.portletName}}
             </h3>
+            <div class="pull-left nameForm" *ngIf="viewName">
+                <form [formGroup]="changeCardName">
+                    <input type="text" class="form-control input-sm" formControlName="cardName" [(ngModel)]="item.portletName" focus="true" autofocus (blur)="hideNameForm(item.portletId)">
+                </form>
+            </div>
             <div class="portlet-widgets">
                 <chore-portlet-actions [portlet]="item" (portletUpdate)="portletUpdate($event)"></chore-portlet-actions>
             </div>

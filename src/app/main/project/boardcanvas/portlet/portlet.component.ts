@@ -22,6 +22,7 @@ export class PortletComponent implements OnInit {
 
   public socket = io('http://localhost:8080/');
   private date;
+  private changeCardName;
   private dueDateForm;
   private diffDays;
   private portletData;
@@ -29,6 +30,8 @@ export class PortletComponent implements OnInit {
   private portletDataArray;
   public updatePortletForm;
   public cardCreateForm;
+  private cardNamePrevValue;
+  private viewName;
 
   constructor(
     private dragulaService: DragulaService,
@@ -104,6 +107,10 @@ export class PortletComponent implements OnInit {
     this.dueDateForm = this.fb.group({
       duedate: ['']
     });
+
+    this.changeCardName = this.fb.group({
+      cardName: ['', Validators.required]
+    });
   }
 
   onDateChange(portletCardDueDate) {
@@ -125,6 +132,31 @@ export class PortletComponent implements OnInit {
       const timeDiff = this.date.getTime() - new Date().getTime();
       this.diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
     }
+  }
+
+  showNameForm(cardName) {
+    this.viewName = true;
+    this.cardNamePrevValue = cardName
+    console.log(this.cardNamePrevValue)
+  }
+
+  hideNameForm(portletId) {
+    console.log(portletId);
+    if (this.changeCardName.valid) {
+        this.httpService.editData(Constant.API_ENDPOINT + 'edit/portlet/' + portletId + '/edit', this.changeCardName.value)
+            .subscribe(
+            (response): void => {
+                this.portletData = response;
+                console.log(this.portletData);
+                this.portletDataArray = this.portletData.board.portlet;
+                this.socket.emit('updateCard', 'message');
+            }
+            );
+    } else {
+      this.changeCardName.controls['cardName'].setValue(this.cardNamePrevValue);
+    }
+    this.viewName = false;
+
   }
 
 

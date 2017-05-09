@@ -30,7 +30,7 @@ export class PortletActionsComponent implements OnInit {
 
     deleteCard(event, portletID) {
         event.preventDefault();
-        this.httpService.editData(Constant.API_ENDPOINT + 'edit/portlet/' + portletID, this.portletId)
+        this.httpService.editData(Constant.API_ENDPOINT + 'edit/portlet/' + portletID + '/delete', this.portletId)
             .subscribe(
             (response): void => {
                 this.portletData = response;
