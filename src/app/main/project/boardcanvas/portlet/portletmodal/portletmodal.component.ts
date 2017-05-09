@@ -60,6 +60,7 @@ export class PortletModalComponent implements OnInit {
   private showFileUploader: Boolean;
   private showLoading: boolean = true;
   private color: string = "#127bdc";
+  private portletCardPrevName;
 
   uploadFile: any; // uploadFile
   postId: number; // postId assign for the cover image post
@@ -305,14 +306,41 @@ export class PortletModalComponent implements OnInit {
   /**
    * Modal label Edit function
    */
-  editLabel() {
+  editLabel(portletCardName) {
     this.viewLabel = false;
+    this.portletCardPrevName = portletCardName;
     this.editLabelForm = this.fb.group({
       portletCardName: [this.card.portletCardName, Validators.required]
     });
     this.zone.run(() => { // <== added
       this.card.portletCardActivity = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardActivity;
     });
+  }
+  /**
+   * Modal label save function
+   */
+  hideLabel(portletCardId) {
+    this.viewLabel = true;
+    if (this.editLabelForm.valid) {
+      this.viewLabel = true;
+      let data = this.editLabelForm.value;
+      let id = portletCardId;
+      this.httpService.editData(Constant.API_ENDPOINT + 'edit/cards/' + id + '/portletCardName', data)
+        .subscribe(
+        (response): void => {
+          this.cardResponseBoard = response;
+          this.cardResponseBoard = this.cardResponseBoard.board.portlet;
+          this.cardUpdate.emit(this.cardResponseBoard);
+          this.zone.run(() => { // <== added
+            this.card.portletCardActivity = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardActivity;
+          });
+          this.socket.emit('updateCardModal', response);
+        }
+        );
+    } else {
+      this.editLabelForm.controls['portletCardName'].setValue(this.portletCardPrevName);
+    }
+
   }
 
 
@@ -394,26 +422,7 @@ export class PortletModalComponent implements OnInit {
   }
 
 
-  /**
-   * Modal label save function
-   */
-  editDoneLabel(portletCardId) {
-    this.viewLabel = true;
-    let data = this.editLabelForm.value;
-    let id = portletCardId;
-    this.httpService.editData(Constant.API_ENDPOINT + 'edit/cards/' + id + '/portletCardName', data)
-      .subscribe(
-      (response): void => {
-        this.cardResponseBoard = response;
-        this.cardResponseBoard = this.cardResponseBoard.board.portlet;
-        this.cardUpdate.emit(this.cardResponseBoard);
-        this.zone.run(() => { // <== added
-          this.card.portletCardActivity = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardActivity;
-        });
-        this.socket.emit('updateCardModal', response);
-      }
-      );
-  }
+
 
   addTagline() {
     this.editAddTagLineVisible = !this.editAddTagLineVisible;

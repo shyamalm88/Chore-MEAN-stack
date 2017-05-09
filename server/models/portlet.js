@@ -120,26 +120,47 @@ app.route('/portlet/:index')
     });
 
 
-app.route('/edit/portlet/:portletId')
+app.route('/edit/portlet/:portletId/:action')
     .put(function(req, res) {
         Board.findOne({ 'portlet.portletId': req.params.portletId }, function(err, result) {
             var responseResult = result;
             var pName = '';
-            responseResult.portlet.forEach(function(element) {
-                if (element.portletId === req.params.portletId) {
-                    pName = element.portletName;
-                    var index = result.portlet.indexOf(element);
-                    responseResult.portlet.splice(index, 1);
-                }
-            });
-            responseResult.boardActivity.push({
-                activity: ['Deleted Portlet named "' + pName + '"'],
-                boardUpdatedyName: responseResult.created_byName,
-                boardUpdatedBy: responseResult.created_by,
-                boardOperation: 'Delete Portlet',
-                boardId: responseResult.boardId,
-                boardOperationOn: new Date(),
-            })
+            if (req.params.action === 'edit') {
+                responseResult.portlet.forEach(function(element) {
+                    if (element.portletId === req.params.portletId) {
+                        pName = req.body.cardName;
+                        element.portletName = req.body.cardName;
+                    }
+                });
+            } else {
+                responseResult.portlet.forEach(function(element) {
+                    if (element.portletId === req.params.portletId) {
+                        pName = element.portletName;
+                        var index = result.portlet.indexOf(element);
+                        responseResult.portlet.splice(index, 1);
+                    }
+                });
+            }
+            if (req.params.action === 'edit') {
+                responseResult.boardActivity.push({
+                    activity: ['Changed Portlet name into "' + pName + '"'],
+                    boardUpdatedyName: responseResult.created_byName,
+                    boardUpdatedBy: responseResult.created_by,
+                    boardOperation: 'Delete Portlet',
+                    boardId: responseResult.boardId,
+                    boardOperationOn: new Date(),
+                })
+            } else {
+                responseResult.boardActivity.push({
+                    activity: ['Deleted Portlet named "' + pName + '"'],
+                    boardUpdatedyName: responseResult.created_byName,
+                    boardUpdatedBy: responseResult.created_by,
+                    boardOperation: 'Delete Portlet',
+                    boardId: responseResult.boardId,
+                    boardOperationOn: new Date(),
+                })
+            }
+            responseResult.markModified('portlet');
             responseResult.save(function(err, result) {
                 if (err) throw err;
                 res.json({
@@ -417,7 +438,7 @@ app.route('/edit/cards/:portletId/:editField')
                                 card.portletCardUpdatedOn = new Date();
                                 card.portletCardActivity.push({
                                     "portletCardId": card.portletCardId,
-                                    "activity": ['Added New Attachment "<a target="_blank" href="' + req.body.cardAttachmentUrl + '">' + req.body.cardAttachmentId + '</a>"'],
+                                    "activity": ['Added New Attachment "' + req.body.cardAttachmentId + '"'],
                                     "portletCardCreatedBy": result.created_by,
                                     "portletCardCreatedByName": result.created_byName,
                                     "portletCardOperation": 'Added Attachment',

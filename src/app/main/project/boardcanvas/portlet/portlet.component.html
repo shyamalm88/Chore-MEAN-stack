@@ -2,9 +2,14 @@
 
     <div class="portlet">
         <div class="portlet-heading bg-teal">
-            <h3 class="portlet-title">
+            <h3 class="portlet-title" (click)="showNameForm(item.portletName)" *ngIf="!viewName">
                 {{item.portletName}}
             </h3>
+            <div class="pull-left nameForm" *ngIf="viewName">
+                <form [formGroup]="changeCardName">
+                    <input type="text" class="form-control input-sm" formControlName="cardName" [(ngModel)]="item.portletName" focus="true" autofocus (blur)="hideNameForm(item.portletId)">
+                </form>
+            </div>
             <div class="portlet-widgets">
                 <chore-portlet-actions [portlet]="item" (portletUpdate)="portletUpdate($event)"></chore-portlet-actions>
             </div>
@@ -20,13 +25,21 @@
                     <div class="faicons" title="This card has a description." *ngIf="card.portletCardsDescription"><span class="badge-icon fa fa-align-left"></span></div>
                     <div class="faicons" title="Attachments" *ngIf="card.portletCardsAttachments.length > 0"><span class="badge-icon fa fa-paperclip"></span><span class="badge-text"> {{card.portletCardsAttachments.length}}</span></div>
                     <div class="faicons" title="comments" *ngIf="card.portletCardsComments.length > 0"><span class="badge-icon fa fa-comment"></span><span class="badge-text"> {{card.portletCardsComments.length}}</span></div>
-                    <div class="faicons" title="checklist"><span class="badge-icon fa fa-check-square-o"></span><span class="badge-text"> 1</span></div>
+                    <div class="faicons" *ngIf="card.portletCardsTodo.length > 0" title="checklist"><span class="badge-icon fa fa-check-square-o"></span><span class="badge-text"> {{card.portletCardsTodo.length}}</span></div>
+                    <div class="faicons" *ngIf="card.portletCardDueDate">
+                        <span class="btn btn-default btn-xs" [ngClass]="{'btn-success': diffDays >= 0, 'btn-danger' : diffDays < 0}"><span><i class="fa fa-clock-o"></i> {{date | date}}</span>
+                        <form [formGroup]="dueDateForm">
+                            <input class="form-control" formControlName="duedate" placeholder="yyyy-mm-dd" type="hidden" [(ngModel)]="card.portletCardDueDate" (ngModelChange)="onDateChange(card.portletCardDueDate)">
+
+                        </form>
+                        </span>
+                    </div>
+                    <div class="faicons" title="checklist"><span class="badge-text">&nbsp;</span></div>
                 </div>
                 <div class="colorLable">
                     <span class="bg-green-light"></span>
                 </div>
                 <chore-portlet-assined></chore-portlet-assined>
-                <!--{{card | json}}-->
                 <template #content let-c="close" let-d="dismiss">
                     <a class="fa fa-lg ion-close dialog-close-button" href="javascript:void(0)" (click)="d('Cross click')"></a>
                     <chore-portlet-modal [card]="card" [portletIndex]="portletIndex" [cardIndex]="cardIndex" (cardUpdate)="cardUpdate($event)"></chore-portlet-modal>

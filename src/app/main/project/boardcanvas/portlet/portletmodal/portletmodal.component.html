@@ -5,10 +5,10 @@
         <div class="window-header ">
             <span class="window-header-icon fa fa-2x fa-file-text-o"></span>
             <div class="window-title">
-                <h2 class="card-detail-title-assist" dir="auto" *ngIf="viewLabel" (click)="editLabel()">{{card.portletCardName}}</h2>
+                <h2 class="card-detail-title-assist" dir="auto" *ngIf="viewLabel" (click)="editLabel(card.portletCardName)">{{card.portletCardName}}</h2>
                 <form [formGroup]="editLabelForm" *ngIf="!viewLabel">
-                    <input type="text" formControlName="portletCardName" [(ngModel)]="card.portletCardName" autofocus class="editModalTextBox v-m" focus="true">
-                    <button type="button" class="btn btn-teal v-m" [disabled]="!editLabelForm.valid" (click)="editDoneLabel(card.portletCardId)">Save</button>
+                    <input type="text" formControlName="portletCardName" [(ngModel)]="card.portletCardName" autofocus class="editModalTextBox v-m" focus="true" (blur)="hideLabel(card.portletCardId)">
+
                 </form>
             </div>
             <div class="window-header-inline-content quiet js-current-list ">
