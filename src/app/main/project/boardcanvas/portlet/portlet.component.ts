@@ -21,7 +21,9 @@ export class PortletComponent implements OnInit {
   private dropdown: NgbDropdown;
 
   public socket = io('http://localhost:8080/');
-
+  private date;
+  private dueDateForm;
+  private diffDays;
   private portletData;
   private boardIndex;
   private portletDataArray;
@@ -99,9 +101,31 @@ export class PortletComponent implements OnInit {
       self.getAllPortlets();
     });
 
+    this.dueDateForm = this.fb.group({
+      duedate: ['']
+    });
   }
 
-
+  onDateChange(portletCardDueDate) {
+    console.log(portletCardDueDate)
+    let year; let month; let day;
+    if (portletCardDueDate) {
+      if (typeof (portletCardDueDate) === 'object' && portletCardDueDate !== null) {
+        year = parseInt(portletCardDueDate.year, 10);
+        month = parseInt(portletCardDueDate.month, 10) - 1;
+        day = parseInt(portletCardDueDate.day, 10);
+        this.date = new Date(year, month, day);
+        console.log(this.date)
+      } else {
+        const date = portletCardDueDate;
+        this.date = date;
+        console.log(this.date)
+      }
+      this.date = new Date(this.date);
+      const timeDiff = this.date.getTime() - new Date().getTime();
+      this.diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+    }
+  }
 
 
   /**

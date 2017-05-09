@@ -417,7 +417,7 @@ app.route('/edit/cards/:portletId/:editField')
                                 card.portletCardUpdatedOn = new Date();
                                 card.portletCardActivity.push({
                                     "portletCardId": card.portletCardId,
-                                    "activity": ['Added New Attachment "<a target="_blank" href="' + req.body.cardAttachmentUrl + '">' + req.body.cardAttachmentId + '</a>"'],
+                                    "activity": ['Added New Attachment "' + req.body.cardAttachmentId + '"'],
                                     "portletCardCreatedBy": result.created_by,
                                     "portletCardCreatedByName": result.created_byName,
                                     "portletCardOperation": 'Added Attachment',

@@ -21,6 +21,14 @@
                     <div class="faicons" title="Attachments" *ngIf="card.portletCardsAttachments.length > 0"><span class="badge-icon fa fa-paperclip"></span><span class="badge-text"> {{card.portletCardsAttachments.length}}</span></div>
                     <div class="faicons" title="comments" *ngIf="card.portletCardsComments.length > 0"><span class="badge-icon fa fa-comment"></span><span class="badge-text"> {{card.portletCardsComments.length}}</span></div>
                     <div class="faicons" *ngIf="card.portletCardsTodo.length > 0" title="checklist"><span class="badge-icon fa fa-check-square-o"></span><span class="badge-text"> {{card.portletCardsTodo.length}}</span></div>
+                    <div class="faicons" *ngIf="card.portletCardDueDate">
+                        <span class="btn btn-default btn-xs" [ngClass]="{'btn-success': diffDays >= 0, 'btn-danger' : diffDays < 0}"><span><i class="fa fa-clock-o"></i> {{date | date}}</span>
+                        <form [formGroup]="dueDateForm">
+                            <input class="form-control" formControlName="duedate" placeholder="yyyy-mm-dd" type="hidden" [(ngModel)]="card.portletCardDueDate" (ngModelChange)="onDateChange(card.portletCardDueDate)">
+
+                        </form>
+                        </span>
+                    </div>
                     <div class="faicons" title="checklist"><span class="badge-text">&nbsp;</span></div>
                 </div>
                 <div class="colorLable">
