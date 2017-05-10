@@ -5,7 +5,29 @@
                 {{board.name}}
             </h3>
             <div class="portlet-widgets">
-                <a href="#" data-toggle="remove"><i class="ion-close-round"></i></a>
+                <a href="javascript:void(0)" ngbDropdown data-toggle="remove" ngbDropdownToggle><i class="ion-close-round"></i></a>
+                <div class="pop-over dropdown-menu" style="right:-10px;left:auto; top: 20px;">
+                    <div data-reactroot="">
+                        <div class="pop-over-header"><span class="pop-over-header-title">Are you ABSOLUTELY sure?</span>
+                        </div>
+                        <div class="facebox-alert" data-facebox-id="facebox-description" id="facebox-description">
+                            Unexpected bad things will happen if you don’t read this!
+                        </div>
+                        <div>
+                            <div class="popover-content">
+                                <div>
+                                    <div class="quiet">
+                                        <p>This action CANNOT be undone. This will permanently delete the board. Please type in the name of the board to confirm.</p>
+                                        <form [formGroup]="deleteBoard" class="form-group">
+                                            <input type="text" class="form-control input-sm" formControlName="deleteBoardName" (focus)="confirmBoardName(board.name)">
+                                        </form>
+                                        <button type="button" (click)="delBoard(board._id)" class="btn btn-sm btn-block btn-danger" [disabled]="!deleteBoard.valid">Delete Board</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="clearfix"></div>
         </div>
@@ -28,7 +50,6 @@
         {{success}}
       </div>
       <div class="alert alert-danger" *ngIf="error">
-
         {{error}}
       </div>
       <form [formGroup]="updateBoardForm" (ngSubmit)="updateBoard($event, d)">
@@ -40,7 +61,7 @@
           </div>
           <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
             <input class="form-control input-sm" [(ngModel)]="board.name" formControlName="name" id="name" name="name" placeholder="Board Name"
-              type="text" />
+              type="text" (blur)="nameUpdate(board.name)" (focus)="getPrevValue(board.name)"/>
               <input class="form-control input-sm" [(ngModel)]="board.boardId" formControlName="boardId" id="boardId" name="boardId" placeholder="Board Id"
               type="hidden" />
           </div>
@@ -114,7 +135,7 @@
         </div>
         <div class="form-group">
           <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-md-push-4">
-            <button class="btn btn-teal" name="submit" type="submit">
+            <button class="btn btn-teal" name="submit" type="submit" [disabled]="!updateBoardForm.valid">
                             Save
                         </button>
 

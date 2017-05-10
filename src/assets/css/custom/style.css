@@ -740,6 +740,20 @@ h6 {
   font-family: Lato, sans-serif;
 }
 
+.facebox-alert {
+  color: #735c0f;
+  background-color: #ffea7f;
+  border-color: rgba(176, 136, 0, 0.3);
+}
+
+.facebox-alert,
+.facebox-danger {
+  padding: 10px 15px;
+  border-style: solid;
+  border-width: 1px 0;
+  line-height: normal;
+}
+
 .list-card-operation {
   background-color: #eee;
   background-clip: padding-box;
@@ -1306,6 +1320,10 @@ hr {
 }
 .quiet a {
   color: #8c8c8c;
+}
+
+.popover-content p {
+  line-height: normal;
 }
 
 .attachment-thumbnail-details {
