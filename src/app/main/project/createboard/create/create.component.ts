@@ -76,6 +76,10 @@ export class CreateBoardComponent implements OnInit {
     this.socket.on('connect', function () {
 
     });
+    let self = this;
+    this.socket.on('getCardDetails', function (data) {
+      self.getAllData();
+    });
   }
 
   onSelected(value: boolean) {
@@ -132,7 +136,13 @@ export class CreateBoardComponent implements OnInit {
 
   }
 
+  boardUpdate(responseFromChild) {
+    if(responseFromChild === 'loadAllData'){
+      this.getAllData();
+      this.socket.emit('updateCard', 'message');
+    }
 
+  }
   // for getting all board data
   getAllData() {
     this.httpService.getData(Constant.API_ENDPOINT + 'board')

@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, OnInit, OnChanges, Input } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { HttpService } from '../../../../common/services/http.service';
@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs/Rx';
 import { Constant } from '../../../../common/constant/constant';
 import { Router } from '@angular/router';
 import * as _ from 'underscore';
+import * as io from 'socket.io-client';
 
 @Component({
     selector: 'chore-list-board',
@@ -21,6 +22,7 @@ import * as _ from 'underscore';
  * =============================================
  */
 export class ListBoardComponent implements OnInit {
+    public socket = io('http://localhost:8080/');
     public boardDisplayData;
     private success;
     private error;
@@ -33,6 +35,9 @@ export class ListBoardComponent implements OnInit {
     private imageDisplay: Boolean = true;
     private coverImageUrl;
     private BoardUID;
+    private name;
+    private deleteName;
+    public deleteBoard;
     uploadFile: any; // uploadFile
     postId: number; // postId assign for the cover image post
     options: Object = {
@@ -42,6 +47,8 @@ export class ListBoardComponent implements OnInit {
     };
 
     @Input() displayData: any;
+    @Output() boardUpdate = new EventEmitter();
+
 
     /**
      * =============================================
@@ -66,7 +73,11 @@ export class ListBoardComponent implements OnInit {
         this.getAllTeams();
         this.imageDisplay = true;
         this.imageUploadDisplay = false;
+        this.deleteBoard = this.fb.group({
+            deleteBoardName: ['', Validators.required],
+        });
     }
+
 
     onSelected(value: boolean) {
         //console.log(value);
@@ -168,6 +179,34 @@ export class ListBoardComponent implements OnInit {
             modal('Cross click');
         }, 1500);
 
+    }
+
+    getPrevValue(name) {
+        this.name = name;
+    }
+
+    nameUpdate(name) {
+        if (name === '' || name === ' ') {
+            this.updateBoardForm.controls['name'].setValue(this.name);
+        }
+    }
+
+    confirmBoardName(boardName) {
+        this.deleteName = boardName.toLowerCase();
+    }
+
+    delBoard(_id) {
+        console.log(_id);
+        console.log(this.deleteBoard.value);
+        console.log(this.deleteName);
+        if ((this.deleteBoard.controls['deleteBoardName'].value).toLowerCase() === this.deleteName) {
+            this.httpService.deleteData(Constant.API_ENDPOINT + 'board/' + _id)
+                .subscribe(
+                (response) => {
+                    this.boardUpdate.emit('loadAllData');
+                }
+                );
+        }
     }
 
     navigateToBoard(id, name) {

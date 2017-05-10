@@ -1077,6 +1077,20 @@ h6 {
     }
 }
 
+.facebox-alert {
+    color: #735c0f;
+    background-color: #ffea7f;
+    border-color: rgba(176, 136, 0, 0.3);
+}
+
+.facebox-alert,
+.facebox-danger {
+    padding: 10px 15px;
+    border-style: solid;
+    border-width: 1px 0;
+    line-height: normal;
+}
+
 .list-card-operation {
     background-color: $color_gallery_approx;
     //Instead of the line below you could use @include background-clip($clip)
@@ -1672,6 +1686,12 @@ hr {
     color: $color_stack_approx;
     a {
         color: $color_stack_approx;
+    }
+}
+
+.popover-content {
+    p {
+        line-height: normal;
     }
 }
 

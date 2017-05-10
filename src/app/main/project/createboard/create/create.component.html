@@ -13,7 +13,7 @@
 </div>
 
 
-<chore-list-board [displayData]="dataSet"></chore-list-board>
+<chore-list-board [displayData]="dataSet" (boardUpdate)="boardUpdate($event)"></chore-list-board>
 
 
 <template #content let-c="close" let-d="dismiss">
