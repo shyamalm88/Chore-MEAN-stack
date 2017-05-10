@@ -203,7 +203,8 @@ export class ListBoardComponent implements OnInit {
             this.httpService.deleteData(Constant.API_ENDPOINT + 'board/' + _id)
                 .subscribe(
                 (response) => {
-                    this.boardUpdate.emit('loadAllData');
+                    //emit data
+                    this.boardUpdate.emit('loadAllData')
                 }
                 );
         }
