@@ -34,23 +34,46 @@
                         <a class="card-detail-item-add-button dark-hover js-details-edit-members "><span class="fa fa-lg ion-android-add "></span></a> <span class="clearfix"></span>
                     </div>
                 </div>
-                <div class="card-detail-item card-detail-item-labels u-clearfix js-card-detail-labels ">
+                <div class="card-detail-item-labels u-clearfix">
                     <h3 class="card-detail-item-header "><i class="fa fa-bookmark"></i> Labels</h3>
-
                 </div>
-                <div class="col-md-5">
-                    <!--<span [(colorPicker)]="color" [style.background]="color" [cpPresetColors]="['#fff', '#000', '#2889e9', '#e920e9', '#fff500', 'rgb(236,64,64)']" [cpAlphaChannel]="'disabled'" [cpPosition]="'right'" [cpOutputFormat]="'rgba'" [cpPositionOffset]="'100%'"
-                        [cpPositionRelativeToArrow]="true" [cpSaveClickOutside]="false" [cpOKButton]="true" [cpOKButtonClass]="'btn btn-xs btn-teal'" [cpOKButtonText]="'OK'" [cpCancelButton]="true" [cpCancelButtonClass]="'btn btn-xs btn-default'" [cpCancelButtonText]="'Cancel'"
-                        [cpFallbackColor]="'#fff'" [cpPresetLabel]="'Preset colors'" class="form-control"></span>
-                    <span [(colorPicker)]="color1" [style.background]="color1" [cpPresetColors]="['#fff', '#000', '#2889e9', '#e920e9', '#fff500', 'rgb(236,64,64)']" [cpAlphaChannel]="'disabled'" [cpPosition]="'right'" [cpOutputFormat]="'rgba'" [cpPositionOffset]="'100%'"
-                        [cpPositionRelativeToArrow]="true" [cpSaveClickOutside]="false" [cpOKButton]="true" [cpOKButtonClass]="'btn btn-xs btn-teal'" [cpOKButtonText]="'OK'" [cpCancelButton]="true" [cpCancelButtonClass]="'btn btn-xs btn-default'" [cpCancelButtonText]="'Cancel'"
-                        [cpFallbackColor]="'#fff'" [cpPresetLabel]="'Preset colors'" class="form-control"> </span>
-                    <div class="clearfix"></div>-->
-
+                <div class="row">
+                    <ul class="display-edit-labels-pop-over">
+                        <li *ngFor="let item of card.portletCardsTags">
+                            <span class="card-label mod-selectable" [ngClass]="item.class" [style.background-color]="item.bg" title="{{item.name}}">
+                                {{item.name}}
+                            </span>
+                        </li>
+                        <li>
+                            <div class="customLabelMaker">
+                                <a class="card-detail-item-add-button dark-hover js-details-edit-members " #tagDrop="ngbDropdown" ngbDropdown ngbDropdownToggle><span class="fa fa-lg ion-android-add "></span></a>
+                                <div class="pop-over dropdown-menu" style="left:0; top: 30px;">
+                                    <div>
+                                        <div class="pop-over-header"><span class="pop-over-header-title">Add Labels</span>
+                                            <a class="pop-over-header-close-btn icon-sm ion-close" href="javascript:void(0)" (click)="$event.stopPropagation(); tagDrop.close();"></a>
+                                        </div>
+                                        <div class="popover-content">
+                                            <div>
+                                                <div>
+                                                    <ul class="pop-over-list edit-labels-pop-over">
+                                                        <li *ngFor="let item of board.boardTagLabels">
+                                                            <a class="card-label-edit-button" href="javascript:void(0);"><i class="fa fa-pencil"></i></a>
+                                                            <span class="card-label mod-selectable" [ngClass]="item.class" [style.background-color]="item.bg" [class.active]="item.selected === true" (click)="addTags(card.portletCardId, item)">
+                                                    <span class="card-label-selectable-icon pull-right">
+                                                        <i class="fa fa-check"></i>
+                                                    </span> {{item.displayName}}
+                                                            </span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
-                <div class="clearfix"></div>
-
-
 
 
                 <!--<div [style.background]="arrayColors['color']" (click)="selectedColor='color'"></div>

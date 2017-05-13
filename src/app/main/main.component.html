@@ -5,7 +5,7 @@
     <main class="mainBoard">
         <div class="board-wrapper" [style.background]="'url('+boardCoverImage+')'" [ngClass]="{'haveBg bgCover': boardCoverImage}" data-adaptive-background="1">
             <div class="board-main-content">
-                <chore-project></chore-project>
+                <chore-project [board]="boardData"></chore-project>
             </div>
 
         </div>

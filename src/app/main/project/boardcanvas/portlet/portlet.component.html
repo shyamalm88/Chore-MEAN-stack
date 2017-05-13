@@ -36,13 +36,22 @@
                     </div>
                     <div class="faicons" title="checklist"><span class="badge-text">&nbsp;</span></div>
                 </div>
+                <div class="js-badges" *ngIf="card.portletCardsTags.length > 0">
+                    <ul class="display-edit-labels-pop-over small-tags">
+                        <li *ngFor="let item of card.portletCardsTags">
+                            <span class="card-label mod-selectable" [ngClass]="item.class" [style.background-color]="item.bg">
+                            </span>
+                        </li>
+                    </ul>
+                </div>
                 <div class="colorLable">
-                    <span class="bg-green-light"></span>
+                    <span *ngIf="card.portletCardsTags.length > 0" [style.background-color]="card.portletCardsTags[0].bg"></span>
+                    <span class="bg-green-light" *ngIf="!card.portletCardsTags.length > 0"></span>
                 </div>
                 <chore-portlet-assined></chore-portlet-assined>
                 <template #content let-c="close" let-d="dismiss">
                     <a class="fa fa-lg ion-close dialog-close-button" href="javascript:void(0)" (click)="d('Cross click')"></a>
-                    <chore-portlet-modal [card]="card" [portletIndex]="portletIndex" [cardIndex]="cardIndex" (cardUpdate)="cardUpdate($event)"></chore-portlet-modal>
+                    <chore-portlet-modal [card]="card" [board]="board" [portletIndex]="portletIndex" [cardIndex]="cardIndex" (cardUpdate)="cardUpdate($event)"></chore-portlet-modal>
                 </template>
             </div>
             <form #form="ngForm" (ngSubmit)="addCard(form, item)">

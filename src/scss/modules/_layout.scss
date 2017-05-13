@@ -1611,14 +1611,14 @@ ul {
 
 .window-main-col {
     float: left;
-    overflow-x: hidden;
-    overflow-y: auto;
+    // overflow-x: hidden;
+    // overflow-y: auto;
     margin: 0;
     min-height: 20px;
     padding: 8px 9pt 9pt;
     position: relative;
     width: 546px;
-    z-index: 0;
+    z-index: 1;
     img {
         max-width: 100% !important;
         height: auto !important;
@@ -1703,6 +1703,117 @@ hr {
     padding: 8px 8px 8px 90pt;
     min-height: 5pc;
     margin: 0;
+}
+
+.customLabelMaker {
+    margin-left: 0px;
+    margin-right: 0px;
+    position: relative;
+    &:after {
+        clear: both;
+        content: '';
+        display: block;
+    }
+    .edit-labels-pop-over {
+        margin-bottom: 8px;
+        li {
+            padding-right: 38px;
+            position: relative;
+            .card-label-edit-button {
+                border-radius: 3px;
+                padding: 8px;
+                position: absolute;
+                top: 0;
+                right: 10px;
+            }
+            .card-label.mod-selectable {
+                border-radius: 3px;
+                cursor: pointer;
+                margin: 0 0 4px;
+                min-height: 36px;
+                padding: 8px;
+                position: relative;
+                -webkit-transition: padding 85ms, margin 85ms, box-shadow 85ms;
+                transition: padding 85ms, margin 85ms, box-shadow 85ms;
+                .card-label-selectable-icon {
+                    right: 6px;
+                    //display: none;
+                    opacity: 0;
+                    transition: all .5s ease-out;
+                }
+                &.active {
+                    .card-label-selectable-icon {
+                        //display: block;
+                        opacity: 1;
+                        transition: all .5s ease-out;
+                    }
+                }
+            }
+            .card-label {
+                background-color: #B6BBBF;
+                border-radius: 3px;
+                color: #fff;
+                font-weight: 700;
+                margin-right: 3px;
+                overflow: hidden;
+                padding: 3px 6px;
+                position: relative;
+                text-overflow: ellipsis;
+                text-shadow: 0 0 5px rgba(0, 0, 0, .2), 0 0 2px #000;
+                white-space: nowrap;
+                display: block;
+            }
+        }
+    }
+}
+
+.display-edit-labels-pop-over {
+    margin-left: 10px;
+    margin-right: 10px;
+    color: #fff;
+    &.small-tags {
+        margin: 0px 0px;
+        li {
+            width: 20px;
+            height: 10px;
+            margin: 0 1px 0 1px;
+            span.card-label.mod-selectable {
+                min-width: 100%;
+                min-height: 100%;
+            }
+        }
+    }
+    li {
+        display: inline-block;
+        margin: 0 0 0 4px;
+        max-width: 150px;
+        span.card-label.mod-selectable {
+            padding: 6px;
+            border-radius: 2px;
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            float: left;
+            min-width: 52px;
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.45);
+            text-align: center;
+        }
+        li {
+            max-width: 270px;
+            padding-right: 38px;
+            position: relative;
+            display: block;
+            text-align: left;
+            overflow: hidden;
+            margin: 0px;
+            span.card-label.mod-selectable {
+                text-align: left;
+                display: block;
+                width: 100%;
+            }
+        }
+    }
 }
 
 .attachment-thumbnail {

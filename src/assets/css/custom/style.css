@@ -1245,14 +1245,12 @@ ul {
 
 .window-main-col {
   float: left;
-  overflow-x: hidden;
-  overflow-y: auto;
   margin: 0;
   min-height: 20px;
   padding: 8px 9pt 9pt;
   position: relative;
   width: 546px;
-  z-index: 0;
+  z-index: 1;
 }
 .window-main-col img {
   max-width: 100% !important;
@@ -1333,6 +1331,113 @@ hr {
   padding: 8px 8px 8px 90pt;
   min-height: 5pc;
   margin: 0;
+}
+
+.customLabelMaker {
+  margin-left: 0px;
+  margin-right: 0px;
+  position: relative;
+}
+.customLabelMaker:after {
+  clear: both;
+  content: '';
+  display: block;
+}
+.customLabelMaker .edit-labels-pop-over {
+  margin-bottom: 8px;
+}
+.customLabelMaker .edit-labels-pop-over li {
+  padding-right: 38px;
+  position: relative;
+}
+.customLabelMaker .edit-labels-pop-over li .card-label-edit-button {
+  border-radius: 3px;
+  padding: 8px;
+  position: absolute;
+  top: 0;
+  right: 10px;
+}
+.customLabelMaker .edit-labels-pop-over li .card-label.mod-selectable {
+  border-radius: 3px;
+  cursor: pointer;
+  margin: 0 0 4px;
+  min-height: 36px;
+  padding: 8px;
+  position: relative;
+  -webkit-transition: padding 85ms, margin 85ms, box-shadow 85ms;
+  transition: padding 85ms, margin 85ms, box-shadow 85ms;
+}
+.customLabelMaker .edit-labels-pop-over li .card-label.mod-selectable .card-label-selectable-icon {
+  right: 6px;
+  opacity: 0;
+  transition: all .5s ease-out;
+}
+.customLabelMaker .edit-labels-pop-over li .card-label.mod-selectable.active .card-label-selectable-icon {
+  opacity: 1;
+  transition: all .5s ease-out;
+}
+.customLabelMaker .edit-labels-pop-over li .card-label {
+  background-color: #B6BBBF;
+  border-radius: 3px;
+  color: #fff;
+  font-weight: 700;
+  margin-right: 3px;
+  overflow: hidden;
+  padding: 3px 6px;
+  position: relative;
+  text-overflow: ellipsis;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.2), 0 0 2px #000;
+  white-space: nowrap;
+  display: block;
+}
+
+.display-edit-labels-pop-over {
+  margin-left: 10px;
+  margin-right: 10px;
+  color: #fff;
+}
+.display-edit-labels-pop-over.small-tags {
+  margin: 0px 0px;
+}
+.display-edit-labels-pop-over.small-tags li {
+  width: 20px;
+  height: 10px;
+  margin: 0 1px 0 1px;
+}
+.display-edit-labels-pop-over.small-tags li span.card-label.mod-selectable {
+  min-width: 100%;
+  min-height: 100%;
+}
+.display-edit-labels-pop-over li {
+  display: inline-block;
+  margin: 0 0 0 4px;
+  max-width: 150px;
+}
+.display-edit-labels-pop-over li span.card-label.mod-selectable {
+  padding: 6px;
+  border-radius: 2px;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  float: left;
+  min-width: 52px;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.45);
+  text-align: center;
+}
+.display-edit-labels-pop-over li li {
+  max-width: 270px;
+  padding-right: 38px;
+  position: relative;
+  display: block;
+  text-align: left;
+  overflow: hidden;
+  margin: 0px;
+}
+.display-edit-labels-pop-over li li span.card-label.mod-selectable {
+  text-align: left;
+  display: block;
+  width: 100%;
 }
 
 .attachment-thumbnail {

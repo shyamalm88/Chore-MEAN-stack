@@ -1,4 +1,5 @@
-import { Component, ViewEncapsulation } from "@angular/core";
+import { Component, ViewEncapsulation, Input, OnInit } from '@angular/core';
+import * as io from 'socket.io-client';
 
 @Component({
 
@@ -7,6 +8,34 @@ import { Component, ViewEncapsulation } from "@angular/core";
     encapsulation: ViewEncapsulation.None
 })
 
-export class ProjectComponent{
-    constructor(){}
+export class ProjectComponent implements OnInit {
+
+    @Input() board: any;
+
+    public socket = io('http://localhost:8080/');
+    private cardTags;
+
+    constructor() { }
+
+    ngOnInit() {
+        let self = this;
+        this.socket.on('updateCardTags', function (response) {
+            self.cardTags = response;
+            self.getSelectedLabels();
+        });
+        this.socket.on('updateCardModal', function (response) {
+            self.board = response.board;
+
+        });
+    }
+
+    getSelectedLabels() {
+        this.board.boardTagLabels.forEach(element => {
+            this.cardTags.forEach(elem => {
+                if (elem.id === element.id) {
+                    Object.assign(element, elem);
+                }
+            });
+        });
+    }
 }

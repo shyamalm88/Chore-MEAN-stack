@@ -25,6 +25,7 @@ var BoardSchema = new Schema({
     coverImageUrl: String,
     coverImageID: String,
     boardActivity: Array,
+    boardTagLabels: Array,
 });
 
 BoardSchema.pre('save', function(next) {
@@ -79,6 +80,91 @@ module.exports.addNewBoard = function(body, callback) {
         coverImageUrl: '',
         coverImageID: '',
         boardId: rString,
+        boardTagLabels: [{
+                class: 'card-label-green',
+                bg: '#4caf50',
+                name: 'Green',
+                displayName: 'Green',
+                id: makeId('greenxxyy-xyxxy-xayx')
+            },
+            {
+                class: 'card-label-yellow',
+                bg: '#ffeb3b',
+                name: 'Yellow',
+                displayName: 'Yellow',
+                id: makeId('yellowxxyy-xyxxy-xayx')
+            },
+            {
+                class: 'card-label-orange',
+                bg: '#ff9800',
+                name: 'Orange',
+                displayName: 'Orange',
+                id: makeId('orangexxyy-xyxxy-xayx')
+            },
+            {
+                class: 'card-label-red',
+                bg: '#f44336',
+                name: 'Red',
+                displayName: 'Red',
+                id: makeId('redxxyy-xyxxy-xayx')
+            },
+            {
+                class: 'card-label-purple',
+                bg: '#673ab7',
+                name: 'Purple',
+                displayName: 'Purple',
+                id: makeId('purplexxyy-xyxxy-xayx')
+            },
+            {
+                class: 'card-label-blue',
+                bg: '#3f51b5',
+                name: 'Blue',
+                displayName: 'Blue',
+                id: makeId('bluexxyy-xyxxy-xayx')
+            },
+            {
+                class: 'card-label-sky',
+                bg: '#2196f3',
+                name: 'Sky',
+                displayName: 'Sky',
+                id: makeId('skyxxyy-xyxxy-xayx')
+            },
+            {
+                class: 'card-label-pink',
+                bg: '#e91e63',
+                name: 'Pink',
+                displayName: 'Pink',
+                id: makeId('pinkxxyy-xyxxy-xayx')
+            },
+            {
+                class: 'card-label-violet',
+                bg: '#9c27b0',
+                name: 'Violet',
+                displayName: 'Violet',
+                id: makeId('violetxxyy-xyxxy-xayx')
+            },
+            {
+                class: 'card-label-lime',
+                bg: '#8bc34a',
+                name: 'Lime',
+                displayName: 'Lime',
+                id: makeId('limexxyy-xyxxy-xayx')
+            },
+            {
+                class: 'card-label-brown',
+                bg: '#795548',
+                name: 'Brown',
+                displayName: 'Brown',
+                id: makeId('brownxxyy-xyxxy-xayx')
+            },
+            {
+                class: 'card-label-black',
+                bg: '#607d8b',
+                name: 'Black',
+                displayName: 'Black',
+                id: makeId('blackxxyy-xyxxy-xayx')
+            }
+        ]
 
     });
     board.boardActivity.push({
@@ -167,3 +253,15 @@ module.exports.deleteBoard = function(index, callback) {
         });
     });
 };
+
+function makeId(pattern) { // Public Domain/MIT
+    var d = new Date().getTime();
+    if (typeof performance !== 'undefined' && typeof performance.now === 'function') {
+        d += performance.now(); //use high-precision timer if available
+    }
+    return pattern.replace(/[xy-]/g, function(c) {
+        var r = (d + Math.random() * 16) % 16 | 0;
+        d = Math.floor(d / 16);
+        return (c === 'y' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+}
