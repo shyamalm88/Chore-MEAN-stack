@@ -196,9 +196,6 @@ export class ListBoardComponent implements OnInit {
     }
 
     delBoard(_id) {
-        console.log(_id);
-        console.log(this.deleteBoard.value);
-        console.log(this.deleteName);
         if ((this.deleteBoard.controls['deleteBoardName'].value).toLowerCase() === this.deleteName) {
             this.httpService.deleteData(Constant.API_ENDPOINT + 'board/' + _id)
                 .subscribe(
@@ -206,9 +203,12 @@ export class ListBoardComponent implements OnInit {
                     //emit data
                     this.boardUpdate.emit('loadAllData')
                 }
+
                 );
         }
     }
+
+
 
     navigateToBoard(id, name) {
         //console.log(id, name);
