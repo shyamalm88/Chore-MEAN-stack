@@ -224,67 +224,28 @@ app.route('/edit/comments/:commentId/:portletCardId/:editField/:action')
         });
     });
 
-app.route('/delete/tags/:portletCardId/:tagsId')
-    .put(function(req, res) {
-        Board.findOne({ 'portlet.portletCards.portletCardId': req.params.portletCardId }, function(err, result) {
-            var responseResult = result;
-            responseResult.portlet.forEach(function(element) {
-                if (element.portletCardId === req.params.portletId) {
-                    element.portletCards.forEach(function(card) {
-                        if (card.portletCardId === req.params.portletCardId) {
-                            card.portletCardsTags.forEach(function(label) {
-                                if (label.id === req.params.tagsId) {
-                                    var index = card.portletCardsTags.indexOf(label);
-                                    card.portletCardsTags.splice(index, 1);
-                                    responseResult.portletCardUpdatedOn = new Date();
-                                    card.portletCardActivity.push({
-                                        "portletCardId": req.params.portletCardId,
-                                        "activity": ['Removed Label "' + req.body.name + '" From this Card'],
-                                        "portletCardCreatedBy": result.created_by,
-                                        "portletCardCreatedByName": result.created_byName,
-                                        "portletCardOperation": 'Removed Label',
-                                        "portletCardOperationOn": responseResult.portletCardUpdatedOn
-                                    });
-                                }
-                            })
-                        }
-                    })
-                }
-            });
-            responseResult.markModified('portlet');
-            responseResult.save(function(err, result) {
-                if (err) {
-                    throw err;
-                }
-                res.json({
-                    message: 'Successfully added value',
-                    board: result
-                });
-            });
-        });
-    });
-
-
-app.route('/edit/portletCardsTags/:portletCardId/:boardTagLabels')
+app.route('/edit/tags/:portletCardId/portletCardsTags/:action')
     .put(function(req, res) {
         Board.findOne({ 'portlet.portletCards.portletCardId': req.params.portletCardId }, function(err, result) {
             var responseResult = result;
             responseResult.boardTagLabels.forEach(function(element) {
-                if (element.id === req.body.id) {
-                    element.name = req.body.name;
-                }
-            });
-            responseResult.portlet.forEach(function(element) {
-                element.portletCards.forEach(function(tags) {
-                    tags.portletCardsTags.forEach(function(individual) {
-                        if (individual.id === req.body.id) {
-                            individual.name = req.body.name;
+                if (req.params.action === 'add' || req.params.action === 'remove') {
+                    if (element.id === req.body.itemId) {
+                        var index = element.portletCardId.indexOf(req.body.portletCardId);
+                        if (index === -1) {
+                            element.portletCardId.push(req.body.portletCardId);
+                        } else {
+                            element.portletCardId.splice(index, 1);
                         }
-                    })
-                })
+                    }
+                } else if (req.params.action === 'edit') {
+                    if (element.id === req.body.id) {
+                        element.name = req.body.name;
+                    }
+                }
+
             });
             responseResult.markModified('boardTagLabels');
-            responseResult.markModified('portlet');
             responseResult.save(function(err, result) {
                 if (err) {
                     throw err;
@@ -458,8 +419,6 @@ app.route('/edit/cards/:portletId/:editField')
             editFieldDiff = 'Description';
         } else if (editField === 'portletCardDueDate') {
             editFieldDiff = 'Due Date';
-        } else if (editField === 'portletCardsTags') {
-            editFieldDiff = 'Card Labels';
         }
         Board.findOne({ 'portlet.portletCards.portletCardId': req.params.portletId }, function(err, result) {
             if (err) throw err;
@@ -484,17 +443,6 @@ app.route('/edit/cards/:portletId/:editField')
                                     "portletCardCreatedBy": result.created_by,
                                     "portletCardCreatedByName": result.created_byName,
                                     "portletCardOperation": 'Edit Comment',
-                                    "portletCardOperationOn": new Date()
-                                });
-                            } else if (editField === 'portletCardsTags') {
-                                card[editField].push(req.body);
-                                card.portletCardUpdatedOn = new Date();
-                                card.portletCardActivity.push({
-                                    "portletCardId": card.portletCardId,
-                                    "activity": ['Added Labels "' + req.body.name + '"'],
-                                    "portletCardCreatedBy": result.created_by,
-                                    "portletCardCreatedByName": result.created_byName,
-                                    "portletCardOperation": 'Added Labels',
                                     "portletCardOperationOn": new Date()
                                 });
                             } else if (editField === 'portletCardsAttachments') {

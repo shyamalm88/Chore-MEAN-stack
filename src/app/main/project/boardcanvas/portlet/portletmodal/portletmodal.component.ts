@@ -162,14 +162,10 @@ export class PortletModalComponent implements OnInit {
     this.socket.on('updateCardModal', function (response) {
       self.cardResponseBoard = response;
       self.cardResponseBoard = self.cardResponseBoard.board.portlet;
-      self.getSelectedLabels();
-      self.zone.run(() => { // <== added
-        self.card = self.cardResponseBoard[self.portletIndex].portletCards[self.cardIndex];
-      });
+      // self.zone.run(() => { // <== added
+      //   self.card = self.cardResponseBoard[self.portletIndex].portletCards[self.cardIndex];
+      // });
     });
-    this.socket.emit('updateCardTags', self.card.portletCardsTags)
-
-    //this.getSelectedLabels();
   }
 
   /**
@@ -522,33 +518,16 @@ export class PortletModalComponent implements OnInit {
 
   }
 
-  getSelectedLabels() {
-    this.board.boardTagLabels.forEach(element => {
-      this.board.portlet[this.portletIndex].portletCards[this.cardIndex].portletCardsTags.forEach(elem => {
-        if (elem.id === element.id) {
-          Object.assign(element, elem);
-        }
-      });
-    });
-    console.log(this.board.boardTagLabels);
-    this.zone.run(() => { // <== added
-      this.card.portletCardsTags = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardsTags;
-    });
-  }
 
   addTags(portletCardId, item) {
-    item.selected = !item.selected;
     const data = {
-      class: item.class,
-      bg: item.bg,
-      id: item.id,
-      name: item.name,
-      selected: item.selected
-    };
+      portletCardId: portletCardId,
+      itemId: item.id
+    }
 
     let id = portletCardId;
     if (item.selected) {
-      this.httpService.editData(Constant.API_ENDPOINT + 'edit/cards/' + id + '/portletCardsTags', data)
+      this.httpService.editData(Constant.API_ENDPOINT + 'edit/tags/' + id + '/portletCardsTags/add', data)
         .subscribe(
         (response): void => {
           this.cardResponseBoard = response;
@@ -556,16 +535,13 @@ export class PortletModalComponent implements OnInit {
           this.cardUpdate.emit(this.cardResponseBoard);
           this.addDescription = false;
           this.zone.run(() => { // <== added
-            this.card.portletCardsTags = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardsTags;
             this.card.portletCardActivity = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardActivity;
           });
-          this.getSelectedLabels();
           this.socket.emit('updateCardModal', response);
-          this.socket.emit('updateCardTags', this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardsTags)
         }
         )
     } else {
-      this.httpService.editData(Constant.API_ENDPOINT + 'delete/tags/' + id + '/' + data.id, data)
+      this.httpService.editData(Constant.API_ENDPOINT + 'edit/tags/' + id + '/portletCardsTags/remove', data)
         .subscribe(
         (response): void => {
           this.cardResponseBoard = response;
@@ -573,12 +549,9 @@ export class PortletModalComponent implements OnInit {
           this.cardUpdate.emit(this.cardResponseBoard);
           this.addDescription = false;
           this.zone.run(() => { // <== added
-            this.card.portletCardsTags = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardsTags;
             this.card.portletCardActivity = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardActivity;
           });
-          this.getSelectedLabels();
           this.socket.emit('updateCardModal', response);
-          this.socket.emit('updateCardTags', this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardsTags)
         }
         )
     }
@@ -600,7 +573,7 @@ export class PortletModalComponent implements OnInit {
     let data = this.showEditLabelForm.value;
     let id = portletCardId;
     if (this.showEditLabelForm.value !== '' || this.showEditLabelForm.value !== ' ') {
-      this.httpService.editData(Constant.API_ENDPOINT + 'edit/portletCardsTags/' + id + '/boardTagLabels', data)
+      this.httpService.editData(Constant.API_ENDPOINT + 'edit/tags/' + id + '/portletCardsTags/edit', data)
         .subscribe(
         (response): void => {
           this.cardResponseBoard = response;
@@ -608,12 +581,9 @@ export class PortletModalComponent implements OnInit {
           this.cardUpdate.emit(this.cardResponseBoard);
           this.addDescription = false;
           this.zone.run(() => { // <== added
-            this.card.portletCardsTags = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardsTags;
             this.card.portletCardActivity = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardActivity;
           });
-          //this.getSelectedLabels();
           this.socket.emit('updateCardModal', response);
-          this.socket.emit('updateCardTags', this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardsTags)
         }
         )
     }

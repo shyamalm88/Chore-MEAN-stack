@@ -39,8 +39,8 @@
                 </div>
                 <div class="row">
                     <ul class="display-edit-labels-pop-over">
-                        <li *ngFor="let item of card.portletCardsTags">
-                            <span class="card-label mod-selectable" [ngClass]="item.class" [style.background-color]="item.bg" title="{{item.name}}">
+                        <li *ngFor="let item of board.boardTagLabels">
+                            <span class="card-label mod-selectable" *ngIf="item.portletCardId.indexOf(card.portletCardId) !== -1" [ngClass]="item.class" [style.background-color]="item.bg" title="{{item.name}}">
                                 {{item.name}}
                             </span>
                         </li>
@@ -58,7 +58,8 @@
                                                     <ul class="pop-over-list edit-labels-pop-over">
                                                         <li *ngFor="let item of board.boardTagLabels">
                                                             <a class="card-label-edit-button" href="javascript:void(0);" (click)="showEditTagForm(item)"><i class="fa fa-pencil"></i></a>
-                                                            <span class="card-label mod-selectable" *ngIf="!item.showEditTagInForm" [ngClass]="item.class" [style.background-color]="item.bg" [class.active]="item.selected === true" (click)="addTags(card.portletCardId, item)">
+                                                            <div class="clearfix"></div>
+                                                            <span class="card-label mod-selectable" *ngIf="!item.showEditTagInForm" [ngClass]="item.class" [style.background-color]="item.bg" [class.active]="item.portletCardId.indexOf(card.portletCardId) !== -1" (click)="addTags(card.portletCardId, item)">
                                                     <span class="card-label-selectable-icon pull-right">
                                                         <i class="fa fa-check"></i>
                                                     </span> {{item.name}}

@@ -19,23 +19,10 @@ export class ProjectComponent implements OnInit {
 
     ngOnInit() {
         let self = this;
-        this.socket.on('updateCardTags', function (response) {
-            self.cardTags = response;
-            self.getSelectedLabels();
-        });
         this.socket.on('updateCardModal', function (response) {
             self.board = response.board;
-
         });
     }
 
-    getSelectedLabels() {
-        this.board.boardTagLabels.forEach(element => {
-            this.cardTags.forEach(elem => {
-                if (elem.id === element.id) {
-                    Object.assign(element, elem);
-                }
-            });
-        });
-    }
+
 }

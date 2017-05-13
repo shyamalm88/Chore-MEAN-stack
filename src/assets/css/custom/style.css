@@ -1392,25 +1392,24 @@ hr {
 }
 
 .display-edit-labels-pop-over {
-  margin-left: 10px;
-  margin-right: 10px;
+  margin-left: 15px;
+  margin-right: 15px;
   color: #fff;
 }
 .display-edit-labels-pop-over.small-tags {
   margin: 0px 0px;
 }
 .display-edit-labels-pop-over.small-tags li {
-  width: 20px;
-  height: 10px;
-  margin: 0 1px 0 1px;
+  margin: 0;
 }
 .display-edit-labels-pop-over.small-tags li span.card-label.mod-selectable {
-  min-width: 100%;
-  min-height: 100%;
+  min-width: 10px;
+  min-height: 10px;
+  margin: 0 1px 0 1px;
 }
 .display-edit-labels-pop-over li {
   display: inline-block;
-  margin: 0 0 0 4px;
+  margin: 0;
   max-width: 150px;
 }
 .display-edit-labels-pop-over li span.card-label.mod-selectable {
@@ -1424,6 +1423,7 @@ hr {
   min-width: 52px;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.45);
   text-align: center;
+  margin-right: 4px;
 }
 .display-edit-labels-pop-over li li {
   max-width: 270px;

@@ -85,6 +85,7 @@ module.exports.addNewBoard = function(body, callback) {
                 bg: '#4caf50',
                 name: 'Green',
                 displayName: 'Green',
+                portletCardId: [],
                 id: makeId('greenxxyy-xyxxy-xayx')
             },
             {
@@ -92,6 +93,7 @@ module.exports.addNewBoard = function(body, callback) {
                 bg: '#ffeb3b',
                 name: 'Yellow',
                 displayName: 'Yellow',
+                portletCardId: [],
                 id: makeId('yellowxxyy-xyxxy-xayx')
             },
             {
@@ -99,6 +101,7 @@ module.exports.addNewBoard = function(body, callback) {
                 bg: '#ff9800',
                 name: 'Orange',
                 displayName: 'Orange',
+                portletCardId: [],
                 id: makeId('orangexxyy-xyxxy-xayx')
             },
             {
@@ -106,6 +109,7 @@ module.exports.addNewBoard = function(body, callback) {
                 bg: '#f44336',
                 name: 'Red',
                 displayName: 'Red',
+                portletCardId: [],
                 id: makeId('redxxyy-xyxxy-xayx')
             },
             {
@@ -113,6 +117,7 @@ module.exports.addNewBoard = function(body, callback) {
                 bg: '#673ab7',
                 name: 'Purple',
                 displayName: 'Purple',
+                portletCardId: [],
                 id: makeId('purplexxyy-xyxxy-xayx')
             },
             {
@@ -120,6 +125,7 @@ module.exports.addNewBoard = function(body, callback) {
                 bg: '#3f51b5',
                 name: 'Blue',
                 displayName: 'Blue',
+                portletCardId: [],
                 id: makeId('bluexxyy-xyxxy-xayx')
             },
             {
@@ -127,6 +133,7 @@ module.exports.addNewBoard = function(body, callback) {
                 bg: '#2196f3',
                 name: 'Sky',
                 displayName: 'Sky',
+                portletCardId: [],
                 id: makeId('skyxxyy-xyxxy-xayx')
             },
             {
@@ -134,6 +141,7 @@ module.exports.addNewBoard = function(body, callback) {
                 bg: '#e91e63',
                 name: 'Pink',
                 displayName: 'Pink',
+                portletCardId: [],
                 id: makeId('pinkxxyy-xyxxy-xayx')
             },
             {
@@ -141,6 +149,7 @@ module.exports.addNewBoard = function(body, callback) {
                 bg: '#9c27b0',
                 name: 'Violet',
                 displayName: 'Violet',
+                portletCardId: [],
                 id: makeId('violetxxyy-xyxxy-xayx')
             },
             {
@@ -148,6 +157,7 @@ module.exports.addNewBoard = function(body, callback) {
                 bg: '#8bc34a',
                 name: 'Lime',
                 displayName: 'Lime',
+                portletCardId: [],
                 id: makeId('limexxyy-xyxxy-xayx')
             },
             {
@@ -155,6 +165,7 @@ module.exports.addNewBoard = function(body, callback) {
                 bg: '#795548',
                 name: 'Brown',
                 displayName: 'Brown',
+                portletCardId: [],
                 id: makeId('brownxxyy-xyxxy-xayx')
             },
             {
@@ -162,6 +173,7 @@ module.exports.addNewBoard = function(body, callback) {
                 bg: '#607d8b',
                 name: 'Black',
                 displayName: 'Black',
+                portletCardId: [],
                 id: makeId('blackxxyy-xyxxy-xayx')
             }
         ]
