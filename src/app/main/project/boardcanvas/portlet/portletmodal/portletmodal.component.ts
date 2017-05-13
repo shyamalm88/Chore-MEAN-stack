@@ -4,13 +4,14 @@ import { Component, ViewEncapsulation, ElementRef, OnInit, Input, ViewChild, Out
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
 
 import { HttpService } from '../../../../../common/services/http.service';
 import { Constant } from '../../../../../common/constant/constant';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { ColorPickerService } from 'angular2-color-picker';
 import { AuthService } from '../../../../../common/services/auth.service';
 import * as io from 'socket.io-client';
+import * as _ from 'underscore';
 
 const URL = '/api/cardImageUpload';
 
@@ -21,6 +22,7 @@ const URL = '/api/cardImageUpload';
 export class PortletModalComponent implements OnInit {
 
   @Input() card: any;
+  @Input() board: any;
   @Input() cardIndex;
   @Input() portletIndex;
   @Output() cardUpdate = new EventEmitter();
@@ -43,6 +45,7 @@ export class PortletModalComponent implements OnInit {
   private editAddTagLineVisible: Boolean;
   private date;
   private Counter = 0;
+  private showEditLabelForm;
 
   private loggedInUserData;
   private userImage;
@@ -59,7 +62,6 @@ export class PortletModalComponent implements OnInit {
   private originalFileName;
   private showFileUploader: Boolean;
   private showLoading: boolean = true;
-  private color: string = "#127bdc";
   private portletCardPrevName;
 
   uploadFile: any; // uploadFile
@@ -78,10 +80,10 @@ export class PortletModalComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private authService: AuthService,
     private zone: NgZone,
-    private cpService: ColorPickerService
-
+    private dropDownConfig: NgbDropdownConfig
   ) {
 
+    this.dropDownConfig.autoClose = false;
 
     /**
      * CKEditor Configuration
@@ -160,11 +162,10 @@ export class PortletModalComponent implements OnInit {
     this.socket.on('updateCardModal', function (response) {
       self.cardResponseBoard = response;
       self.cardResponseBoard = self.cardResponseBoard.board.portlet;
-      self.zone.run(() => { // <== added
-        self.card = self.cardResponseBoard[self.portletIndex].portletCards[self.cardIndex];
-      });
+      // self.zone.run(() => { // <== added
+      //   self.card = self.cardResponseBoard[self.portletIndex].portletCards[self.cardIndex];
+      // });
     });
-
   }
 
   /**
@@ -515,6 +516,78 @@ export class PortletModalComponent implements OnInit {
       this.addDescription = false;
     }
 
+  }
+
+
+  addTags(portletCardId, item) {
+    const data = {
+      portletCardId: portletCardId,
+      itemId: item.id
+    }
+
+    let id = portletCardId;
+    if (item.selected) {
+      this.httpService.editData(Constant.API_ENDPOINT + 'edit/tags/' + id + '/portletCardsTags/add', data)
+        .subscribe(
+        (response): void => {
+          this.cardResponseBoard = response;
+          this.cardResponseBoard = this.cardResponseBoard.board.portlet;
+          this.cardUpdate.emit(this.cardResponseBoard);
+          this.addDescription = false;
+          this.zone.run(() => { // <== added
+            this.card.portletCardActivity = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardActivity;
+          });
+          this.socket.emit('updateCardModal', response);
+        }
+        )
+    } else {
+      this.httpService.editData(Constant.API_ENDPOINT + 'edit/tags/' + id + '/portletCardsTags/remove', data)
+        .subscribe(
+        (response): void => {
+          this.cardResponseBoard = response;
+          this.cardResponseBoard = this.cardResponseBoard.board.portlet;
+          this.cardUpdate.emit(this.cardResponseBoard);
+          this.addDescription = false;
+          this.zone.run(() => { // <== added
+            this.card.portletCardActivity = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardActivity;
+          });
+          this.socket.emit('updateCardModal', response);
+        }
+        )
+    }
+  }
+
+  showEditTagForm(item) {
+    this.board.boardTagLabels.forEach(element => {
+      element.showEditTagInForm = false;
+    });
+    item.showEditTagInForm = true;
+    this.showEditLabelForm = this.fb.group({
+      name: [item.name, Validators.required],
+      id: ['', Validators.required]
+    })
+  }
+
+  updateLabelDisplayName(item, portletCardId) {
+    console.log(this.showEditLabelForm.value);
+    let data = this.showEditLabelForm.value;
+    let id = portletCardId;
+    if (this.showEditLabelForm.value !== '' || this.showEditLabelForm.value !== ' ') {
+      this.httpService.editData(Constant.API_ENDPOINT + 'edit/tags/' + id + '/portletCardsTags/edit', data)
+        .subscribe(
+        (response): void => {
+          this.cardResponseBoard = response;
+          this.cardResponseBoard = this.cardResponseBoard.board.portlet;
+          this.cardUpdate.emit(this.cardResponseBoard);
+          this.addDescription = false;
+          this.zone.run(() => { // <== added
+            this.card.portletCardActivity = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardActivity;
+          });
+          this.socket.emit('updateCardModal', response);
+        }
+        )
+    }
+    item.showEditTagInForm = false;
   }
 
   /**

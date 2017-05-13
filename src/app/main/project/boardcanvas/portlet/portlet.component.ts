@@ -17,6 +17,7 @@ import * as io from 'socket.io-client';
 
 export class PortletComponent implements OnInit {
 
+  @Input() board: any;
   @ViewChild(NgbDropdown)
   private dropdown: NgbDropdown;
 

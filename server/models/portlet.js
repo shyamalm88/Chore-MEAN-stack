@@ -224,6 +224,40 @@ app.route('/edit/comments/:commentId/:portletCardId/:editField/:action')
         });
     });
 
+app.route('/edit/tags/:portletCardId/portletCardsTags/:action')
+    .put(function(req, res) {
+        Board.findOne({ 'portlet.portletCards.portletCardId': req.params.portletCardId }, function(err, result) {
+            var responseResult = result;
+            responseResult.boardTagLabels.forEach(function(element) {
+                if (req.params.action === 'add' || req.params.action === 'remove') {
+                    if (element.id === req.body.itemId) {
+                        var index = element.portletCardId.indexOf(req.body.portletCardId);
+                        if (index === -1) {
+                            element.portletCardId.push(req.body.portletCardId);
+                        } else {
+                            element.portletCardId.splice(index, 1);
+                        }
+                    }
+                } else if (req.params.action === 'edit') {
+                    if (element.id === req.body.id) {
+                        element.name = req.body.name;
+                    }
+                }
+
+            });
+            responseResult.markModified('boardTagLabels');
+            responseResult.save(function(err, result) {
+                if (err) {
+                    throw err;
+                }
+                res.json({
+                    message: 'Successfully added value',
+                    board: result
+                });
+            });
+        });
+    });
+
 
 app.route('/edit/cardcover/:portletCardId/:portletCardImageId')
     .put(function(req, res) {
@@ -336,13 +370,14 @@ app.route('/add/cards/:portletId')
                             "portletCardTagLine": "",
                             "portletCardCreatedOn": new Date(),
                             "portletCardUpdatedOn": new Date(),
-                            "portletCardsAttachments": [],
                             "portletCardCover": '',
+                            "portletCardsDescription": '',
+                            "portletCardDueDate": '',
+                            "portletCardsAttachments": [],
                             "portletCardsComments": [],
                             "portletCardsMembers": [],
                             "portletCardsTodo": [],
-                            "portletCardsDescription": '',
-                            "portletCardDueDate": '',
+                            "portletCardsTags": [],
                             "portletCardActivity": [{
                                 "activity": ['Created New Card Named as "' + req.body.cardlabel + '"'],
                                 "portletCardId": portletCardId,

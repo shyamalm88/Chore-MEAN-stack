@@ -25,12 +25,15 @@ io.on('connection', function(client) {
     client.on('updateCardModal', function(data) {
         client.broadcast.emit('updateCardModal', data);
     });
+    client.on('updateCardTags', function(data) {
+        client.broadcast.emit('updateCardTags', data);
+    });
     client.on('updateBoard', function(data) {
         client.broadcast.emit('getBoard', data);
     });
 
     client.on('disconnect', function() {
-        client.broadcast.emit('getCardDetails', 'card');
+        //client.broadcast.emit('getCardDetails', 'card');
     });
 });
 

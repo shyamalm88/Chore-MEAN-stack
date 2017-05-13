@@ -30,19 +30,28 @@
                         <span class="btn btn-default btn-xs" [ngClass]="{'btn-success': diffDays >= 0, 'btn-danger' : diffDays < 0}"><span><i class="fa fa-clock-o"></i> {{date | date}}</span>
                         <form [formGroup]="dueDateForm">
                             <input class="form-control" formControlName="duedate" placeholder="yyyy-mm-dd" type="hidden" [(ngModel)]="card.portletCardDueDate" (ngModelChange)="onDateChange(card.portletCardDueDate)">
-
                         </form>
                         </span>
                     </div>
                     <div class="faicons" title="checklist"><span class="badge-text">&nbsp;</span></div>
                 </div>
+                <div class="js-badges">
+                    <ul class="display-edit-labels-pop-over small-tags">
+                        <li *ngFor="let item of board.boardTagLabels">
+                            <span class="card-label mod-selectable" *ngIf="item.portletCardId.indexOf(card.portletCardId) !== -1" [ngClass]="item.class" [style.background-color]="item.bg" title="{{item.name}}">
+
+                            </span>
+                        </li>
+                    </ul>
+                </div>
                 <div class="colorLable">
                     <span class="bg-green-light"></span>
                 </div>
+
                 <chore-portlet-assined></chore-portlet-assined>
                 <template #content let-c="close" let-d="dismiss">
                     <a class="fa fa-lg ion-close dialog-close-button" href="javascript:void(0)" (click)="d('Cross click')"></a>
-                    <chore-portlet-modal [card]="card" [portletIndex]="portletIndex" [cardIndex]="cardIndex" (cardUpdate)="cardUpdate($event)"></chore-portlet-modal>
+                    <chore-portlet-modal [card]="card" [board]="board" [portletIndex]="portletIndex" [cardIndex]="cardIndex" (cardUpdate)="cardUpdate($event)"></chore-portlet-modal>
                 </template>
             </div>
             <form #form="ngForm" (ngSubmit)="addCard(form, item)">
