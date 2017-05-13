@@ -57,11 +57,24 @@
                                                 <div>
                                                     <ul class="pop-over-list edit-labels-pop-over">
                                                         <li *ngFor="let item of board.boardTagLabels">
-                                                            <a class="card-label-edit-button" href="javascript:void(0);"><i class="fa fa-pencil"></i></a>
-                                                            <span class="card-label mod-selectable" [ngClass]="item.class" [style.background-color]="item.bg" [class.active]="item.selected === true" (click)="addTags(card.portletCardId, item)">
+                                                            <a class="card-label-edit-button" href="javascript:void(0);" (click)="showEditTagForm(item)"><i class="fa fa-pencil"></i></a>
+                                                            <span class="card-label mod-selectable" *ngIf="!item.showEditTagInForm" [ngClass]="item.class" [style.background-color]="item.bg" [class.active]="item.selected === true" (click)="addTags(card.portletCardId, item)">
                                                     <span class="card-label-selectable-icon pull-right">
                                                         <i class="fa fa-check"></i>
-                                                    </span> {{item.displayName}}
+                                                    </span> {{item.name}}
+                                                            </span>
+                                                            <span class="card-label mod-selectable" *ngIf="item.showEditTagInForm" [ngClass]="item.class" [style.background-color]="item.bg">
+                                                    <span class="card-label-selectable-icon pull-right">
+                                                        <i class="fa fa-check"></i>
+                                                    </span>
+                                                            <div class="row">
+                                                                <div class="col-sm-10">
+                                                                    <form [formGroup]="showEditLabelForm">
+                                                                        <input type="text" formControlName="name" class="form-control input-sm" autofocus focus="true" (blur)="updateLabelDisplayName(item, card.portletCardId)">
+                                                                        <input type="hidden" formControlName="id" [ngModel]="item.id">
+                                                                    </form>
+                                                                </div>
+                                                            </div>
                                                             </span>
                                                         </li>
                                                     </ul>

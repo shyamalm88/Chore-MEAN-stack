@@ -45,6 +45,7 @@ export class PortletModalComponent implements OnInit {
   private editAddTagLineVisible: Boolean;
   private date;
   private Counter = 0;
+  private showEditLabelForm;
 
   private loggedInUserData;
   private userImage;
@@ -530,6 +531,9 @@ export class PortletModalComponent implements OnInit {
       });
     });
     console.log(this.board.boardTagLabels);
+    this.zone.run(() => { // <== added
+      this.card.portletCardsTags = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardsTags;
+    });
   }
 
   addTags(portletCardId, item) {
@@ -578,6 +582,42 @@ export class PortletModalComponent implements OnInit {
         }
         )
     }
+  }
+
+  showEditTagForm(item) {
+    this.board.boardTagLabels.forEach(element => {
+      element.showEditTagInForm = false;
+    });
+    item.showEditTagInForm = true;
+    this.showEditLabelForm = this.fb.group({
+      name: [item.name, Validators.required],
+      id: ['', Validators.required]
+    })
+  }
+
+  updateLabelDisplayName(item, portletCardId) {
+    console.log(this.showEditLabelForm.value);
+    let data = this.showEditLabelForm.value;
+    let id = portletCardId;
+    if (this.showEditLabelForm.value !== '' || this.showEditLabelForm.value !== ' ') {
+      this.httpService.editData(Constant.API_ENDPOINT + 'edit/portletCardsTags/' + id + '/boardTagLabels', data)
+        .subscribe(
+        (response): void => {
+          this.cardResponseBoard = response;
+          this.cardResponseBoard = this.cardResponseBoard.board.portlet;
+          this.cardUpdate.emit(this.cardResponseBoard);
+          this.addDescription = false;
+          this.zone.run(() => { // <== added
+            this.card.portletCardsTags = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardsTags;
+            this.card.portletCardActivity = this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardActivity;
+          });
+          //this.getSelectedLabels();
+          this.socket.emit('updateCardModal', response);
+          this.socket.emit('updateCardTags', this.cardResponseBoard[this.portletIndex].portletCards[this.cardIndex].portletCardsTags)
+        }
+        )
+    }
+    item.showEditTagInForm = false;
   }
 
   /**

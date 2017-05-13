@@ -265,6 +265,39 @@ app.route('/delete/tags/:portletCardId/:tagsId')
     });
 
 
+app.route('/edit/portletCardsTags/:portletCardId/:boardTagLabels')
+    .put(function(req, res) {
+        Board.findOne({ 'portlet.portletCards.portletCardId': req.params.portletCardId }, function(err, result) {
+            var responseResult = result;
+            responseResult.boardTagLabels.forEach(function(element) {
+                if (element.id === req.body.id) {
+                    element.name = req.body.name;
+                }
+            });
+            responseResult.portlet.forEach(function(element) {
+                element.portletCards.forEach(function(tags) {
+                    tags.portletCardsTags.forEach(function(individual) {
+                        if (individual.id === req.body.id) {
+                            individual.name = req.body.name;
+                        }
+                    })
+                })
+            });
+            responseResult.markModified('boardTagLabels');
+            responseResult.markModified('portlet');
+            responseResult.save(function(err, result) {
+                if (err) {
+                    throw err;
+                }
+                res.json({
+                    message: 'Successfully added value',
+                    board: result
+                });
+            });
+        });
+    });
+
+
 app.route('/edit/cardcover/:portletCardId/:portletCardImageId')
     .put(function(req, res) {
         Board.findOne({ 'portlet.portletCards.portletCardId': req.params.portletCardId }, function(err, result) {

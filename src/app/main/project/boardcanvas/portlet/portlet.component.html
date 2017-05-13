@@ -30,7 +30,6 @@
                         <span class="btn btn-default btn-xs" [ngClass]="{'btn-success': diffDays >= 0, 'btn-danger' : diffDays < 0}"><span><i class="fa fa-clock-o"></i> {{date | date}}</span>
                         <form [formGroup]="dueDateForm">
                             <input class="form-control" formControlName="duedate" placeholder="yyyy-mm-dd" type="hidden" [(ngModel)]="card.portletCardDueDate" (ngModelChange)="onDateChange(card.portletCardDueDate)">
-
                         </form>
                         </span>
                     </div>
