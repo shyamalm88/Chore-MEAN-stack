@@ -4,6 +4,9 @@
 /dist
 /tmp
 /uploads
+/dist/assets/css/custom/style.css
+/nodemon.json
+
 .vscode
 # dependencies
 /node_modules
