@@ -49,10 +49,10 @@
                 </div>
 
                 <chore-portlet-assined></chore-portlet-assined>
-                <template #content let-c="close" let-d="dismiss">
+                <ng-template #content let-c="close" let-d="dismiss">
                     <a class="fa fa-lg ion-close dialog-close-button" href="javascript:void(0)" (click)="d('Cross click')"></a>
                     <chore-portlet-modal [card]="card" [board]="board" [portletIndex]="portletIndex" [cardIndex]="cardIndex" (cardUpdate)="cardUpdate($event)"></chore-portlet-modal>
-                </template>
+                </ng-template>
             </div>
             <form #form="ngForm" (ngSubmit)="addCard(form, item)">
                 <div class="portlet-body addCardBody" [hidden]="!item.hideme">

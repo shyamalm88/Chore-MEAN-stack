@@ -11,12 +11,12 @@
     </div>
 </div>
 <chore-team-list [teamlist]="teamDataSet"></chore-team-list>
-<template #content let-c="close" let-d="dismiss">
+<ng-template #content let-c="close" let-d="dismiss">
     <div class="modal-header">
         <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
-    <h4 class="modal-title">Create team</h4>
+        <h4 class="modal-title">Create team</h4>
     </div>
     <div class="modal-body">
         <div class="alert alert-success" *ngIf="success">
@@ -26,49 +26,49 @@
             {{error}}
         </div>
         <form [formGroup]="createTeamForm" (ngSubmit)="createTeam(createTeamForm.value, d)">
-        <div class="form-group">
-            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                <label class="control-label requiredField" for="name">Team Name <span class="asteriskField">*</span>
+            <div class="form-group">
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                    <label class="control-label requiredField" for="name">Team Name <span class="asteriskField">*</span>
                 </label>
+                </div>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                    <input class="form-control input-sm" id="name" placeholder="Team Name" type="text" [charCount]="50" formControlName="name" />
+                </div>
+                <div class="clearfix"></div>
             </div>
-            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-                <input class="form-control input-sm" id="name"  placeholder="Team Name" type="text" [charCount]="50" formControlName="name"/>
-            </div>
-            <div class="clearfix"></div>
-        </div>
-        <div class="form-group">
-            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-        <label class="control-label " for="description">
+            <div class="form-group">
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                    <label class="control-label " for="description">
         Description
         </label>
-            </div>
-            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-        <textarea class="form-control" cols="10" id="description" placeholder="Team Description" rows="2" [charCount]="200" formControlName="description"></textarea>
+                </div>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                    <textarea class="form-control" cols="10" id="description" placeholder="Team Description" rows="2" [charCount]="200" formControlName="description"></textarea>
 
+                </div>
+                <div class="clearfix"></div>
             </div>
-            <div class="clearfix"></div>
-        </div>
-        <div class="form-group">
-            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-        <label class="control-label" for="description">
+            <div class="form-group">
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                    <label class="control-label" for="description">
         Created by
         </label>
-            </div>
-            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-        <input class="form-control input-sm" id="name" type="text" readonly formControlName="createdby"/>
+                </div>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                    <input class="form-control input-sm" id="name" type="text" readonly formControlName="createdby" />
 
+                </div>
+                <div class="clearfix"></div>
             </div>
-            <div class="clearfix"></div>
-        </div>
-        <div class="form-group">
-        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-md-push-4">
-        <button class="btn btn-teal" name="submit" type="submit" [disabled]="!createTeamForm.valid">
+            <div class="form-group">
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-md-push-4">
+                    <button class="btn btn-teal" name="submit" type="submit" [disabled]="!createTeamForm.valid">
             Create
         </button>
 
-        </div>
-        <div class="clearfix"></div>
-        </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
         </form>
     </div>
-</template>
+</ng-template>

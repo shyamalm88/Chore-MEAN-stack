@@ -2,10 +2,7 @@
 
 # compiled output
 /tmp
-/uploads
-/nodemon.json
 
-.vscode
 # dependencies
 /node_modules
 
@@ -13,7 +10,6 @@
 /.idea
 .project
 .classpath
-.vscode
 .c9/
 *.launch
 .settings/
@@ -41,6 +37,3 @@ testem.log
 #System Files
 .DS_Store
 Thumbs.db
-
-#node_modules
-/node_modules
