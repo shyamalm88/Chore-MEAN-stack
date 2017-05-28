@@ -1546,6 +1546,20 @@ hr {
   right: 6px;
 }
 
+.comment-box input[type="text"] {
+  visibility: hidden;
+}
+.comment-box .emoji-search .emojis-container {
+  overflow-x: hidden !important;
+  overflow-y: scroll !important;
+}
+.comment-box .emoji-search .search-header {
+  padding: 2px !important;
+}
+.comment-box .emoji-opener {
+  background-image: url("http://res.cloudinary.com/shyamal/image/upload/v1493410595/icons/smile.svg") !important;
+}
+
 .comment-box-options-item {
   border-radius: 3px;
   float: left;

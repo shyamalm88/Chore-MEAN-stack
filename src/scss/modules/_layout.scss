@@ -1925,6 +1925,24 @@ hr {
     right: 6px;
 }
 
+.comment-box {
+    input[type="text"] {
+        visibility: hidden;
+    }
+    .emoji-search {
+        .emojis-container {
+            overflow-x: hidden !important;
+            overflow-y: scroll !important;
+        }
+        .search-header {
+            padding: 2px !important;
+        }
+    }
+    .emoji-opener {
+        background-image: url('http://res.cloudinary.com/shyamal/image/upload/v1493410595/icons/smile.svg') !important;
+    }
+}
+
 .comment-box-options-item {
     //Instead of the line below you could use @include border-radius($radius, $vertical-radius)
     border-radius: 3px;
