@@ -16,96 +16,94 @@
 <chore-list-board [displayData]="dataSet" (boardUpdate)="boardUpdate($event)"></chore-list-board>
 
 
-<template #content let-c="close" let-d="dismiss">
+<ng-template #content let-c="close" let-d="dismiss">
     <div class="modal-header">
         <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
-    <h4 class="modal-title">Create board</h4>
+        <h4 class="modal-title">Create board</h4>
     </div>
     <div class="modal-body">
-    <div class="alert alert-success" *ngIf="success">
-        {{success}}
-    </div>
-    <div class="alert alert-danger" *ngIf="error">
+        <div class="alert alert-success" *ngIf="success">
+            {{success}}
+        </div>
+        <div class="alert alert-danger" *ngIf="error">
 
-        {{error}}
-    </div>
-    <form [formGroup]="createBoardForm" (ngSubmit)="createBoard($event, d)">
-     <div class="form-group">
-         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-             <label class="control-label requiredField" for="name">Board Name <span class="asteriskField">*</span>
+            {{error}}
+        </div>
+        <form [formGroup]="createBoardForm" (ngSubmit)="createBoard($event, d)">
+            <div class="form-group">
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                    <label class="control-label requiredField" for="name">Board Name <span class="asteriskField">*</span>
             </label>
-         </div>
-         <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-             <input class="form-control input-sm" id="name" formControlName="name" placeholder="Board Name" type="text" [charCount]="50"/>
-         </div>
-         <div class="clearfix"></div>
-     </div>
-     <div class="form-group">
-         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-             <label class="control-label requiredField" for="name">Assigned Team
+                </div>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                    <input class="form-control input-sm" id="name" formControlName="name" placeholder="Board Name" type="text" [charCount]="50" />
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                    <label class="control-label requiredField" for="name">Assigned Team
             </label>
-         </div>
-         <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-             <select class="form-control" formControlName="teamname" [(ngModel)]="teamSet[0].name">
+                </div>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                    <select class="form-control" formControlName="teamname" [(ngModel)]="teamSet[0].name">
                 <option *ngFor="let item of teamSet; let i = index" [attr.value]="item.name" [attr.selected]="i == 0 ? true : null">{{item.name}}</option>
             </select>
-            <!--<chore-single-select [teams]="teamSet" (onSelected)="onSelected($event)"></chore-single-select>
+                    <!--<chore-single-select [teams]="teamSet" (onSelected)="onSelected($event)"></chore-single-select>
             <input type="hidden" formControlName="teamname" [(ngModel)]="selectedValue">-->
-         </div>
-         <div class="clearfix"></div>
-     </div>
-     <div class="form-group">
-         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-            <label class="control-label " for="file">
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                    <label class="control-label " for="file">
             Upload Board Cover Image
             </label>
-         </div>
-         <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-            <input type="file"
-            [ng-file-select]="options" class="inputfile" (onUpload)="handleUpload($event)" placeholder="upload cover image" accept="image/*">
-            <label for="">
+                </div>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                    <input type="file" [ng-file-select]="options" class="inputfile" (onUpload)="handleUpload($event)" placeholder="upload cover image" accept="image/*">
+                    <label for="">
                 <span>{{fileName}}</span> <strong><i class="fa fa-upload"></i> Choose a file </strong>
             </label>
 
-         </div>
-         <div class="clearfix"></div>
-     </div>
-     <div class="form-group">
-         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-      <label class="control-label " for="description">
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                    <label class="control-label " for="description">
        Description
       </label>
-         </div>
-         <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-      <textarea class="form-control" cols="10" id="description" formControlName="description" placeholder="Board Description" rows="2" [charCount]="200"></textarea>
-
-         </div>
-         <div class="clearfix"></div>
-     </div>
-     <div class="form-group">
-         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-      <label class="control-label" for="description">
+                </div>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                    <textarea class="form-control" cols="10" id="description" formControlName="description" placeholder="Board Description" rows="2" [charCount]="200"></textarea>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                    <label class="control-label" for="description">
        Created by
       </label>
-         </div>
-         <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-      <input class="form-control input-sm" id="name" formControlName="createdby" type="text" readonly/>
-      <input class="form-control input-sm" id="name" formControlName="createdByName" type="hidden" readonly/>
+                </div>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                    <input class="form-control input-sm" id="name" formControlName="createdby" type="text" readonly/>
+                    <input class="form-control input-sm" id="name" formControlName="createdByName" type="hidden" readonly/>
 
-         </div>
-         <div class="clearfix"></div>
-     </div>
-     <div class="form-group">
-      <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-md-push-4">
-       <button class="btn btn-teal" name="submit" type="submit" [disabled]="!createBoardForm.valid">
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-md-push-4">
+                    <button class="btn btn-teal" name="submit" type="submit" [disabled]="!createBoardForm.valid">
         Save
        </button>
 
-      </div>
-      <div class="clearfix"></div>
-     </div>
-    </form>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </form>
     </div>
-</template>
+</ng-template>

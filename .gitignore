@@ -1,13 +1,8 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # compiled output
-/dist
 /tmp
-/uploads
-/dist/assets/css/custom/style.css
-/nodemon.json
 
-.vscode
 # dependencies
 /node_modules
 
@@ -15,7 +10,6 @@
 /.idea
 .project
 .classpath
-.vscode
 .c9/
 *.launch
 .settings/
@@ -43,6 +37,3 @@ testem.log
 #System Files
 .DS_Store
 Thumbs.db
-
-#node_modules
-/node_modules
