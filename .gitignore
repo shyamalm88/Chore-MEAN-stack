@@ -2,6 +2,7 @@
 
 # compiled output
 dist/
+e2e/
 /tmp
 
 # dependencies
